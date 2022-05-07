@@ -5,6 +5,8 @@ import { RouterLink, RouterView } from 'vue-router'
 import { userStore } from '@/stores/User'
 
 const user = userStore()
+
+user.tryToken()
 </script>
 
 <template>
@@ -53,7 +55,14 @@ const user = userStore()
   </header>
 
   <div id="main" class="container px-4 py-5">
-    <RouterView />
+    <div v-if="user.token">
+      <RouterView />
+    </div>
+    <div v-else>
+      <a class="btn btn-success" @click="user.getToken()"
+        ><font-awesome-icon icon="arrow-right-to-bracket" /> Login</a
+      >
+    </div>
   </div>
 </template>
 

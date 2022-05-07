@@ -2,16 +2,13 @@
 // import TheWelcome from "@/components/TheWelcome.vue";
 import TopBanner from '@/components/TopBanner.vue'
 
-import { userStore } from '@/stores/User'
-
-const user = userStore()
+import QueueList from '@/components/QueueList.vue'
 </script>
 
 <template>
   <main>
     <TopBanner />
-
-    <div v-if="user.token">Logged In {{ user.token }}</div>
-    <div v-else>Not Logged In</div>
+    <br />
+    <QueueList />
   </main>
 </template>
