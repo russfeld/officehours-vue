@@ -10,6 +10,11 @@ export const queueStore = defineStore('queues', {
       errors: 0,
     }
   },
+  getters: {
+    getQueueById: (state) => {
+      return (id) => state.queues.find((queue) => queue.id === parseInt(id))
+    }
+  },
   actions: {
     async getQueues() {
       const user = userStore()
