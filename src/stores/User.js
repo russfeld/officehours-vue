@@ -9,7 +9,7 @@ export const userStore = defineStore('user', {
   },
   actions: {
     async getToken() {
-      axios
+      await axios
         .get('http://localhost:3000/token', { withCredentials: true })
         .then((response) => {
           this.token = response.data.token
@@ -26,7 +26,7 @@ export const userStore = defineStore('user', {
     },
 
     async tryToken() {
-      axios
+      await axios
         .get('http://localhost:3000/token', { withCredentials: true })
         .then((response) => {
           this.token = response.data.token

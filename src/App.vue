@@ -6,7 +6,7 @@ import { userStore } from '@/stores/User'
 
 const user = userStore()
 
-user.tryToken()
+//user.tryToken()
 </script>
 
 <template>
@@ -14,7 +14,7 @@ user.tryToken()
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-purple">
       <div class="container">
-        <a class="navbar-brand" href="#">Office Hours</a>
+        <RouterLink to="/" class="navbar-brand">Office Hours</RouterLink>
         <button
           class="navbar-toggler"
           type="button"
@@ -55,14 +55,7 @@ user.tryToken()
   </header>
 
   <div id="main" class="container px-4 py-5">
-    <div v-if="user.token">
-      <RouterView />
-    </div>
-    <div v-else>
-      <a class="btn btn-success" @click="user.getToken()"
-        ><font-awesome-icon icon="arrow-right-to-bracket" /> Login</a
-      >
-    </div>
+    <RouterView />
   </div>
 </template>
 

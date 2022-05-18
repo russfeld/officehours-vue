@@ -23,9 +23,10 @@ library.add(faArrowRightFromBracket)
 
 const app = createApp(App)
 
+app.use(createPinia())
 app.use(router)
 app.use(VueAxios, axios)
-app.use(createPinia())
+
 
 // Add Font Awesome
 app.component('font-awesome-icon', FontAwesomeIcon)

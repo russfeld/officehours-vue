@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import QueueView from '../views/QueueView.vue'
 import QueueSingleView from '../views/QueueSingleView.vue'
+import { appStore } from '@/stores/App'
 import { userStore } from '@/stores/User'
 import { queueStore } from '@/stores/Queues'
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons'
 
 
 const router = createRouter({
@@ -50,6 +52,7 @@ const router = createRouter({
 router.beforeEach(async function(to, from) {
   if(to.name !== 'home') {
 
+    const app = appStore()
     const user = userStore()
     const queues = queueStore()
 
@@ -58,7 +61,10 @@ router.beforeEach(async function(to, from) {
     }
 
     if (user.token) {
-      queues.hydrate()
+      if (app.hydrated === false) {
+        await queues.hydrate()
+        app.hydrated = true
+      }
     } else {
       return '/'
     } 
