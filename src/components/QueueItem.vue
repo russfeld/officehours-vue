@@ -23,7 +23,6 @@ function loadqueue(queue_id) {
 </template>
 
 <style scoped>
-
 /* Copied from Hover https://github.com/IanLunn/Hover */
 /* Grow */
 .hvr-grow {
@@ -38,9 +37,10 @@ function loadqueue(queue_id) {
   transition-property: transform;
   cursor: pointer;
 }
-.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
   -webkit-transform: scale(1.05);
   transform: scale(1.05);
 }
-
 </style>

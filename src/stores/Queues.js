@@ -13,7 +13,7 @@ export const queueStore = defineStore('queues', {
   getters: {
     getQueueById: (state) => {
       return (id) => state.queues.find((queue) => queue.id === parseInt(id))
-    }
+    },
   },
   actions: {
     async hydrate() {

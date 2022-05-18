@@ -27,7 +27,6 @@ app.use(createPinia())
 app.use(router)
 app.use(VueAxios, axios)
 
-
 // Add Font Awesome
 app.component('font-awesome-icon', FontAwesomeIcon)
 

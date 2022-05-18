@@ -5,8 +5,6 @@ import QueueSingleView from '../views/QueueSingleView.vue'
 import { appStore } from '@/stores/App'
 import { userStore } from '@/stores/User'
 import { queueStore } from '@/stores/Queues'
-import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons'
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,17 +13,17 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      beforeEnter: async (to, from) => {
+      beforeEnter: async () => {
         const user = userStore()
 
         if (!user.token) {
           await user.tryToken()
         }
-      
+
         if (user.token) {
           return '/queues'
         }
-      }
+      },
     },
     {
       path: '/about',
@@ -38,20 +36,19 @@ const router = createRouter({
     {
       path: '/queues',
       name: 'queues',
-      component: QueueView
+      component: QueueView,
     },
     {
       path: '/queues/:id',
       name: 'queue_single',
       component: QueueSingleView,
       props: true,
-    }
+    },
   ],
 })
 
-router.beforeEach(async function(to, from) {
-  if(to.name !== 'home') {
-
+router.beforeEach(async function (to) {
+  if (to.name !== 'home') {
     const app = appStore()
     const user = userStore()
     const queues = queueStore()
@@ -67,7 +64,7 @@ router.beforeEach(async function(to, from) {
       }
     } else {
       return '/'
-    } 
+    }
   }
 })
 
