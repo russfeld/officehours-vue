@@ -2,13 +2,22 @@
 // import TheWelcome from "@/components/TheWelcome.vue";
 import TopBanner from '@/components/TopBanner.vue'
 
-import QueueList from '@/components/QueueList.vue'
+import { userStore } from '@/stores/User'
+
+const user = userStore()
 </script>
 
 <template>
   <main>
     <TopBanner />
     <br />
-    <QueueList />
+    <div v-if="user.token">
+      <RouterLink to="/queues" class="btn btn-success">Queues List</RouterLink>
+    </div>
+    <div v-else>
+      <a class="btn btn-success" @click="user.getToken()"
+        ><font-awesome-icon icon="arrow-right-to-bracket" /> Login</a
+      >
+    </div>
   </main>
 </template>

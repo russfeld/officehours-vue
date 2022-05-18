@@ -5,7 +5,7 @@ import { queueStore } from '@/stores/Queues'
 
 const queues = queueStore()
 
-queues.getQueues()
+// queues.getQueues()
 </script>
 
 <template>

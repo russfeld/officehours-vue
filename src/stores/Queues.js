@@ -16,7 +16,7 @@ export const queueStore = defineStore('queues', {
     }
   },
   actions: {
-    async getQueues() {
+    async hydrate() {
       const user = userStore()
       const config = {
         headers: {

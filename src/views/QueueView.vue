@@ -1,21 +1,14 @@
 <script setup>
-import { queueStore } from '@/stores/Queues'
+// import TheWelcome from "@/components/TheWelcome.vue";
+import TopBanner from '@/components/TopBanner.vue'
 
-const props = defineProps(['id'])
-console.log(props.id)
-
-const queues = queueStore()
-
-const queue = queues.getQueueById(props.id)
-
+import QueueList from '@/components/QueueList.vue'
 </script>
 
 <template>
   <main>
-    <h1 class="display-5 text-center">{{ queue.name }}</h1>
-    <hr>
-    <div>
-        {{ queue.description }}
-    </div>
+    <TopBanner />
+    <br />
+    <QueueList />
   </main>
 </template>

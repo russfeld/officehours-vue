@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function loadqueue(queue_id) {
-  router.push('/queue/' + queue_id)
+  router.push('/queues/' + queue_id)
 }
 </script>
 

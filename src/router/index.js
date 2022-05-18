@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import QueueView from '../views/QueueView.vue'
+import QueueSingleView from '../views/QueueSingleView.vue'
+import { userStore } from '@/stores/User'
+import { queueStore } from '@/stores/Queues'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,6 +13,17 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      beforeEnter: async (to, from) => {
+        const user = userStore()
+
+        if (!user.token) {
+          await user.tryToken()
+        }
+      
+        if (user.token) {
+          return '/queues'
+        }
+      }
     },
     {
       path: '/about',
@@ -19,12 +34,35 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
-      path: '/queue/:id',
-      name: 'queue',
-      component: QueueView,
+      path: '/queues',
+      name: 'queues',
+      component: QueueView
+    },
+    {
+      path: '/queues/:id',
+      name: 'queue_single',
+      component: QueueSingleView,
       props: true,
     }
   ],
+})
+
+router.beforeEach(async function(to, from) {
+  if(to.name !== 'home') {
+
+    const user = userStore()
+    const queues = queueStore()
+
+    if (!user.token) {
+      await user.tryToken()
+    }
+
+    if (user.token) {
+      queues.hydrate()
+    } else {
+      return '/'
+    } 
+  }
 })
 
 export default router
