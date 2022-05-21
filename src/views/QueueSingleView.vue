@@ -2,7 +2,6 @@
 import { queueStore } from '@/stores/Queues'
 
 const props = defineProps(['id'])
-console.log(props.id)
 
 const queues = queueStore()
 

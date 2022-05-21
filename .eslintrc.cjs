@@ -11,4 +11,8 @@ module.exports = {
   env: {
     'vue/setup-compiler-macros': true,
   },
+  rules: {
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+  },
 }

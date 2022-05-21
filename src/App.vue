@@ -1,12 +1,9 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-// import HelloWorld from "@/components/HelloWorld.vue";
 
 import { userStore } from '@/stores/User'
 
 const user = userStore()
-
-//user.tryToken()
 </script>
 
 <template>

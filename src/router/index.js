@@ -48,7 +48,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async function (to) {
-  if (to.name !== 'home') {
+  if (to.name !== 'home' && to.name !== 'about') {
     const app = appStore()
     const user = userStore()
     const queues = queueStore()
@@ -56,11 +56,15 @@ router.beforeEach(async function (to) {
     if (!user.token) {
       await user.tryToken()
     }
-
     if (user.token) {
       if (app.hydrated === false) {
-        await queues.hydrate()
-        app.hydrated = true
+        try {
+          await queues.hydrate()
+          app.hydrated = true
+        } catch (error) {
+          console.error(error)
+          return '/'
+        }
       }
     } else {
       return '/'

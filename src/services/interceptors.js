@@ -1,33 +1,34 @@
 /* https://www.bezkoder.com/vue-refresh-token/ */
-import axios from "./api";
+import axios from './api'
 import { userStore } from '@/stores/User'
 
 const setupInterceptors = () => {
-    axios.interceptors.request.use(
-        (config) => {
-            if (config.url !== "/token") {
-              const user = userStore()
-              if (user.token) {
-                config.headers["Authorization"] = 'Bearer ' + user.token
-              }
-            }
-            return config
-        },
-        (error) => {
-          return Promise.reject(error)
+  axios.interceptors.request.use(
+    (config) => {
+      if (config.url !== '/token') {
+        const user = userStore()
+        if (user.token) {
+          config.headers['Authorization'] = 'Bearer ' + user.token
         }
-    );
-    axios.interceptors.response.use(
-      (res) => {
-        return res;
-      },
-      async (err) => {
-        const original_config = err.config;
-        if (original_config.url !== "/token" && err.response) {
+      }
+      return config
+    },
+    (error) => {
+      return Promise.reject(error)
+    }
+  )
+  axios.interceptors.response.use(
+    (res) => {
+      return res
+    },
+    async (err) => {
+      const original_config = err.config
+      if (original_config.url !== '/token' && err.response) {
+        if (err.response.status === 401) {
           // Expired Access Token
-          if (err.response.status === 401 && !original_config._retry) {
+          if (!original_config._retry) {
             // Prevent infinite loops
-            original_config._retry = true;
+            original_config._retry = true
             try {
               const user = userStore()
               await user.refreshToken()
@@ -35,11 +36,14 @@ const setupInterceptors = () => {
             } catch (_error) {
               return Promise.reject(_error)
             }
+          } else {
+            //console.log('This is a retry - aborting')
           }
         }
-        return Promise.reject(err);
       }
-    )
+      return Promise.reject(err)
+    }
+  )
 }
 
-export default setupInterceptors;
+export default setupInterceptors
