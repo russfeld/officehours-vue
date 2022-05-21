@@ -1,10 +1,20 @@
 import axios from 'axios'
+import jwt_decode from 'jwt-decode'
 import { defineStore } from 'pinia'
 
 export const userStore = defineStore('user', {
   state: () => {
     return {
       token: '',
+    }
+  },
+  getters: {
+    refresh_token() {
+      if(token) {
+        return jwt_decode(token)['refresh_token']
+      } else {
+        return ''
+      }
     }
   },
   actions: {
@@ -34,6 +44,24 @@ export const userStore = defineStore('user', {
         .catch((err) => {
           if (err.response && err.response.status === 401) {
             console.log('Unable to get token - need to log in again')
+          } else {
+            console.log(err)
+          }
+          this.token = ''
+        })
+    },
+
+    async refreshToken() {
+      await axios
+        .post('http://localhost:3000/token', {
+          refresh_token: this.refresh_token
+        })
+        .then((response) => {
+          this.token = response.data.token
+        })
+        .catch((err) => {
+          if (err.response && err.response.status === 401) {
+            console.log('Unable to refresh token - need to log in again')
           } else {
             console.log(err)
           }

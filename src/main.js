@@ -4,6 +4,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { createPinia } from 'pinia'
+import setupInterceptors from './services/interceptors'
 
 // Add Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -21,6 +22,7 @@ library.add(faArrowRightToBracket)
 library.add(faChalkboardTeacher)
 library.add(faArrowRightFromBracket)
 
+setupInterceptors();
 const app = createApp(App)
 
 app.use(createPinia())

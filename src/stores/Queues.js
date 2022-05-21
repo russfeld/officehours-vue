@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '@/services/api'
 import { defineStore } from 'pinia'
 
 import { userStore } from '@/stores/User'
@@ -18,15 +18,15 @@ export const queueStore = defineStore('queues', {
   actions: {
     async hydrate() {
       const user = userStore()
-      const config = {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + user.token,
-        },
-      }
-      await axios
-        .get('http://localhost:3000/api/v1/queues', config)
+      // const config = {
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //     Authorization: 'Bearer ' + user.token,
+      //   },
+      // }
+      await api
+        .get('/api/v1/queues')
         .then((response) => {
           this.queues = response.data
           this.errors = 0
