@@ -20,5 +20,14 @@ export const queueStore = defineStore('queues', {
         this.errors = 0
       })
     },
+    async update(queue) {
+      await api
+        .post('/api/v1/queues/' + queue.id + '/edit', {
+          queue: queue,
+        })
+        .then(async () => {
+          await this.hydrate()
+        })
+    },
   },
 })
