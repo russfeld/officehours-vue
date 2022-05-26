@@ -1,12 +1,17 @@
 <script setup>
 import { queueStore } from '@/stores/Queues'
+import { usersStore } from '@/stores/Users'
 import { useRouter } from 'vue-router'
 import { setErrors } from '@formkit/vue'
+import VueMultiselect from 'vue-multiselect'
+
 const router = useRouter()
 
 const props = defineProps(['id'])
 
 const queues = queueStore()
+const users = usersStore()
+users.hydrate()
 
 const queue = queues.getQueueById(props.id)
 
@@ -17,25 +22,38 @@ const save = async (data) => {
     snippet,
     description,
   }))(data)
+  // only send user ids of related users
+  data['users'] = []
+  for (const user of queue.users) {
+    data['users'].push({
+      id: user.id,
+    })
+  }
   try {
     await queues.update(data)
     router.push('/queues/' + queue.id)
   } catch (error) {
     if (error.response && error.response.status === 422) {
       let errors = {}
-      for (const input in error.response.data.data) {
-        errors[input] = ''
-        for (const message of error.response.data.data[input]) {
-          errors[input] = errors[input] + message.message + ' '
+      if (error.response.data.data) {
+        for (const input in error.response.data.data) {
+          errors[input] = ''
+          for (const message of error.response.data.data[input]) {
+            errors[input] = errors[input] + message.message + ' '
+          }
         }
+        setErrors(
+          'queueform',
+          [
+            'The server rejected this submission. Please correct errors listed above',
+          ],
+          errors // (optional) input level errors
+        )
+      } else {
+        setErrors('queueform', [
+          'The server rejected this submission due to an SQL Error. Refresh and try again',
+        ])
       }
-      setErrors(
-        'queueform',
-        [
-          'The server rejected this submission. Please correct errors listed above',
-        ],
-        errors // (optional) input level errors
-      )
     } else {
       console.error(error)
     }
@@ -74,6 +92,24 @@ const save = async (data) => {
         help="Long description shown on the queue page"
         rows="10"
       />
+      <div class="mb-3">
+        <label for="multiselect-users" class="form-label">Helpers</label>
+        <VueMultiselect
+          id="multiselect-users"
+          class="form-control"
+          v-model="queue.users"
+          :options="users.users"
+          :multiple="true"
+          tag-placeholder="Add this as new tag"
+          placeholder="Type to search or add tag"
+          label="eid"
+          track-by="id"
+        />
+        <div class="form-text">
+          Helpers who can manage the queue (usually TAs) - admins already have
+          access
+        </div>
+      </div>
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col d-grid mb-2">
           <button class="btn btn-success">Save</button>
@@ -90,6 +126,8 @@ const save = async (data) => {
     </FormKit>
   </main>
 </template>
+
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 
 <style>
 .formkit-messages {

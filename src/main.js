@@ -18,12 +18,14 @@ import {
   faArrowRightFromBracket,
   faChalkboardTeacher,
   faPenToSquare,
+  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faArrowRightToBracket)
 library.add(faChalkboardTeacher)
 library.add(faArrowRightFromBracket)
 library.add(faPenToSquare)
+library.add(faArrowLeft)
 
 setupInterceptors()
 const app = createApp(App)

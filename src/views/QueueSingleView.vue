@@ -12,6 +12,9 @@ const queue = queues.getQueueById(props.id)
 
 <template>
   <main>
+    <router-link :to="{ name: 'queues' }" class="btn btn-secondary float-start"
+      ><font-awesome-icon icon="arrow-left" /> Back</router-link
+    >
     <router-link
       :to="{ name: 'queue_edit', params: { id: queue.id } }"
       class="btn btn-secondary float-end"

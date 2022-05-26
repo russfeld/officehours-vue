@@ -5,7 +5,6 @@ export const queueStore = defineStore('queues', {
   state: () => {
     return {
       queues: [],
-      errors: 0,
     }
   },
   getters: {
@@ -17,7 +16,6 @@ export const queueStore = defineStore('queues', {
     async hydrate() {
       await api.get('/api/v1/queues').then((response) => {
         this.queues = response.data
-        this.errors = 0
       })
     },
     async update(queue) {
