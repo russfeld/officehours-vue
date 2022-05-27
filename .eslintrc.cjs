@@ -4,7 +4,7 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 module.exports = {
   root: true,
   extends: [
-    'plugin:vue/vue3-essential',
+    'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/eslint-config-prettier',
   ],
@@ -14,5 +14,9 @@ module.exports = {
   rules: {
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+  },
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
 }

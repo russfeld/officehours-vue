@@ -12,9 +12,9 @@ const queues = queueStore()
   <div class="row row-cols-1 row-cols-lg-3 g-4">
     <QueueItem
       v-for="(queue, index) in queues.queues"
+      :key="queue.id"
       :queue="queue"
       :index="index"
-      :key="queue.id"
     >
     </QueueItem>
   </div>

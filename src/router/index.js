@@ -3,8 +3,9 @@ import HomeView from '../views/HomeView.vue'
 import QueueView from '../views/QueueView.vue'
 import QueueSingleView from '../views/QueueSingleView.vue'
 import QueueEditView from '../views/QueueEditView.vue'
+import ProfileView from '../views/ProfileView.vue'
 import { appStore } from '@/stores/App'
-import { userStore } from '@/stores/User'
+import { tokenStore } from '@/stores/Token'
 import { queueStore } from '@/stores/Queues'
 
 const router = createRouter({
@@ -15,7 +16,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       beforeEnter: async () => {
-        const user = userStore()
+        const user = tokenStore()
 
         if (!user.token) {
           await user.tryToken()
@@ -51,13 +52,18 @@ const router = createRouter({
       component: QueueEditView,
       props: true,
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
+    },
   ],
 })
 
 router.beforeEach(async function (to) {
   if (to.name !== 'home' && to.name !== 'about') {
     const app = appStore()
-    const user = userStore()
+    const user = tokenStore()
     const queues = queueStore()
 
     if (!user.token) {

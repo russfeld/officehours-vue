@@ -3,7 +3,12 @@ import { RouterLink } from 'vue-router'
 
 import { queueStore } from '@/stores/Queues'
 
-const props = defineProps(['id'])
+const props = defineProps({
+  id: {
+    type: Number,
+    default: -1,
+  },
+})
 
 const queues = queueStore()
 

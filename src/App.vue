@@ -1,9 +1,9 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 
-import { userStore } from '@/stores/User'
+import { tokenStore } from '@/stores/Token'
 
-const user = userStore()
+const user = tokenStore()
 </script>
 
 <template>
@@ -23,11 +23,11 @@ const user = userStore()
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div id="navbarCollapse" class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <RouterLink to="/" active-class="active" class="nav-link"
-                >Home</RouterLink
+              <RouterLink to="/queues" active-class="active" class="nav-link"
+                >Queues</RouterLink
               >
             </li>
             <li class="nav-item">
@@ -36,15 +36,31 @@ const user = userStore()
               >
             </li>
           </ul>
-          <div v-if="user.token">
-            <a class="btn btn-success" @click="user.logout()"
-              ><font-awesome-icon icon="arrow-right-from-bracket" /> Logout</a
-            >
-          </div>
-          <div v-else>
-            <a class="btn btn-success" @click="user.getToken()"
-              ><font-awesome-icon icon="arrow-right-to-bracket" /> Login</a
-            >
+          <div class="">
+            <div v-if="user.token">
+              <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                  <RouterLink
+                    to="/profile"
+                    active-class="active"
+                    class="nav-link"
+                    ><font-awesome-icon icon="user" />
+                    {{ user.eid }}</RouterLink
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-success float-end" @click="user.logout()"
+                    ><font-awesome-icon icon="arrow-right-from-bracket" />
+                    Logout</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div v-else>
+              <a class="btn btn-success" @click="user.getToken()"
+                ><font-awesome-icon icon="arrow-right-to-bracket" /> Login</a
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -52,7 +68,9 @@ const user = userStore()
   </header>
 
   <div id="main" class="container px-4 py-5">
-    <RouterView />
+    <Suspense>
+      <RouterView />
+    </Suspense>
   </div>
 </template>
 

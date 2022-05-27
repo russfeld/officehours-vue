@@ -1,7 +1,15 @@
 <script setup>
-const props = defineProps(['queue'])
-
 import { useRouter } from 'vue-router'
+
+const props = defineProps({
+  queue: {
+    type: Object,
+    default() {
+      return {}
+    },
+  },
+})
+
 const router = useRouter()
 
 function loadqueue(queue_id) {

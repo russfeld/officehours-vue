@@ -2,9 +2,9 @@
 // import TheWelcome from "@/components/TheWelcome.vue";
 import TopBanner from '@/components/TopBanner.vue'
 
-import { userStore } from '@/stores/User'
+import { tokenStore } from '@/stores/Token'
 
-const user = userStore()
+const user = tokenStore()
 </script>
 
 <template>

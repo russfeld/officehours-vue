@@ -7,7 +7,12 @@ import VueMultiselect from 'vue-multiselect'
 
 const router = useRouter()
 
-const props = defineProps(['id'])
+const props = defineProps({
+  id: {
+    type: Number,
+    default: -1,
+  },
+})
 
 const queues = queueStore()
 const users = usersStore()
@@ -66,8 +71,8 @@ const save = async (data) => {
     <h1 class="display-5 text-center">Edit Queue</h1>
     <hr />
     <FormKit
-      type="form"
       id="queueform"
+      type="form"
       :value="queue"
       :actions="false"
       @submit="save"
@@ -96,8 +101,8 @@ const save = async (data) => {
         <label for="multiselect-users" class="form-label">Helpers</label>
         <VueMultiselect
           id="multiselect-users"
-          class="form-control"
           v-model="queue.users"
+          class="form-control"
           :options="users.users"
           :multiple="true"
           tag-placeholder="Add this as new tag"

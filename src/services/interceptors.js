@@ -1,12 +1,12 @@
 /* https://www.bezkoder.com/vue-refresh-token/ */
 import axios from './api'
-import { userStore } from '@/stores/User'
+import { tokenStore } from '@/stores/Token'
 
 const setupInterceptors = () => {
   axios.interceptors.request.use(
     (config) => {
       if (config.url !== '/token') {
-        const user = userStore()
+        const user = tokenStore()
         if (user.token) {
           config.headers['Authorization'] = 'Bearer ' + user.token
         }
@@ -30,7 +30,7 @@ const setupInterceptors = () => {
             // Prevent infinite loops
             original_config._retry = true
             try {
-              const user = userStore()
+              const user = tokenStore()
               await user.refreshToken()
               return axios(original_config)
             } catch (_error) {

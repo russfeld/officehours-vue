@@ -19,6 +19,7 @@ import {
   faChalkboardTeacher,
   faPenToSquare,
   faArrowLeft,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faArrowRightToBracket)
@@ -26,6 +27,7 @@ library.add(faChalkboardTeacher)
 library.add(faArrowRightFromBracket)
 library.add(faPenToSquare)
 library.add(faArrowLeft)
+library.add(faUser)
 
 setupInterceptors()
 const app = createApp(App)
@@ -48,6 +50,6 @@ app.use(
 )
 
 // Add Font Awesome
-app.component('font-awesome-icon', FontAwesomeIcon)
+app.component('FontAwesomeIcon', FontAwesomeIcon)
 
 app.mount('#app')
