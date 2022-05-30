@@ -31,6 +31,13 @@ export const tokenStore = defineStore('token', {
         return ''
       }
     },
+    is_admin() {
+      if (this.token) {
+        return jwt_decode(this.token)['is_admin']
+      } else {
+        return false
+      }
+    },
   },
   actions: {
     async getToken() {

@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-
+import { tokenStore } from '@/stores/Token'
 import { queueStore } from '@/stores/Queues'
 
 const props = defineProps({
@@ -11,6 +11,7 @@ const props = defineProps({
 })
 
 const queues = queueStore()
+const user = tokenStore()
 
 const queue = queues.getQueueById(props.id)
 </script>
@@ -21,6 +22,7 @@ const queue = queues.getQueueById(props.id)
       ><font-awesome-icon icon="arrow-left" /> Back</router-link
     >
     <router-link
+      v-if="user.is_admin"
       :to="{ name: 'queue_edit', params: { id: queue.id } }"
       class="btn btn-secondary float-end"
       ><font-awesome-icon icon="pen-to-square" /> Edit</router-link

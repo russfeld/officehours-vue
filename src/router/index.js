@@ -4,6 +4,7 @@ import QueueView from '../views/QueueView.vue'
 import QueueSingleView from '../views/QueueSingleView.vue'
 import QueueEditView from '../views/QueueEditView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import AdminView from '../views/AdminView.vue'
 import { appStore } from '@/stores/App'
 import { tokenStore } from '@/stores/Token'
 import { queueStore } from '@/stores/Queues'
@@ -51,11 +52,24 @@ const router = createRouter({
       name: 'queue_edit',
       component: QueueEditView,
       props: true,
+      beforeEnter: () => {
+        const user = tokenStore()
+        return user.is_admin
+      },
     },
     {
       path: '/profile',
       name: 'profile',
       component: ProfileView,
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminView,
+      beforeEnter: () => {
+        const user = tokenStore()
+        return user.is_admin
+      },
     },
   ],
 })
