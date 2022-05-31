@@ -5,9 +5,10 @@ import QueueSingleView from '../views/QueueSingleView.vue'
 import QueueEditView from '../views/QueueEditView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import AdminView from '../views/AdminView.vue'
-import { appStore } from '@/stores/App'
+import UserEditView from '../views/UserEditView.vue'
+// import { appStore } from '@/stores/App'
 import { tokenStore } from '@/stores/Token'
-import { queueStore } from '@/stores/Queues'
+// import { queueStore } from '@/stores/Queues'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,28 +72,39 @@ const router = createRouter({
         return user.is_admin
       },
     },
+    {
+      path: '/admin/user/:id/edit',
+      name: 'admin_useredit',
+      component: UserEditView,
+      props: true,
+      beforeEnter: () => {
+        const user = tokenStore()
+        return user.is_admin
+      },
+    },
   ],
 })
 
 router.beforeEach(async function (to) {
   if (to.name !== 'home' && to.name !== 'about') {
-    const app = appStore()
+    // const app = appStore()
     const user = tokenStore()
-    const queues = queueStore()
+    // const queues = queueStore()
 
     if (!user.token) {
       await user.tryToken()
     }
     if (user.token) {
-      if (app.hydrated === false) {
-        try {
-          await queues.hydrate()
-          app.hydrated = true
-        } catch (error) {
-          console.error(error)
-          return '/'
-        }
-      }
+      // TODO Remove this?
+      // if (app.hydrated === false) {
+      //   try {
+      //     await queues.hydrate()
+      //     app.hydrated = true
+      //   } catch (error) {
+      //     console.error(error)
+      //     return '/'
+      //   }
+      // }
     } else {
       return '/'
     }

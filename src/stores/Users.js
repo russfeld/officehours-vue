@@ -7,10 +7,29 @@ export const usersStore = defineStore('users', {
       users: [],
     }
   },
+  getters: {
+    getUserById: (state) => {
+      return (id) => state.users.find((user) => user.id === parseInt(id))
+    },
+  },
   actions: {
     async hydrate() {
       await api.get('/api/v1/users').then((response) => {
         this.users = response.data
+      })
+    },
+    async update(user) {
+      await api
+        .post('/api/v1/users/' + user.id, {
+          user: user,
+        })
+        .then(async () => {
+          await this.hydrate()
+        })
+    },
+    async deleteUser(id) {
+      await api.delete('/api/v1/users/' + id).then(async () => {
+        await this.hydrate()
       })
     },
   },

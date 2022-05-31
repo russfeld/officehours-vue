@@ -4,6 +4,7 @@ import QueueItem from '@/components/QueueItem.vue'
 import { queueStore } from '@/stores/Queues'
 
 const queues = queueStore()
+queues.hydrate()
 
 // queues.getQueues()
 </script>

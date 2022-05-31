@@ -1,6 +1,6 @@
 <script setup>
-import { queueStore } from '@/stores/Queues'
 import { usersStore } from '@/stores/Users'
+import { rolesStore } from '@/stores/Roles'
 import { useRouter } from 'vue-router'
 import { setErrors } from '@formkit/vue'
 import VueMultiselect from 'vue-multiselect'
@@ -14,29 +14,28 @@ const props = defineProps({
   },
 })
 
-const queues = queueStore()
 const users = usersStore()
-users.hydrate()
+const roles = rolesStore()
+roles.hydrate()
 
-const queue = queues.getQueueById(props.id)
+const user = users.getUserById(props.id)
 
 const save = async (data) => {
-  data = (({ id, name, snippet, description }) => ({
+  data = (({ id, name, contact_info }) => ({
     id,
     name,
-    snippet,
-    description,
+    contact_info,
   }))(data)
-  // only send user ids of related users
-  data['users'] = []
-  for (const user of queue.users) {
-    data['users'].push({
-      id: user.id,
+  // only send role ids of related roles
+  data['roles'] = []
+  for (const role of user.roles) {
+    data['roles'].push({
+      id: role.id,
     })
   }
   try {
-    await queues.update(data)
-    router.push('/queues/' + queue.id)
+    await users.update(data)
+    router.push('/admin/')
   } catch (error) {
     if (error.response && error.response.status === 422) {
       let errors = {}
@@ -48,14 +47,14 @@ const save = async (data) => {
           }
         }
         setErrors(
-          'queueform',
+          'usersForm',
           [
             'The server rejected this submission. Please correct errors listed above',
           ],
           errors // (optional) input level errors
         )
       } else {
-        setErrors('queueform', [
+        setErrors('usersForm', [
           'The server rejected this submission due to an SQL Error. Refresh and try again',
         ])
       }
@@ -68,62 +67,58 @@ const save = async (data) => {
 
 <template>
   <main>
-    <h1 class="display-5 text-center">Edit Queue</h1>
+    <h1 class="display-5 text-center">Edit User</h1>
     <hr />
     <FormKit
-      id="queueform"
+      id="userform"
       type="form"
-      :value="queue"
+      :value="user"
       :actions="false"
       @submit="save"
     >
       <FormKit
         type="text"
-        name="name"
-        label="Queue Name"
-        help="Name of the queue (usually the course)"
+        name="eid"
+        label="eID"
+        :disabled="true"
+        help="The user's K-State eID (cannot be changed)"
         validation="required"
       />
       <FormKit
         type="text"
-        name="snippet"
-        label="Short Description"
-        help="Short description shown on the initial card"
+        name="name"
+        label="Name"
+        help="The user's full name as you'd like it displayed on the site"
+        validation="required"
       />
       <FormKit
         type="textarea"
-        name="description"
-        label="Long Description"
-        help="Long description shown on the queue page"
+        name="contact_info"
+        label="Contact Information"
+        help="Any information we should know about how to contact the user"
         rows="10"
       />
       <div class="mb-3">
-        <label for="multiselect-users" class="form-label">Helpers</label>
+        <label for="multiselect-roles" class="form-label">Roles</label>
         <VueMultiselect
-          id="multiselect-users"
-          v-model="queue.users"
+          id="multiselect-roles"
+          v-model="user.roles"
           class="form-control"
-          :options="users.users"
+          :options="roles.roles"
           :multiple="true"
-          tag-placeholder="Add this as new user"
-          placeholder="Type to search or add user"
-          label="eid"
+          tag-placeholder="Add this as new role"
+          placeholder="Type to search or add role"
+          label="name"
           track-by="id"
         />
-        <div class="form-text">
-          Helpers who can manage the queue (usually TAs) - admins already have
-          access
-        </div>
+        <div class="form-text">Roles assigned to this user</div>
       </div>
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col d-grid mb-2">
           <button class="btn btn-success">Save</button>
         </div>
         <div class="col d-grid mb-2">
-          <router-link
-            :to="{ name: 'queue_single', params: { id: queue.id } }"
-            class="btn btn-secondary"
-          >
+          <router-link :to="{ name: 'admin' }" class="btn btn-secondary">
             Cancel</router-link
           >
         </div>
