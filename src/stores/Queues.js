@@ -32,5 +32,10 @@ export const queueStore = defineStore('queues', {
         await this.hydrate()
       })
     },
+    async addQueue(name) {
+      await api.put('/api/v1/queues/', { name: name }).then(async () => {
+        await this.hydrate()
+      })
+    },
   },
 })

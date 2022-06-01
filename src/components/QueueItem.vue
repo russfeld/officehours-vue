@@ -19,7 +19,7 @@ function loadqueue(queue_id) {
 
 <template>
   <div class="col">
-    <div class="card hvr-grow" @click="loadqueue(props.queue.id)">
+    <div class="card w-100 hvr-grow" @click="loadqueue(props.queue.id)">
       <h5 class="card-header">{{ props.queue.name }}</h5>
       <div class="card-body">
         <!--<h5 class="card-title">Special title treatment</h5>-->

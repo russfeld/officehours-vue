@@ -32,5 +32,10 @@ export const usersStore = defineStore('users', {
         await this.hydrate()
       })
     },
+    async addUser(eid) {
+      await api.put('/api/v1/users/', { eid: eid }).then(async () => {
+        await this.hydrate()
+      })
+    },
   },
 })

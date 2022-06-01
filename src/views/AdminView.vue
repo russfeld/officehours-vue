@@ -41,6 +41,32 @@ const confirmQueue = async function (id) {
   await queues.deleteQueue(id)
   queueModal.hide()
 }
+
+const addQueue = async function () {
+  var name = prompt('Enter a name for the new queue')
+  try {
+    await queues.addQueue(name)
+  } catch (error) {
+    if (error.response && error.response.status === 422) {
+      alert(JSON.stringify(error.response.data))
+    } else {
+      alert(error)
+    }
+  }
+}
+
+const addUser = async function () {
+  var eid = prompt('Enter an eID to create a user')
+  try {
+    await users.addUser(eid)
+  } catch (error) {
+    if (error.response && error.response.status === 422) {
+      alert(JSON.stringify(error.response.data))
+    } else {
+      alert(error)
+    }
+  }
+}
 </script>
 
 <template>
@@ -131,7 +157,11 @@ const confirmQueue = async function (id) {
     </div>
   </div>
 
+  <button type="button" class="btn btn-success float-end" @click="addUser">
+    <font-awesome-icon icon="plus" /> User
+  </button>
   <h1 class="text-center">Users</h1>
+
   <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -174,6 +204,9 @@ const confirmQueue = async function (id) {
     </tbody>
   </table>
 
+  <button type="button" class="btn btn-success float-end" @click="addQueue">
+    <font-awesome-icon icon="plus" /> Queue
+  </button>
   <h1 class="text-center">Queues</h1>
   <table class="table table-striped table-hover">
     <thead>

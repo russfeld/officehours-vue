@@ -21,6 +21,7 @@ import {
   faArrowLeft,
   faUser,
   faTrash,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faArrowRightToBracket)
@@ -30,6 +31,7 @@ library.add(faPenToSquare)
 library.add(faArrowLeft)
 library.add(faUser)
 library.add(faTrash)
+library.add(faPlus)
 
 setupInterceptors()
 const app = createApp(App)
