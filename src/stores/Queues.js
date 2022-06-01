@@ -27,5 +27,10 @@ export const queueStore = defineStore('queues', {
           await this.hydrate()
         })
     },
+    async deleteQueue(id) {
+      await api.delete('/api/v1/queues/' + id).then(async () => {
+        await this.hydrate()
+      })
+    },
   },
 })

@@ -1,41 +1,60 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { usersStore } from '@/stores/Users'
+import { queueStore } from '@/stores/Queues'
 import { Modal } from 'bootstrap'
 import { reactive } from 'vue'
 
 const users = usersStore()
 users.hydrate()
 
+const queues = queueStore()
+queues.hydrate()
+
 var modalUser = reactive({})
-var modal
+var userModal
 
 const removeUser = function (user) {
   modalUser.id = user.id
   modalUser.eid = user.eid
   modalUser.name = user.name
-  modal = new Modal('#myModal', {})
-  modal.show()
+  userModal = new Modal('#userModal', {})
+  userModal.show()
 }
 
-const confirm = async function (id) {
+const confirmUser = async function (id) {
   await users.deleteUser(id)
-  modal.hide()
+  userModal.hide()
+}
+
+var modalQueue = reactive({})
+var queueModal
+
+const removeQueue = function (queue) {
+  modalQueue.id = queue.id
+  modalQueue.name = queue.name
+  queueModal = new Modal('#queueModal', {})
+  queueModal.show()
+}
+
+const confirmQueue = async function (id) {
+  await queues.deleteQueue(id)
+  queueModal.hide()
 }
 </script>
 
 <template>
   <div
-    id="myModal"
+    id="userModal"
     class="modal fade"
     tabindex="-1"
-    aria-labelledby="exampleModalLabel"
+    aria-labelledby="userModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="exampleModalLabel" class="modal-title">Delete User</h5>
+          <h5 id="userModalLabel" class="modal-title">Delete User</h5>
           <button
             type="button"
             class="btn-close"
@@ -61,7 +80,7 @@ const confirm = async function (id) {
           <button
             type="button"
             class="btn btn-danger"
-            @click="confirm(modalUser.id)"
+            @click="confirmUser(modalUser.id)"
           >
             <font-awesome-icon icon="trash" /> Delete User
           </button>
@@ -69,6 +88,50 @@ const confirm = async function (id) {
       </div>
     </div>
   </div>
+
+  <div
+    id="queueModal"
+    class="modal fade"
+    tabindex="-1"
+    aria-labelledby="queueModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="queueModalLabel" class="modal-title">Delete Queue</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <h5>Are you sure you want to delete this queue?</h5>
+          <p><strong>Name: </strong>{{ modalQueue.name }}</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="confirmQueue(modalQueue.id)"
+          >
+            <font-awesome-icon icon="trash" /> Delete Queue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1 class="text-center">Users</h1>
   <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -102,6 +165,32 @@ const confirm = async function (id) {
               type="button"
               class="btn btn-danger btn-sm mx-1"
               @click.prevent="removeUser(user)"
+            >
+              <font-awesome-icon icon="trash" />
+            </button>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+
+  <h1 class="text-center">Queues</h1>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template v-for="queue in queues.queues" :key="queue.id">
+        <tr>
+          <td>{{ queue.name }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm mx-1"
+              @click.prevent="removeQueue(queue)"
             >
               <font-awesome-icon icon="trash" />
             </button>
