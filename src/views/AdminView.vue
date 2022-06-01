@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router'
 import { usersStore } from '@/stores/Users'
 import { queueStore } from '@/stores/Queues'
+import { tokenStore } from '@/stores/Token'
 import { Modal } from 'bootstrap'
 import { reactive } from 'vue'
 
@@ -10,6 +11,8 @@ users.hydrate()
 
 const queues = queueStore()
 queues.hydrate()
+
+const token = tokenStore()
 
 var modalUser = reactive({})
 var userModal
@@ -157,6 +160,35 @@ const addUser = async function () {
     </div>
   </div>
 
+  <button type="button" class="btn btn-success float-end" @click="addQueue">
+    <font-awesome-icon icon="plus" /> Queue
+  </button>
+  <h1 class="text-center">Queues</h1>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template v-for="queue in queues.queues" :key="queue.id">
+        <tr>
+          <td>{{ queue.name }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm mx-1"
+              @click.prevent="removeQueue(queue)"
+            >
+              <font-awesome-icon icon="trash" />
+            </button>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+
   <button type="button" class="btn btn-success float-end" @click="addUser">
     <font-awesome-icon icon="plus" /> User
   </button>
@@ -192,38 +224,10 @@ const addUser = async function () {
               <font-awesome-icon icon="pen-to-square" />
             </router-link>
             <button
+              v-if="user.id != token.id"
               type="button"
               class="btn btn-danger btn-sm mx-1"
               @click.prevent="removeUser(user)"
-            >
-              <font-awesome-icon icon="trash" />
-            </button>
-          </td>
-        </tr>
-      </template>
-    </tbody>
-  </table>
-
-  <button type="button" class="btn btn-success float-end" @click="addQueue">
-    <font-awesome-icon icon="plus" /> Queue
-  </button>
-  <h1 class="text-center">Queues</h1>
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <template v-for="queue in queues.queues" :key="queue.id">
-        <tr>
-          <td>{{ queue.name }}</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm mx-1"
-              @click.prevent="removeQueue(queue)"
             >
               <font-awesome-icon icon="trash" />
             </button>
