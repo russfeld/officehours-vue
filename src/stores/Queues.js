@@ -5,13 +5,14 @@ export const queueStore = defineStore('queues', {
   state: () => {
     return {
       queues: [],
+      queue: {},
     }
   },
-  getters: {
-    getQueueById: (state) => {
-      return (id) => state.queues.find((queue) => queue.id === parseInt(id))
-    },
-  },
+  // getters: {
+  //   getQueueById: (state) => {
+  //     return (id) => state.queues.find((queue) => queue.id === parseInt(id))
+  //   },
+  // },
   actions: {
     async hydrate() {
       await api.get('/api/v1/queues').then((response) => {
@@ -36,6 +37,14 @@ export const queueStore = defineStore('queues', {
       await api.put('/api/v1/queues/', { name: name }).then(async () => {
         await this.hydrate()
       })
+    },
+    async toggleQueue(id) {
+      await api.post('/api/v1/queues/' + id + '/toggle').then(async () => {
+        await this.hydrate()
+      })
+    },
+    getQueueById(id) {
+      this.queue = this.queues.find((queue) => queue.id === parseInt(id))
     },
   },
 })

@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router'
 import { tokenStore } from '@/stores/Token'
 import { queueStore } from '@/stores/Queues'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   id: {
@@ -10,10 +11,19 @@ const props = defineProps({
   },
 })
 
-const queues = queueStore()
 const user = tokenStore()
 
-const queue = queues.getQueueById(props.id)
+const queues = queueStore()
+await queues.hydrate()
+
+const { queue } = storeToRefs(queues)
+
+queues.getQueueById(props.id)
+
+const toggleQueue = async function (id) {
+  await queues.toggleQueue(id)
+  queues.getQueueById(props.id)
+}
 </script>
 
 <template>
@@ -31,6 +41,35 @@ const queue = queues.getQueueById(props.id)
     <hr />
     <div>
       {{ queue.description }}
+    </div>
+    <hr />
+    <div class="d-flex">
+      <div class="mx-auto d-block">
+        <template v-if="queue.helper">
+          <h2 class="text-center">Moderate Queue</h2>
+          <template v-if="queue.is_open">
+            <a class="w-100 btn btn-danger" @click="toggleQueue(queue.id)"
+              >Close Queue</a
+            >
+            <p>Queue Here!</p>
+          </template>
+          <template v-else>
+            <a class="w-100 btn btn-success" @click="toggleQueue(queue.id)"
+              >Open Queue</a
+            >
+          </template>
+        </template>
+        <template v-else>
+          <h2 class="text-center">Moderate Queue</h2>
+          <template v-if="queue.is_open">
+            <a class="w-100 btn btn-success">Join Queue</a>
+            <p>Queue Here!</p>
+          </template>
+          <template v-else>
+            <a class="w-100 btn btn-danger" disabled>Queue is Closed</a>
+          </template>
+        </template>
+      </div>
     </div>
   </main>
 </template>

@@ -46,7 +46,11 @@ const router = createRouter({
       path: '/queues/:id',
       name: 'queue_single',
       component: QueueSingleView,
-      props: true,
+      props: (route) => {
+        return {
+          id: Number(route.params.id),
+        }
+      },
     },
     {
       path: '/queues/:id/edit',
