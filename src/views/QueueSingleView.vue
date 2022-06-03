@@ -45,9 +45,9 @@ const toggleQueue = async function (id) {
     <hr />
     <div class="d-flex">
       <div class="mx-auto d-block">
-        <template v-if="queue.helper">
+        <template v-if="queue.helper == 1">
           <h2 class="text-center">Moderate Queue</h2>
-          <template v-if="queue.is_open">
+          <template v-if="queue.is_open == 1">
             <a class="w-100 btn btn-danger" @click="toggleQueue(queue.id)"
               >Close Queue</a
             >
@@ -60,8 +60,8 @@ const toggleQueue = async function (id) {
           </template>
         </template>
         <template v-else>
-          <h2 class="text-center">Moderate Queue</h2>
-          <template v-if="queue.is_open">
+          <h2 class="text-center">Waiting Queue</h2>
+          <template v-if="queue.is_open == 1">
             <a class="w-100 btn btn-success">Join Queue</a>
             <p>Queue Here!</p>
           </template>
