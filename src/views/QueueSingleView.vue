@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router'
 import { tokenStore } from '@/stores/Token'
 import { queueStore } from '@/stores/Queues'
+import { requestsStore } from '../stores/Requests'
 import { storeToRefs } from 'pinia'
 
 const props = defineProps({
@@ -16,6 +17,8 @@ const user = tokenStore()
 const queues = queueStore()
 await queues.hydrate()
 
+const requests = requestsStore()
+
 const { queue } = storeToRefs(queues)
 
 queues.getQueueById(props.id)
@@ -23,6 +26,10 @@ queues.getQueueById(props.id)
 const toggleQueue = async function (id) {
   await queues.toggleQueue(id)
   queues.getQueueById(props.id)
+}
+
+const joinQueue = async function (id) {
+  await requests.joinQueue(id)
 }
 </script>
 
@@ -62,7 +69,9 @@ const toggleQueue = async function (id) {
         <template v-else>
           <h2 class="text-center">Waiting Queue</h2>
           <template v-if="queue.is_open == 1">
-            <a class="w-100 btn btn-success">Join Queue</a>
+            <a class="w-100 btn btn-success" @click="joinQueue(queue.id)"
+              >Join Queue</a
+            >
             <p>Queue Here!</p>
           </template>
           <template v-else>
