@@ -1,7 +1,7 @@
 import api from '@/services/api'
 import { defineStore } from 'pinia'
 
-export const userStore = defineStore('user', {
+export const profileStore = defineStore('profile', {
   state: () => {
     return {
       user: {},
@@ -9,13 +9,13 @@ export const userStore = defineStore('user', {
   },
   actions: {
     async hydrate() {
-      await api.get('/api/v1/user').then((response) => {
+      await api.get('/api/v1/profile').then((response) => {
         this.user = response.data
       })
     },
     async update(user) {
       await api
-        .post('/api/v1/user/', {
+        .post('/api/v1/profile/', {
           user: user,
         })
         .then(async () => {

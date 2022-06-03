@@ -5,7 +5,7 @@ import { tokenStore } from '@/stores/Token'
 const setupInterceptors = () => {
   axios.interceptors.request.use(
     (config) => {
-      if (config.url !== '/token') {
+      if (config.url !== '/auth/token') {
         const user = tokenStore()
         if (user.token) {
           config.headers['Authorization'] = 'Bearer ' + user.token
@@ -23,7 +23,7 @@ const setupInterceptors = () => {
     },
     async (err) => {
       const original_config = err.config
-      if (original_config.url !== '/token' && err.response) {
+      if (original_config.url !== '/auth/token' && err.response) {
         if (err.response.status === 401) {
           // Expired Access Token
           if (!original_config._retry) {

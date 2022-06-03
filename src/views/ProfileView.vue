@@ -1,9 +1,9 @@
 <script setup>
-import { userStore } from '@/stores/User'
+import { profileStore } from '@/stores/Profile'
 import { setErrors } from '@formkit/vue'
 import router from '../router'
 
-const user = userStore()
+const user = profileStore()
 await user.hydrate()
 
 const save = async (data) => {

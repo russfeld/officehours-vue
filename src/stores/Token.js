@@ -42,14 +42,14 @@ export const tokenStore = defineStore('token', {
   actions: {
     async getToken() {
       await api
-        .get('/token', { withCredentials: true })
+        .get('/auth/token', { withCredentials: true })
         .then((response) => {
           this.token = response.data.token
         })
         .catch((err) => {
           if (err.response && err.response.status === 401) {
             // Redirect to CAS login
-            window.location.href = 'http://localhost:3000/cas_login'
+            window.location.href = 'http://localhost:3000/auth/login'
           } else {
             console.error(err)
           }
@@ -59,7 +59,7 @@ export const tokenStore = defineStore('token', {
 
     async tryToken() {
       await api
-        .get('/token', { withCredentials: true })
+        .get('/auth/token', { withCredentials: true })
         .then((response) => {
           this.token = response.data.token
         })
@@ -76,7 +76,7 @@ export const tokenStore = defineStore('token', {
 
     async refreshToken() {
       await api
-        .post('/token', {
+        .post('/auth/token', {
           refresh_token: this.refresh_token,
         })
         .then((response) => {
@@ -94,7 +94,7 @@ export const tokenStore = defineStore('token', {
 
     async logout() {
       this.token = ''
-      window.location.href = 'http://localhost:3000/logout'
+      window.location.href = 'http://localhost:3000/auth/logout'
     },
   },
 })
