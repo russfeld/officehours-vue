@@ -14,7 +14,8 @@ export const requestsStore = defineStore('requests', {
   actions: {
     async hydrate() {
       await api.get('/api/v1/requests/' + this.id).then((response) => {
-        this.roles = response.data
+        this.requests = response.data
+        console.log("Requests hydrated!")
       })
     },
     async joinQueue(id) {
@@ -35,7 +36,7 @@ export const requestsStore = defineStore('requests', {
           })
         }
       }
-      this.socket.emit('queue:join', id, async (response) => {
+      await this.socket.emit('queue:join', id, async (response) => {
         if (response != 200) {
           this.socket.disconnect()
           this.socket = undefined
