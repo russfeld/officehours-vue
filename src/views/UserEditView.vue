@@ -1,6 +1,7 @@
 <script setup>
-import { usersStore } from '@/stores/Users'
-import { rolesStore } from '@/stores/Roles'
+import { useUsersStore } from '@/stores/Users'
+import { useRolesStore } from '@/stores/Roles'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { setErrors } from '@formkit/vue'
 import VueMultiselect from 'vue-multiselect'
@@ -14,11 +15,16 @@ const props = defineProps({
   },
 })
 
-const users = usersStore()
-const roles = rolesStore()
-roles.hydrate()
+const usersStore = useUsersStore()
+await usersStore.hydrate()
+usersStore.getUserById(props.id)
 
-const user = users.getUserById(props.id)
+const { user } = storeToRefs(usersStore)
+
+const rolesStore = useRolesStore()
+rolesStore.hydrate()
+
+const { roles } = storeToRefs(rolesStore)
 
 const save = async (data) => {
   data = (({ id, name, contact_info }) => ({
@@ -34,7 +40,7 @@ const save = async (data) => {
     })
   }
   try {
-    await users.update(data)
+    await usersStore.update(data)
     router.push('/admin/')
   } catch (error) {
     if (error.response && error.response.status === 422) {
@@ -104,7 +110,7 @@ const save = async (data) => {
           id="multiselect-roles"
           v-model="user.roles"
           class="form-control"
-          :options="roles.roles"
+          :options="roles"
           :multiple="true"
           tag-placeholder="Add this as new role"
           placeholder="Type to search or add role"

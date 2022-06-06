@@ -1,18 +1,22 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { usersStore } from '@/stores/Users'
-import { queueStore } from '@/stores/Queues'
-import { tokenStore } from '@/stores/Token'
+import { useUsersStore } from '@/stores/Users'
+import { useQueuesStore } from '@/stores/Queues'
+import { useTokenStore } from '@/stores/Token'
 import { Modal } from 'bootstrap'
 import { reactive } from 'vue'
+import { storeToRefs } from 'pinia'
 
-const users = usersStore()
-users.hydrate()
+const usersStore = useUsersStore()
+usersStore.hydrate()
 
-const queues = queueStore()
-queues.hydrate()
+const { users } = storeToRefs(usersStore)
 
-const token = tokenStore()
+const queuesStore = useQueuesStore()
+queuesStore.hydrate()
+const { queues } = storeToRefs(queuesStore)
+
+const tokenStore = useTokenStore()
 
 var modalUser = reactive({})
 var userModal
@@ -26,7 +30,7 @@ const removeUser = function (user) {
 }
 
 const confirmUser = async function (id) {
-  await users.deleteUser(id)
+  await usersStore.deleteUser(id)
   userModal.hide()
 }
 
@@ -41,14 +45,14 @@ const removeQueue = function (queue) {
 }
 
 const confirmQueue = async function (id) {
-  await queues.deleteQueue(id)
+  await queuesStore.deleteQueue(id)
   queueModal.hide()
 }
 
 const addQueue = async function () {
   var name = prompt('Enter a name for the new queue')
   try {
-    await queues.addQueue(name)
+    await queuesStore.addQueue(name)
   } catch (error) {
     if (error.response && error.response.status === 422) {
       alert(JSON.stringify(error.response.data))
@@ -61,7 +65,7 @@ const addQueue = async function () {
 const addUser = async function () {
   var eid = prompt('Enter an eID to create a user')
   try {
-    await users.addUser(eid)
+    await usersStore.addUser(eid)
   } catch (error) {
     if (error.response && error.response.status === 422) {
       alert(JSON.stringify(error.response.data))
@@ -172,7 +176,7 @@ const addUser = async function () {
       </tr>
     </thead>
     <tbody>
-      <template v-for="queue in queues.queues" :key="queue.id">
+      <template v-for="queue in queues" :key="queue.id">
         <tr>
           <td>{{ queue.name }}</td>
           <td>
@@ -204,7 +208,7 @@ const addUser = async function () {
       </tr>
     </thead>
     <tbody>
-      <template v-for="user in users.users" :key="user.id">
+      <template v-for="user in users" :key="user.id">
         <tr>
           <td>{{ user.eid }}</td>
           <td>{{ user.name }}</td>
@@ -224,7 +228,7 @@ const addUser = async function () {
               <font-awesome-icon icon="pen-to-square" />
             </router-link>
             <button
-              v-if="user.id != token.id"
+              v-if="user.id != tokenStore.id"
               type="button"
               class="btn btn-danger btn-sm mx-1"
               @click.prevent="removeUser(user)"

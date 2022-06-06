@@ -1,16 +1,12 @@
 import api from '@/services/api'
 import { defineStore } from 'pinia'
 
-export const usersStore = defineStore('users', {
+export const useUsersStore = defineStore('users', {
   state: () => {
     return {
       users: [],
+      user: {},
     }
-  },
-  getters: {
-    getUserById: (state) => {
-      return (id) => state.users.find((user) => user.id === parseInt(id))
-    },
   },
   actions: {
     async hydrate() {
@@ -36,6 +32,9 @@ export const usersStore = defineStore('users', {
       await api.put('/api/v1/users/', { eid: eid }).then(async () => {
         await this.hydrate()
       })
+    },
+    getUserById(id) {
+      this.user = this.users.find((user) => user.id === parseInt(id))
     },
   },
 })

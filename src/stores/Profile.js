@@ -1,7 +1,7 @@
 import api from '@/services/api'
 import { defineStore } from 'pinia'
 
-export const profileStore = defineStore('profile', {
+export const useProfileStore = defineStore('profile', {
   state: () => {
     return {
       user: {},

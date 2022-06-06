@@ -1,10 +1,13 @@
 <script setup>
-import { profileStore } from '@/stores/Profile'
+import { useProfileStore } from '@/stores/Profile'
 import { setErrors } from '@formkit/vue'
+import { storeToRefs } from 'pinia'
 import router from '../router'
 
-const user = profileStore()
-await user.hydrate()
+const profileStore = useProfileStore()
+await profileStore.hydrate()
+
+const { user } = storeToRefs(profileStore)
 
 const save = async (data) => {
   data = (({ name, contact_info }) => ({
@@ -12,7 +15,7 @@ const save = async (data) => {
     contact_info,
   }))(data)
   try {
-    await user.update(data)
+    await profileStore.update(data)
     router.push('/queues/')
   } catch (error) {
     if (error.response && error.response.status === 422) {
@@ -50,7 +53,7 @@ const save = async (data) => {
     <FormKit
       id="userform"
       type="form"
-      :value="user.user"
+      :value="user"
       :actions="false"
       @submit="save"
     >

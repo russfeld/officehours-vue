@@ -1,8 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { tokenStore } from '@/stores/Token'
-import { queueStore } from '@/stores/Queues'
-import { requestsStore } from '../stores/Requests'
+import { useTokenStore } from '@/stores/Token'
+import { useQueuesStore } from '@/stores/Queues'
+import { useRequestsStore } from '../stores/Requests'
 import RequestItem from '@/components/RequestItem.vue'
 import { storeToRefs } from 'pinia'
 
@@ -13,25 +13,24 @@ const props = defineProps({
   },
 })
 
-const user = tokenStore()
+const tokenStore = useTokenStore()
 
-const queues = queueStore()
-await queues.hydrate()
+const queuesStore = useQueuesStore()
+await queuesStore.hydrate()
 
-const requestsInst = requestsStore()
+const requestsStore = useRequestsStore()
 
-const { queue } = storeToRefs(queues)
-const { requests } = storeToRefs(requestsInst)
-
-queues.getQueueById(props.id)
+queuesStore.getQueueById(props.id)
+const { queue } = storeToRefs(queuesStore)
+const { requests } = storeToRefs(requestsStore)
 
 const toggleQueue = async function (id) {
-  await queues.toggleQueue(id)
-  queues.getQueueById(props.id)
+  await queuesStore.toggleQueue(id)
+  queuesStore.getQueueById(props.id)
 }
 
 const joinQueue = async function (id) {
-  await requestsInst.joinQueue(id)
+  await requestsStore.joinQueue(id)
 }
 </script>
 
@@ -41,7 +40,7 @@ const joinQueue = async function (id) {
       ><font-awesome-icon icon="arrow-left" /> Back</router-link
     >
     <router-link
-      v-if="user.is_admin"
+      v-if="tokenStore.is_admin"
       :to="{ name: 'queue_edit', params: { id: queue.id } }"
       class="btn btn-secondary float-end"
       ><font-awesome-icon icon="pen-to-square" /> Edit</router-link

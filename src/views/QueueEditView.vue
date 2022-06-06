@@ -1,9 +1,10 @@
 <script setup>
-import { queueStore } from '@/stores/Queues'
-import { usersStore } from '@/stores/Users'
+import { useQueuesStore } from '@/stores/Queues'
+import { useUsersStore } from '@/stores/Users'
 import { useRouter } from 'vue-router'
 import { setErrors } from '@formkit/vue'
 import VueMultiselect from 'vue-multiselect'
+import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 
@@ -14,11 +15,14 @@ const props = defineProps({
   },
 })
 
-const queues = queueStore()
-const users = usersStore()
-users.hydrate()
+const queuesStore = useQueuesStore()
+await queuesStore.hydrate()
+queuesStore.getQueueById(props.id)
+const { queue } = storeToRefs(queuesStore)
 
-const queue = queues.getQueueById(props.id)
+const usersStore = useUsersStore()
+usersStore.hydrate()
+const { users } = storeToRefs(usersStore)
 
 const save = async (data) => {
   data = (({ id, name, snippet, description }) => ({
@@ -35,7 +39,7 @@ const save = async (data) => {
     })
   }
   try {
-    await queues.update(data)
+    await queuesStore.update(data)
     router.push('/queues/' + queue.id)
   } catch (error) {
     if (error.response && error.response.status === 422) {
@@ -103,7 +107,7 @@ const save = async (data) => {
           id="multiselect-users"
           v-model="queue.users"
           class="form-control"
-          :options="users.users"
+          :options="users"
           :multiple="true"
           tag-placeholder="Add this as new user"
           placeholder="Type to search or add user"

@@ -3,9 +3,10 @@ import jwt_decode from 'jwt-decode'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 
-export const tokenStore = defineStore('token', {
+export const useTokenStore = defineStore('token', {
   state: () => {
     return {
+      // TODO this may be unsafe - consider refactor?
       token: useStorage('token', ''),
     }
   },

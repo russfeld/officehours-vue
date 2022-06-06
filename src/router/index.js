@@ -6,9 +6,7 @@ import QueueEditView from '../views/QueueEditView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import AdminView from '../views/AdminView.vue'
 import UserEditView from '../views/UserEditView.vue'
-// import { appStore } from '@/stores/App'
-import { tokenStore } from '@/stores/Token'
-// import { queueStore } from '@/stores/Queues'
+import { useTokenStore } from '@/stores/Token'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,13 +16,13 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       beforeEnter: async () => {
-        const user = tokenStore()
+        const tokenStore = useTokenStore()
 
-        if (!user.token) {
-          await user.tryToken()
+        if (!tokenStore.token) {
+          await tokenStore.tryToken()
         }
 
-        if (user.token) {
+        if (tokenStore.token) {
           return '/queues'
         }
       },
@@ -58,8 +56,8 @@ const router = createRouter({
       component: QueueEditView,
       props: true,
       beforeEnter: () => {
-        const user = tokenStore()
-        return user.is_admin
+        const tokenStore = useTokenStore()
+        return tokenStore.is_admin
       },
     },
     {
@@ -72,8 +70,8 @@ const router = createRouter({
       name: 'admin',
       component: AdminView,
       beforeEnter: () => {
-        const user = tokenStore()
-        return user.is_admin
+        const tokenStore = useTokenStore()
+        return tokenStore.is_admin
       },
     },
     {
@@ -82,8 +80,8 @@ const router = createRouter({
       component: UserEditView,
       props: true,
       beforeEnter: () => {
-        const user = tokenStore()
-        return user.is_admin
+        const tokenStore = useTokenStore()
+        return tokenStore.is_admin
       },
     },
   ],
@@ -91,14 +89,12 @@ const router = createRouter({
 
 router.beforeEach(async function (to) {
   if (to.name !== 'home' && to.name !== 'about') {
-    // const app = appStore()
-    const user = tokenStore()
-    // const queues = queueStore()
+    const tokenStore = useTokenStore()
 
-    if (!user.token) {
-      await user.tryToken()
+    if (!tokenStore.token) {
+      await tokenStore.tryToken()
     }
-    if (user.token) {
+    if (tokenStore.token) {
       // TODO Remove this?
       // if (app.hydrated === false) {
       //   try {

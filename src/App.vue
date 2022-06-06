@@ -1,9 +1,9 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 
-import { tokenStore } from '@/stores/Token'
+import { useTokenStore } from '@/stores/Token'
 
-const user = tokenStore()
+const tokenStore = useTokenStore()
 </script>
 
 <template>
@@ -35,14 +35,14 @@ const user = tokenStore()
                 >About</RouterLink
               >
             </li>
-            <li v-if="user.is_admin" class="nav-item">
+            <li v-if="tokenStore.is_admin" class="nav-item">
               <RouterLink to="/admin" active-class="active" class="nav-link"
                 >Admin</RouterLink
               >
             </li>
           </ul>
           <div class="">
-            <div v-if="user.token">
+            <div v-if="tokenStore.token">
               <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
                   <RouterLink
@@ -50,11 +50,13 @@ const user = tokenStore()
                     active-class="active"
                     class="nav-link"
                     ><font-awesome-icon icon="user" />
-                    {{ user.eid }}</RouterLink
+                    {{ tokenStore.eid }}</RouterLink
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="btn btn-success float-end" @click="user.logout()"
+                  <a
+                    class="btn btn-success float-end"
+                    @click="tokenStore.logout()"
                     ><font-awesome-icon icon="arrow-right-from-bracket" />
                     Logout</a
                   >
@@ -62,7 +64,7 @@ const user = tokenStore()
               </ul>
             </div>
             <div v-else>
-              <a class="btn btn-success" @click="user.getToken()"
+              <a class="btn btn-success" @click="tokenStore.getToken()"
                 ><font-awesome-icon icon="arrow-right-to-bracket" /> Login</a
               >
             </div>
