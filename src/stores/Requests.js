@@ -1,6 +1,11 @@
-import api from '@/services/api'
+// Imports
 import { defineStore } from 'pinia'
 import { io } from 'socket.io-client'
+
+// Services
+import api from '@/services/api'
+
+// Stores
 import { useTokenStore } from '@/stores/Token'
 
 export const useRequestsStore = defineStore('requests', {

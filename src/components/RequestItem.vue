@@ -1,4 +1,5 @@
 <script setup>
+// Properties
 const props = defineProps({
   request: {
     type: Object,

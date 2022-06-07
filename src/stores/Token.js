@@ -1,7 +1,10 @@
-import api from '@/services/api'
-import jwt_decode from 'jwt-decode'
+// Imports
 import { defineStore } from 'pinia'
+import jwt_decode from 'jwt-decode'
 import { useStorage } from '@vueuse/core'
+
+// Services
+import api from '@/services/api'
 
 export const useTokenStore = defineStore('token', {
   state: () => {

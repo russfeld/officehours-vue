@@ -1,6 +1,9 @@
 <script setup>
+// Imports
 import { useRouter } from 'vue-router'
+const router = useRouter()
 
+// Properties
 const props = defineProps({
   queue: {
     type: Object,
@@ -10,8 +13,7 @@ const props = defineProps({
   },
 })
 
-const router = useRouter()
-
+// Router action to load a queue when a card is clicked
 function loadqueue(queue_id) {
   router.push('/queues/' + queue_id)
 }

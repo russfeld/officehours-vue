@@ -1,5 +1,8 @@
 /* https://www.bezkoder.com/vue-refresh-token/ */
+// Imports
 import axios from './api'
+
+// Stores
 import { useTokenStore } from '@/stores/Token'
 
 const setupInterceptors = () => {

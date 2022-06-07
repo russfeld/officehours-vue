@@ -1,12 +1,23 @@
+// Imports
 import { createRouter, createWebHistory } from 'vue-router'
+
+// Views
 import HomeView from '../views/HomeView.vue'
-import QueueView from '../views/QueueView.vue'
+import QueueListView from '../views/QueueListView.vue'
 import QueueSingleView from '../views/QueueSingleView.vue'
 import QueueEditView from '../views/QueueEditView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import AdminView from '../views/AdminView.vue'
 import UserEditView from '../views/UserEditView.vue'
+
+// Stores
 import { useTokenStore } from '@/stores/Token'
+
+// Route Guard - Confirm User Is Admin
+const requireAdmin = () => {
+  const tokenStore = useTokenStore()
+  return tokenStore.is_admin
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,7 +49,7 @@ const router = createRouter({
     {
       path: '/queues',
       name: 'queues',
-      component: QueueView,
+      component: QueueListView,
     },
     {
       path: '/queues/:id',
@@ -55,10 +66,7 @@ const router = createRouter({
       name: 'queue_edit',
       component: QueueEditView,
       props: true,
-      beforeEnter: () => {
-        const tokenStore = useTokenStore()
-        return tokenStore.is_admin
-      },
+      beforeEnter: requireAdmin,
     },
     {
       path: '/profile',
@@ -69,24 +77,19 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: AdminView,
-      beforeEnter: () => {
-        const tokenStore = useTokenStore()
-        return tokenStore.is_admin
-      },
+      beforeEnter: requireAdmin,
     },
     {
       path: '/admin/user/:id/edit',
       name: 'admin_useredit',
       component: UserEditView,
       props: true,
-      beforeEnter: () => {
-        const tokenStore = useTokenStore()
-        return tokenStore.is_admin
-      },
+      beforeEnter: requireAdmin,
     },
   ],
 })
 
+// Global Route Guard - User Must Log In!
 router.beforeEach(async function (to) {
   if (to.name !== 'home' && to.name !== 'about') {
     const tokenStore = useTokenStore()
@@ -95,16 +98,7 @@ router.beforeEach(async function (to) {
       await tokenStore.tryToken()
     }
     if (tokenStore.token) {
-      // TODO Remove this?
-      // if (app.hydrated === false) {
-      //   try {
-      //     await queues.hydrate()
-      //     app.hydrated = true
-      //   } catch (error) {
-      //     console.error(error)
-      //     return '/'
-      //   }
-      // }
+      // TODO App-level Hydrate Action
     } else {
       return '/'
     }
