@@ -8,8 +8,12 @@ export const useQueuesStore = defineStore('queues', {
   state: () => {
     return {
       queues: [],
-      queue: {},
     }
+  },
+  getters: {
+    getQueue: (state) => {
+      return (id) => state.queues.find((queue) => queue.id === id)
+    },
   },
   actions: {
     async hydrate() {
@@ -40,9 +44,6 @@ export const useQueuesStore = defineStore('queues', {
       await api.post('/api/v1/queues/' + id + '/toggle').then(async () => {
         await this.hydrate()
       })
-    },
-    getQueueById(id) {
-      this.queue = this.queues.find((queue) => queue.id === parseInt(id))
     },
   },
 })

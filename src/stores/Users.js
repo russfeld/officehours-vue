@@ -8,8 +8,12 @@ export const useUsersStore = defineStore('users', {
   state: () => {
     return {
       users: [],
-      user: {},
     }
+  },
+  getters: {
+    getUser: (state) => {
+      return (id) => state.users.find((user) => user.id === id)
+    },
   },
   actions: {
     async hydrate() {
@@ -35,9 +39,6 @@ export const useUsersStore = defineStore('users', {
       await api.put('/api/v1/users/', { eid: eid }).then(async () => {
         await this.hydrate()
       })
-    },
-    getUserById(id) {
-      this.user = this.users.find((user) => user.id === parseInt(id))
     },
   },
 })

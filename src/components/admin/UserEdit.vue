@@ -23,8 +23,7 @@ const props = defineProps({
 // Users Store
 const usersStore = useUsersStore()
 await usersStore.hydrate()
-usersStore.getUserById(props.id)
-const { user } = storeToRefs(usersStore)
+const user = usersStore.users.find((user) => user.id === parseInt(props.id))
 
 // Roles Store
 const rolesStore = useRolesStore()

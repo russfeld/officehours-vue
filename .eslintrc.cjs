@@ -13,7 +13,7 @@ module.exports = {
   },
   rules: {
     'no-console': ['error', { allow: ['warn', 'error'] }],
-    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+    'no-unused-vars': ['error', { varsIgnorePattern: 'props' }],
   },
   parserOptions: {
     ecmaVersion: 'latest',
