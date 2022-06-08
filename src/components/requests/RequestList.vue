@@ -19,7 +19,7 @@ const props = defineProps({
 // Requests Store
 const requestsStore = useRequestsStore()
 const { requests } = storeToRefs(requestsStore)
-await requestsStore.joinQueue(props.id)
+//await requestsStore.joinQueue(props.id)
 </script>
 
 <template>

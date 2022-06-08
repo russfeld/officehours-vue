@@ -17,21 +17,21 @@ const props = defineProps({
 // Queues Store
 const queuesStore = useQueuesStore()
 await queuesStore.hydrate()
-const queue = queuesStore.queues.find((queue) => queue.id === props.id)
+const getQueue = queuesStore.getQueue
 
 // Requests Store
 const requestsStore = useRequestsStore()
 
 // Join Queue
-const joinQueue = async function (id) {
-  await requestsStore.joinQueue(id)
+const joinQueue = async function () {
+  await requestsStore.joinQueue(props.id)
 }
 </script>
 
 <template>
   <h2 class="text-center">Waiting Queue</h2>
-  <template v-if="queue.is_open == 1">
-    <a class="w-100 btn btn-success" @click="joinQueue(id)">Join Queue</a>
+  <template v-if="getQueue(id).is_open == 1">
+    <a class="w-100 btn btn-success" @click="joinQueue()">Join Queue</a>
     <RequestList :id="id" />
   </template>
   <template v-else>

@@ -18,7 +18,7 @@ export const useRequestsStore = defineStore('requests', {
   },
   actions: {
     async hydrate() {
-      await api.get('/api/v1/requests/' + this.id).then((response) => {
+      await api.get('/api/v1/requests/' + this.queue_id).then((response) => {
         this.requests = response.data
       })
     },
@@ -40,12 +40,24 @@ export const useRequestsStore = defineStore('requests', {
           })
         }
       }
-      await this.socket.emit('queue:join', id, async (response) => {
+      this.socket.on('queue:update', async () => {
+        await this.hydrate()
+      })
+      await this.socket.emit('queue:join', this.queue_id, async (response) => {
         if (response != 200) {
           this.socket.disconnect()
           this.socket = undefined
         } else {
           await this.hydrate()
+        }
+      })
+    },
+    async closeQueue() {
+      await this.socket.emit('queue:close', this.queue_id, async (response) => {
+        if (response == 200) {
+          this.socket.disconnect()
+          this.socket = undefined
+          this.requests = []
         }
       })
     },
