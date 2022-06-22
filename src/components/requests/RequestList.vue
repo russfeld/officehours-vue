@@ -23,13 +23,14 @@ const { requests } = storeToRefs(requestsStore)
 </script>
 
 <template>
-  <div class="list-group">
+  <ul class="list-group list-group-numbered">
     <RequestItem
       v-for="(request, index) in requests"
       :key="request.id"
       :request="request"
       :index="index"
+      v-bind="$attrs"
     >
     </RequestItem>
-  </div>
+  </ul>
 </template>

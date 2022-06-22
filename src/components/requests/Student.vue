@@ -22,9 +22,13 @@ const getQueue = queuesStore.getQueue
 // Requests Store
 const requestsStore = useRequestsStore()
 
+if (getQueue(props.id).is_open == 1) {
+  await requestsStore.connectQueue(props.id)
+}
+
 // Join Queue
 const joinQueue = async function () {
-  await requestsStore.joinQueue(props.id)
+  await requestsStore.joinQueue()
 }
 </script>
 
@@ -32,6 +36,7 @@ const joinQueue = async function () {
   <h2 class="text-center">Waiting Queue</h2>
   <template v-if="getQueue(id).is_open == 1">
     <a class="w-100 btn btn-success" @click="joinQueue()">Join Queue</a>
+    <hr />
     <RequestList :id="id" />
   </template>
   <template v-else>

@@ -22,7 +22,7 @@ export const useRequestsStore = defineStore('requests', {
         this.requests = response.data
       })
     },
-    async joinQueue(id) {
+    async connectQueue(id) {
       if (id != this.queue_id) {
         if (this.socket) {
           this.socket.disconnect()
@@ -43,17 +43,28 @@ export const useRequestsStore = defineStore('requests', {
       this.socket.on('queue:update', async () => {
         await this.hydrate()
       })
-      await this.socket.emit('queue:join', this.queue_id, async (response) => {
-        if (response != 200) {
-          this.socket.disconnect()
-          this.socket = undefined
-        } else {
+      await this.socket.emit(
+        'queue:connect',
+        this.queue_id,
+        async (response) => {
+          if (response != 200) {
+            this.socket.disconnect()
+            this.socket = undefined
+          } else {
+            await this.hydrate()
+          }
+        }
+      )
+    },
+    async joinQueue() {
+      await this.socket.emit('queue:join', async (response) => {
+        if (response == 200) {
           await this.hydrate()
         }
       })
     },
     async closeQueue() {
-      await this.socket.emit('queue:close', this.queue_id, async (response) => {
+      await this.socket.emit('queue:close', async (response) => {
         if (response == 200) {
           this.socket.disconnect()
           this.socket = undefined
