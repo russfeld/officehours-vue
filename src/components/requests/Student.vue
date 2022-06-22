@@ -35,6 +35,7 @@ const joinQueue = async function () {
 <template>
   <h2 class="text-center">Waiting Queue</h2>
   <template v-if="getQueue(id).is_open == 1">
+    <!-- TODO Remove button once in queue? -->
     <a class="w-100 btn btn-success" @click="joinQueue()">Join Queue</a>
     <hr />
     <RequestList :id="id" />

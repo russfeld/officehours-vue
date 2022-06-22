@@ -6,6 +6,7 @@ import { storeToRefs } from 'pinia'
 import RequestItem from './RequestItem.vue'
 
 // Stores
+import { useTokenStore } from '@/stores/Token'
 import { useRequestsStore } from '@/stores/Requests'
 
 // Properties
@@ -15,6 +16,9 @@ const props = defineProps({
     default: -1,
   },
 })
+
+// Token Store
+const tokenStore = useTokenStore()
 
 // Requests Store
 const requestsStore = useRequestsStore()
@@ -30,6 +34,7 @@ const { requests } = storeToRefs(requestsStore)
       :request="request"
       :index="index"
       v-bind="$attrs"
+      :user-id="tokenStore.id"
     >
     </RequestItem>
   </ul>

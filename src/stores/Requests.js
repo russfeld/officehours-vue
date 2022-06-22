@@ -43,6 +43,9 @@ export const useRequestsStore = defineStore('requests', {
       this.socket.on('queue:update', async () => {
         await this.hydrate()
       })
+      this.socket.on('queue:closing', async () => {
+        // TODO handle queue closing gracefully
+      })
       await this.socket.emit(
         'queue:connect',
         this.queue_id,
@@ -60,6 +63,7 @@ export const useRequestsStore = defineStore('requests', {
       await this.socket.emit('queue:join', async (response) => {
         if (response == 200) {
           await this.hydrate()
+          //TODO handle error?
         }
       })
     },
@@ -69,6 +73,30 @@ export const useRequestsStore = defineStore('requests', {
           this.socket.disconnect()
           this.socket = undefined
           this.requests = []
+        }
+      })
+    },
+    async takeRequest(id) {
+      await this.socket.emit('request:take', id, async (response) => {
+        if (response == 200) {
+          await this.hydrate()
+          //TODO handle error?
+        }
+      })
+    },
+    async deleteRequest(id) {
+      await this.socket.emit('request:delete', id, async (response) => {
+        if (response == 200) {
+          await this.hydrate()
+          //TODO handle error?
+        }
+      })
+    },
+    async finishRequest(id) {
+      await this.socket.emit('request:finish', id, async (response) => {
+        if (response == 200) {
+          await this.hydrate()
+          //TODO handle error?
         }
       })
     },
