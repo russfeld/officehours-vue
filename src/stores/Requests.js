@@ -19,6 +19,7 @@ export const useRequestsStore = defineStore('requests', {
   actions: {
     async hydrate() {
       await api.get('/api/v1/requests/' + this.queue_id).then((response) => {
+        // TODO $patch here
         this.requests = response.data
       })
     },
