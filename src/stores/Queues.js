@@ -40,10 +40,10 @@ export const useQueuesStore = defineStore('queues', {
         await this.hydrate()
       })
     },
-    async openQueue(id) {
-      await api.post('/api/v1/queues/' + id + '/open').then(async () => {
-        await this.hydrate()
-      })
-    },
+    // async openQueue(id) {
+    //   await api.post('/api/v1/queues/' + id + '/open').then(async () => {
+    //     await this.hydrate()
+    //   })
+    // },
   },
 })

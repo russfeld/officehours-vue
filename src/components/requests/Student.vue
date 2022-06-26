@@ -1,4 +1,8 @@
 <script setup>
+// Imports
+import { Modal } from 'bootstrap'
+import { onBeforeRouteLeave } from 'vue-router'
+
 // Components
 import RequestList from './RequestList.vue'
 
@@ -25,33 +29,88 @@ const getQueue = queuesStore.getQueue
 
 // Requests Store
 const requestsStore = useRequestsStore()
+const getRequest = requestsStore.getRequest
+requestsStore.connectQueue(props.id)
 
-if (getQueue(props.id).is_open == 1) {
-  await requestsStore.connectQueue(props.id)
-}
+// Modal Instance
+var studentModal
+var modalShown = false
+
+// Subscribe to state
+requestsStore.$subscribe(() => {
+  const request = getRequest(tokenStore.id)
+  if (request && request.status_id == 2 && !modalShown) {
+    modalShown = true
+    studentModal = new Modal('#studentModal', {})
+    studentModal.show()
+  }
+})
 
 // Join Queue
 const joinQueue = async function () {
+  modalShown = false
   await requestsStore.joinQueue()
 }
 
-var request = requestsStore.requests.find((item) => {
-  return item.user_id == tokenStore.id
-})
-
-// Subscribe to state
-requestsStore.$subscribe((mutation, state) => {
-  request = state.requests.find((item) => {
-    return item.user_id == tokenStore.id
-  })
-  // TODO pop up modal if status_id is 2?
+// Disconnect Socket on Leave
+onBeforeRouteLeave(async () => {
+  await requestsStore.disconnectQueue()
 })
 </script>
 
 <template>
+  <div
+    id="studentModal"
+    class="modal fade"
+    tabindex="-1"
+    aria-labelledby="studentModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="studentModalLabel" class="modal-title">Your Turn!</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            You will be helped by
+            {{
+              getRequest(tokenStore.id) && getRequest(tokenStore.id).helper
+                ? getRequest(tokenStore.id).helper.name
+                : ''
+            }}
+          </p>
+          <p>Their contact info is below</p>
+          <div>
+            {{
+              getRequest(tokenStore.id) && getRequest(tokenStore.id).helper
+                ? getRequest(tokenStore.id).helper.contact_info
+                : ''
+            }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <h2 class="text-center">Waiting Queue</h2>
   <template v-if="getQueue(id).is_open == 1">
-    <template v-if="request != undefined">
+    <template v-if="getRequest(tokenStore.id) != undefined">
       <a class="w-100 btn btn-success disabled" disabled>Queue Joined</a>
     </template>
     <template v-else>

@@ -1,7 +1,6 @@
 <script setup>
 // Stores
 import { useRequestsStore } from '@/stores/Requests'
-
 // Properties
 const props = defineProps({
   request: {
@@ -41,21 +40,34 @@ const finishRequest = async function () {
 </script>
 
 <template>
-  <template v-if="request.status_id == 1">
-    <li
-      class="list-group-item"
-      :class="[
-        request.user_id == userId ? 'current-user list-group-item-dark' : '',
-      ]"
-    >
-      {{ request.user.name }}
-      <template v-if="helper">
-        <button
-          class="float-end btn btn-danger btn-sm mx-1"
-          @click="deleteRequest"
-        >
-          X
-        </button>
+  <li
+    class="list-group-item"
+    :class="[
+      request.status_id == 2 ? 'list-group-item-primary' : '',
+      request.user_id == userId ? 'current-user' : '',
+      requestsStore.userOnline(request.user_id) ? '' : 'list-group-item-light',
+    ]"
+  >
+    <template v-if="requestsStore.userOnline(request.user_id)">
+      <font-awesome-icon icon="link" />
+    </template>
+    <template v-else>
+      <font-awesome-icon icon="link-slash" />
+    </template>
+    {{ request.user.name }}
+    <template v-if="request.status_id == 2">
+      <span class="badge bg-primary rounded-pill">{{
+        request.helper.name
+      }}</span>
+    </template>
+    <template v-if="helper">
+      <button
+        class="float-end btn btn-danger btn-sm mx-1"
+        @click="deleteRequest"
+      >
+        X
+      </button>
+      <template v-if="request.status_id == 1">
         <button
           class="float-end btn btn-primary btn-sm mx-1"
           @click="takeRequest"
@@ -63,24 +75,7 @@ const finishRequest = async function () {
           Take
         </button>
       </template>
-    </li>
-  </template>
-  <template v-if="request.status_id == 2">
-    <li
-      class="list-group-item list-group-item-primary"
-      :class="[request.user_id == userId ? 'current-user' : '']"
-    >
-      {{ request.user.name }}
-      <span class="badge bg-primary rounded-pill"
-        >Meet with {{ request.helper.name }}</span
-      >
-      <template v-if="helper">
-        <button
-          class="float-end btn btn-danger btn-sm mx-1"
-          @click="deleteRequest"
-        >
-          X
-        </button>
+      <template v-else>
         <button
           class="float-end btn btn-success btn-sm mx-1"
           @click="finishRequest"
@@ -88,8 +83,8 @@ const finishRequest = async function () {
           Done
         </button>
       </template>
-    </li>
-  </template>
+    </template>
+  </li>
 </template>
 
 <style scoped>

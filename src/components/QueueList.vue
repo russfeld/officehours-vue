@@ -15,6 +15,7 @@ queuesStore.hydrate()
 const { queues } = storeToRefs(queuesStore)
 
 const sortedQueues = computed(() => {
+  // HACK - is there a way to do this elsewhere?
   return queues.value.sort((a, b) => b.is_open - a.is_open)
 })
 </script>

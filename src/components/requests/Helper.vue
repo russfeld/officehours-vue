@@ -1,4 +1,7 @@
 <script setup>
+// Imports
+import { onBeforeRouteLeave } from 'vue-router'
+
 // Components
 import RequestList from './RequestList.vue'
 
@@ -21,21 +24,22 @@ const getQueue = queuesStore.getQueue
 
 // Requests Store
 const requestsStore = useRequestsStore()
+requestsStore.connectQueue(props.id)
 
-if (getQueue(props.id).is_open) {
-  requestsStore.connectQueue(props.id)
-}
-
+// Disable Queue
 const disableQueue = async function () {
   await requestsStore.closeQueue()
-  queuesStore.hydrate()
 }
 
-// Enable/Disable Queue
+// Enable Queue
 const enableQueue = async function () {
-  await queuesStore.openQueue(props.id)
-  requestsStore.connectQueue(props.id)
+  await requestsStore.openQueue()
 }
+
+// Disconnect Socket on Leave
+onBeforeRouteLeave(async () => {
+  await requestsStore.disconnectQueue()
+})
 </script>
 
 <template>
