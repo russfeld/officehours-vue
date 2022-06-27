@@ -79,6 +79,7 @@ const save = async (data) => {
         help="Your full name as you'd like it displayed on the site"
         validation="required"
       />
+      <!-- TODO: WYSIWIG Editor -->
       <FormKit
         type="textarea"
         name="contact_info"

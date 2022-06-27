@@ -24,6 +24,8 @@ import {
   faPlus,
   faLink,
   faLinkSlash,
+  faCircleQuestion,
+  faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faArrowRightToBracket)
@@ -36,6 +38,8 @@ library.add(faTrash)
 library.add(faPlus)
 library.add(faLink)
 library.add(faLinkSlash)
+library.add(faCircleQuestion)
+library.add(faUserGraduate)
 
 setupInterceptors()
 const app = createApp(App)

@@ -11,6 +11,18 @@ const props = defineProps({
       return {}
     },
   },
+  helpers: {
+    type: Number,
+    default() {
+      return 0
+    },
+  },
+  requests: {
+    type: Number,
+    default() {
+      return 0
+    },
+  },
 })
 
 // Router action to load a queue when a card is clicked
@@ -25,7 +37,10 @@ function loadqueue(queue_id) {
       <h5 class="card-header">
         {{ props.queue.name }}
         <template v-if="props.queue.is_open === 1">
-          <span class="float-end badge rounded-pill bg-success">Open</span>
+          <span class="float-end badge rounded-pill bg-success"
+            >Open | {{ helpers }} <font-awesome-icon icon="user-graduate" /> |
+            {{ requests }} <font-awesome-icon icon="circle-question"
+          /></span>
         </template>
         <template v-else>
           <span class="float-end badge rounded-pill bg-danger">Closed</span>

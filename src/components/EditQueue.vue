@@ -102,6 +102,7 @@ const save = async (data) => {
         label="Short Description"
         help="Short description shown on the initial card"
       />
+      <!-- TODO: WYSIWIG Editor -->
       <FormKit
         type="textarea"
         name="description"

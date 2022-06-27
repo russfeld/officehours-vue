@@ -12,7 +12,8 @@ import { useQueuesStore } from '@/stores/Queues'
 // Queues Store
 const queuesStore = useQueuesStore()
 queuesStore.hydrate()
-const { queues } = storeToRefs(queuesStore)
+queuesStore.hydrateOnline()
+const { queues, online } = storeToRefs(queuesStore)
 
 const sortedQueues = computed(() => {
   // HACK - is there a way to do this elsewhere?
@@ -27,6 +28,8 @@ const sortedQueues = computed(() => {
       :key="queue.id"
       :queue="queue"
       :index="index"
+      :helpers="online['helpers'][String(queue.id)]"
+      :requests="online['requests'][String(queue.id)]"
     >
     </QueueCard>
   </div>

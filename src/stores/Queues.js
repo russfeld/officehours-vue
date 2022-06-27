@@ -8,6 +8,7 @@ export const useQueuesStore = defineStore('queues', {
   state: () => {
     return {
       queues: [],
+      online: {},
     }
   },
   getters: {
@@ -19,6 +20,11 @@ export const useQueuesStore = defineStore('queues', {
     async hydrate() {
       await api.get('/api/v1/queues').then((response) => {
         this.queues = response.data
+      })
+    },
+    async hydrateOnline() {
+      await api.get('/api/v1/queues/online').then((response) => {
+        this.online = response.data
       })
     },
     async update(queue) {
