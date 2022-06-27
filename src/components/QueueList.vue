@@ -12,7 +12,7 @@ import { useQueuesStore } from '@/stores/Queues'
 // Queues Store
 const queuesStore = useQueuesStore()
 queuesStore.hydrate()
-queuesStore.hydrateOnline()
+await queuesStore.hydrateOnline()
 const { queues, online } = storeToRefs(queuesStore)
 
 const sortedQueues = computed(() => {

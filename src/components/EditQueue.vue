@@ -23,8 +23,7 @@ const props = defineProps({
 // Queues Store
 const queuesStore = useQueuesStore()
 await queuesStore.hydrate()
-queuesStore.getQueueById(props.id)
-const { queue } = storeToRefs(queuesStore)
+const queue = queuesStore.getQueue(props.id)
 
 // Users Store
 const usersStore = useUsersStore()

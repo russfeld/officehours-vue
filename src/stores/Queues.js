@@ -13,7 +13,7 @@ export const useQueuesStore = defineStore('queues', {
   },
   getters: {
     getQueue: (state) => {
-      return (id) => state.queues.find((queue) => queue.id === id)
+      return (id) => state.queues.find((queue) => queue.id == id)
     },
   },
   actions: {
