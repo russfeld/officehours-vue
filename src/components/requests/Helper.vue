@@ -4,6 +4,7 @@ import { onBeforeRouteLeave } from 'vue-router'
 
 // Components
 import RequestList from './RequestList.vue'
+import HelperList from './HelperList.vue'
 
 // Stores
 import { useQueuesStore } from '@/stores/Queues'
@@ -44,6 +45,7 @@ onBeforeRouteLeave(async () => {
 
 <template>
   <h2 class="text-center">Moderate Queue</h2>
+  <HelperList />
   <template v-if="getQueue(id).is_open == 1">
     <a class="w-100 btn btn-success" @click="disableQueue"
       >Queue is Open - Click to Close</a

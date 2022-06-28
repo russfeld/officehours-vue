@@ -11,6 +11,7 @@ export const useRequestsStore = defineStore('requests', {
     return {
       requests: [],
       online: [],
+      helpers: [],
       socket: undefined,
       queue_id: -1,
     }
@@ -69,12 +70,19 @@ export const useRequestsStore = defineStore('requests', {
       this.socket.on('user:offline', async (id) => {
         this.online.splice(this.online.indexOf(String(id)), 1)
       })
+      this.socket.on('helper:online', async (helper) => {
+        this.helpers.push(helper)
+      })
+      this.socket.on('helper:offline', async (id) => {
+        this.helpers.splice(this.helpers.findIndex(helper => helper.id == id), 1)
+      })
       this.socket.on('queue:opening', async () => {
         const queuesStore = useQueuesStore()
         await queuesStore.hydrate()
       })
-      this.socket.on('connected', async (online) => {
+      this.socket.on('connected', async (online, helpers) => {
         this.online = online
+        this.helpers = helpers
       })
       this.socket.on('queue:closing', async () => {
         // this.socket.disconnect()
