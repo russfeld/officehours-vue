@@ -27,6 +27,8 @@ const { requests } = storeToRefs(requestsStore)
 </script>
 
 <template>
+  <h3 class="text-center">Students Waiting</h3>
+  <hr />
   <ul class="list-group list-group-numbered">
     <RequestItem
       v-for="(request, index) in requests"

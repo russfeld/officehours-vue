@@ -44,15 +44,11 @@ const getQueue = queuesStore.getQueue
       {{ getQueue(id).description }}
     </div>
     <hr />
-    <div class="d-flex">
-      <div class="mx-auto d-block">
-        <template v-if="getQueue(id).helper == 1">
-          <Helper :id="id" />
-        </template>
-        <template v-else>
-          <Student :id="id" />
-        </template>
-      </div>
-    </div>
+    <template v-if="getQueue(id).helper == 1">
+      <Helper :id="id" />
+    </template>
+    <template v-else>
+      <Student :id="id" />
+    </template>
   </main>
 </template>

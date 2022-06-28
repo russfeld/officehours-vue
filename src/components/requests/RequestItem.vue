@@ -92,4 +92,11 @@ const finishRequest = async function () {
   font-weight: bold;
   border-width: 2px;
 }
+
+.btn-xs {
+  padding: 0.25rem 0.25rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+  line-height: 1;
+}
 </style>

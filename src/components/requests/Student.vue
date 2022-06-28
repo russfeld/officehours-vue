@@ -5,6 +5,7 @@ import { onBeforeRouteLeave } from 'vue-router'
 
 // Components
 import RequestList from './RequestList.vue'
+import HelperList from './HelperList.vue'
 
 // Stores
 import { useQueuesStore } from '@/stores/Queues'
@@ -108,18 +109,35 @@ onBeforeRouteLeave(async () => {
     </div>
   </div>
 
-  <h2 class="text-center">Waiting Queue</h2>
-  <template v-if="getQueue(id).is_open == 1">
-    <template v-if="getRequest(tokenStore.id) != undefined">
-      <a class="w-100 btn btn-success disabled" disabled>Queue Joined</a>
+  <div class="queue-header mx-auto">
+    <h2 class="text-center">Waiting Queue</h2>
+    <template v-if="getQueue(id).is_open == 1">
+      <template v-if="getRequest(tokenStore.id) != undefined">
+        <a class="w-100 btn btn-success disabled" disabled>Queue Joined</a>
+      </template>
+      <template v-else>
+        <a class="w-100 btn btn-success" @click="joinQueue()">Join Queue</a>
+      </template>
     </template>
     <template v-else>
-      <a class="w-100 btn btn-success" @click="joinQueue()">Join Queue</a>
+      <a class="w-100 btn btn-danger disabled" disabled>Queue is Closed</a>
     </template>
-    <hr />
-    <RequestList :id="id" />
-  </template>
-  <template v-else>
-    <a class="w-100 btn btn-danger disabled" disabled>Queue is Closed</a>
+  </div>
+  <hr />
+  <template v-if="getQueue(id).is_open == 1">
+    <div class="row">
+      <div class="col-12 col-md-4 mb-4">
+        <HelperList />
+      </div>
+      <div class="col-12 col-md-8 mb-4">
+        <RequestList :id="id" />
+      </div>
+    </div>
   </template>
 </template>
+
+<style scoped>
+.queue-header {
+  max-width: 500px;
+}
+</style>

@@ -44,18 +44,32 @@ onBeforeRouteLeave(async () => {
 </script>
 
 <template>
-  <h2 class="text-center">Moderate Queue</h2>
-  <HelperList />
-  <template v-if="getQueue(id).is_open == 1">
-    <a class="w-100 btn btn-success" @click="disableQueue"
-      >Queue is Open - Click to Close</a
-    >
-    <hr />
-    <RequestList :id="id" helper />
-  </template>
-  <template v-else>
-    <a class="w-100 btn btn-danger" @click="enableQueue"
-      >Queue is Closed - Click to Open</a
-    >
-  </template>
+  <div class="queue-header mx-auto">
+    <h2 class="text-center">Moderate Queue</h2>
+    <template v-if="getQueue(id).is_open == 1">
+      <a class="w-100 btn btn-success" @click="disableQueue"
+        >Queue is Open - Click to Close</a
+      >
+    </template>
+    <template v-else>
+      <a class="w-100 btn btn-danger" @click="enableQueue"
+        >Queue is Closed - Click to Open</a
+      >
+    </template>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-12 col-md-4 mb-4">
+      <HelperList />
+    </div>
+    <div class="col-12 col-md-8 mb-4">
+      <RequestList :id="id" helper />
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.queue-header {
+  max-width: 500px;
+}
+</style>

@@ -74,7 +74,10 @@ export const useRequestsStore = defineStore('requests', {
         this.helpers.push(helper)
       })
       this.socket.on('helper:offline', async (id) => {
-        this.helpers.splice(this.helpers.findIndex(helper => helper.id == id), 1)
+        this.helpers.splice(
+          this.helpers.findIndex((helper) => helper.id == id),
+          1
+        )
       })
       this.socket.on('queue:opening', async () => {
         const queuesStore = useQueuesStore()
@@ -87,7 +90,6 @@ export const useRequestsStore = defineStore('requests', {
       this.socket.on('queue:closing', async () => {
         // this.socket.disconnect()
         // this.$reset()
-        this.online = []
         this.requests = []
         const queuesStore = useQueuesStore()
         await queuesStore.hydrate()
@@ -126,7 +128,6 @@ export const useRequestsStore = defineStore('requests', {
         if (response == 200) {
           // this.socket.disconnect()
           // this.$reset()
-          this.online = new Set()
           this.requests = []
           const queuesStore = useQueuesStore()
           queuesStore.hydrate()
