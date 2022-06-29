@@ -13,7 +13,8 @@ export const useRequestsStore = defineStore('requests', {
       online: [],
       helpers: [],
       socket: undefined,
-      queue_id: -1,
+      connected: false,
+      error: false,
     }
   },
   getters: {
@@ -27,28 +28,29 @@ export const useRequestsStore = defineStore('requests', {
   },
   actions: {
     async connectQueue(id) {
-      if (id != this.queue_id) {
-        if (this.socket) {
-          this.socket.disconnect()
-        }
-        this.$reset()
+      if (this.socket) {
+        this.socket.disconnect()
       }
-      this.queue_id = id
-      if (!this.socket) {
-        const tokenStore = useTokenStore()
-        if (tokenStore.token) {
-          this.socket = io('http://localhost:3000', {
-            auth: {
-              token: tokenStore.token,
-              queue_id: this.queue_id,
-            },
-          })
-        }
-      }
-      this.socket.on('connect_error', async () => {
+      this.$reset()
+      const tokenStore = useTokenStore()
+      this.socket = io('http://localhost:3000', {
+        auth: {
+          token: tokenStore.token,
+          queue_id: id,
+        },
+      })
+      this.socket.on('connect', () => {
+        this.connected = true
+        this.error = false
+      })
+      this.socket.on('connect_error', () => {
         //console.log(error)
-        // TODO use socket.connected to show connected status in UI?
         this.$reset
+        this.error = true
+      })
+      this.socket.on('disconnect', () => {
+        this.connected = false
+        this.error = false
       })
       this.socket.on('queue:update', async (updated) => {
         var index = this.requests.findIndex((r) => r.id === updated.id)

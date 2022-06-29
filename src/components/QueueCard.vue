@@ -49,7 +49,7 @@ function loadqueue(queue_id) {
       <div class="card-body">
         <!--<h5 class="card-title">Special title treatment</h5>-->
         <p class="card-text">{{ props.queue.snippet }}</p>
-        <a href="#" class="btn btn-primary">Queue</a>
+        <!--<a href="#" class="btn btn-primary">Queue</a>-->
       </div>
     </div>
   </div>

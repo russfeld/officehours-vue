@@ -1,6 +1,7 @@
 <script setup>
 // Imports
 import { onBeforeRouteLeave } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
 // Components
 import RequestList from './RequestList.vue'
@@ -25,7 +26,8 @@ const getQueue = queuesStore.getQueue
 
 // Requests Store
 const requestsStore = useRequestsStore()
-requestsStore.connectQueue(props.id)
+const { connected, error } = storeToRefs(requestsStore)
+await requestsStore.connectQueue(props.id)
 
 // Disable Queue
 const disableQueue = async function () {
@@ -37,6 +39,11 @@ const enableQueue = async function () {
   await requestsStore.openQueue()
 }
 
+// Retry Connect
+const reconnect = async function () {
+  await requestsStore.connectQueue(props.id)
+}
+
 // Disconnect Socket on Leave
 onBeforeRouteLeave(async () => {
   await requestsStore.disconnectQueue()
@@ -45,6 +52,30 @@ onBeforeRouteLeave(async () => {
 
 <template>
   <div class="queue-header mx-auto">
+    <template v-if="connected">
+      <button class="btn btn-outline-success float-end disabled">
+        <font-awesome-icon icon="link" />
+        <span class="visually-hidden">Connected!</span>
+      </button>
+    </template>
+    <template v-else>
+      <template v-if="error">
+        <button class="btn btn-outline-danger float-end" @click="reconnect">
+          <font-awesome-icon icon="link-slash" />
+          <span class="visually-hidden">Disconnected!</span>
+        </button>
+      </template>
+      <template v-else>
+        <button class="btn btn-outline-warning float-end" @click="reconnect">
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Connecting...</span>
+        </button>
+      </template>
+    </template>
     <h2 class="text-center">Moderate Queue</h2>
     <template v-if="getQueue(id).is_open == 1">
       <a class="w-100 btn btn-success" @click="disableQueue"

@@ -28,10 +28,11 @@ const router = createRouter({
       component: HomeView,
       beforeEnter: async () => {
         const tokenStore = useTokenStore()
+        await tokenStore.tryToken()
 
-        if (!tokenStore.token) {
-          await tokenStore.tryToken()
-        }
+        // if (!tokenStore.token) {
+        //   await tokenStore.tryToken()
+        // }
 
         if (tokenStore.token) {
           return '/queues'
@@ -97,9 +98,7 @@ router.beforeEach(async function (to) {
     if (!tokenStore.token) {
       await tokenStore.tryToken()
     }
-    if (tokenStore.token) {
-      // TODO App-level Hydrate Action
-    } else {
+    if (!tokenStore.token) {
       return '/'
     }
   }
