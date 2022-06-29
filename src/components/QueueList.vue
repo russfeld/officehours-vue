@@ -1,7 +1,6 @@
 <script setup>
 // Imports
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
 
 // Components
 import QueueCard from '@/components/QueueCard.vue'
@@ -13,12 +12,7 @@ import { useQueuesStore } from '@/stores/Queues'
 const queuesStore = useQueuesStore()
 queuesStore.hydrate()
 await queuesStore.hydrateOnline()
-const { queues, online } = storeToRefs(queuesStore)
-
-const sortedQueues = computed(() => {
-  // HACK - is there a way to do this elsewhere?
-  return queues.value.sort((a, b) => b.is_open - a.is_open)
-})
+const { sortedQueues, online } = storeToRefs(queuesStore)
 </script>
 
 <template>

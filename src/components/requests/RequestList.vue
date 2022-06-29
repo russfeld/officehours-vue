@@ -22,16 +22,17 @@ const tokenStore = useTokenStore()
 
 // Requests Store
 const requestsStore = useRequestsStore()
-const { requests } = storeToRefs(requestsStore)
+const { sortedRequests } = storeToRefs(requestsStore)
 //await requestsStore.joinQueue(props.id)
 </script>
 
 <template>
   <h3 class="text-center">Students Waiting</h3>
   <hr />
+  {{ sortedRequests }}
   <ul class="list-group list-group-numbered">
     <RequestItem
-      v-for="(request, index) in requests"
+      v-for="(request, index) in sortedRequests"
       :key="request.id"
       :request="request"
       :index="index"

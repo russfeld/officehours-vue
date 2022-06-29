@@ -31,6 +31,7 @@ await requestsStore.connectQueue(props.id)
 
 // Disable Queue
 const disableQueue = async function () {
+  // TODO add confirmation dialog
   await requestsStore.closeQueue()
 }
 

@@ -25,6 +25,15 @@ export const useRequestsStore = defineStore('requests', {
       return (id) =>
         state.online.find((user) => user == id) === undefined ? false : true
     },
+    sortedRequests: (state) => {
+      return [...state.requests].sort(function (a, b) {
+        if (a.status_id == b.status_id) {
+          return a.id - b.id
+        } else {
+          return b.status_id - a.status_id
+        }
+      })
+    },
   },
   actions: {
     async connectQueue(id) {

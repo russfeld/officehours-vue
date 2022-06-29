@@ -15,6 +15,9 @@ export const useQueuesStore = defineStore('queues', {
     getQueue: (state) => {
       return (id) => state.queues.find((queue) => queue.id == id)
     },
+    sortedQueues: (state) => {
+      return [...state.queues].sort((a, b) => b.is_open - a.is_open)
+    },
   },
   actions: {
     async hydrate() {
