@@ -1,6 +1,8 @@
 <script setup>
 // Imports
 import { RouterLink } from 'vue-router'
+import DOMPurify from 'dompurify'
+import { marked } from 'marked'
 
 // Components
 import Helper from './requests/Helper.vue'
@@ -40,9 +42,11 @@ const getQueue = queuesStore.getQueue
     >
     <h1 class="display-5 text-center">{{ getQueue(id).name }}</h1>
     <hr />
-    <div>
-      {{ getQueue(id).description }}
-    </div>
+    <!-- Using DOMPurify to sanitize HTML -->
+    <!-- eslint-disable vue/no-v-html -->
+    <div
+      v-html="DOMPurify.sanitize(marked.parse(getQueue(id).description))"
+    ></div>
     <hr />
     <template v-if="getQueue(id).helper == 1">
       <Helper :id="id" />

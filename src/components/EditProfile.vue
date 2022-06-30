@@ -1,8 +1,10 @@
 <script setup>
 // Imports
+import { onMounted } from 'vue'
 import { setErrors } from '@formkit/vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
+import EasyMDE from 'easymde'
 
 // Stores
 import { useProfileStore } from '@/stores/Profile'
@@ -15,12 +17,23 @@ const profileStore = useProfileStore()
 await profileStore.hydrate()
 const { user } = storeToRefs(profileStore)
 
+// Configure EasyMDE
+var easyMDE
+onMounted(() => {
+  easyMDE = new EasyMDE({
+    blockStyles: {
+      italic: '_',
+    },
+    status: false,
+  })
+})
+
 // Save Profile Information
-const save = async (data) => {
-  data = (({ name, contact_info }) => ({
-    name,
-    contact_info,
-  }))(data)
+const save = async (formdata) => {
+  const data = {
+    name: formdata.name,
+    contact_info: easyMDE.value(),
+  }
   try {
     await profileStore.update(data)
     router.push('/queues/')
@@ -79,7 +92,6 @@ const save = async (data) => {
         help="Your full name as you'd like it displayed on the site"
         validation="required"
       />
-      <!-- TODO: WYSIWIG Editor -->
       <FormKit
         type="textarea"
         name="contact_info"
@@ -102,6 +114,8 @@ const save = async (data) => {
 </template>
 
 <style>
+@import 'easymde/dist/easymde.min.css';
+
 .formkit-messages {
   list-style-type: none;
   padding-left: 0px;

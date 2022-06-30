@@ -3,6 +3,8 @@
 import { Modal } from 'bootstrap'
 import { onBeforeRouteLeave } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import DOMPurify from 'dompurify'
+import { marked } from 'marked'
 
 // Components
 import RequestList from './RequestList.vue'
@@ -86,22 +88,25 @@ onBeforeRouteLeave(async () => {
           ></button>
         </div>
         <div class="modal-body">
-          <p>
-            You will be helped by
-            {{
-              getRequest(tokenStore.id) && getRequest(tokenStore.id).helper
-                ? getRequest(tokenStore.id).helper.name
-                : ''
-            }}
-          </p>
-          <p>Their contact info is below</p>
-          <div>
-            {{
-              getRequest(tokenStore.id) && getRequest(tokenStore.id).helper
-                ? getRequest(tokenStore.id).helper.contact_info
-                : ''
-            }}
-          </div>
+          <template
+            v-if="getRequest(tokenStore.id) && getRequest(tokenStore.id).helper"
+          >
+            <p>
+              You will be helped by
+              <strong>{{ getRequest(tokenStore.id).helper.name }}</strong
+              >. Their contact info is below:
+            </p>
+            <hr />
+            <!-- Using DOMPurify to sanitize HTML -->
+            <!-- eslint-disable vue/no-v-html -->
+            <div
+              v-html="
+                DOMPurify.sanitize(
+                  marked.parse(getRequest(tokenStore.id).helper.contact_info)
+                )
+              "
+            ></div>
+          </template>
         </div>
         <div class="modal-footer">
           <button

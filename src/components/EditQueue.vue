@@ -1,9 +1,11 @@
 <script setup>
 // Imports
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { setErrors } from '@formkit/vue'
 import VueMultiselect from 'vue-multiselect'
 import { storeToRefs } from 'pinia'
+import EasyMDE from 'easymde'
 
 // Stores
 import { useQueuesStore } from '@/stores/Queues'
@@ -30,14 +32,25 @@ const usersStore = useUsersStore()
 usersStore.hydrate()
 const { users } = storeToRefs(usersStore)
 
+// Configure EasyMDE
+var easyMDE
+onMounted(() => {
+  easyMDE = new EasyMDE({
+    blockStyles: {
+      italic: '_',
+    },
+    status: false,
+  })
+})
+
 // Save Queue
 const save = async (data) => {
-  data = (({ id, name, snippet, description }) => ({
+  data = (({ id, name, snippet }) => ({
     id,
     name,
     snippet,
-    description,
   }))(data)
+  data['description'] = easyMDE.value()
   // only send user ids of related users
   data['users'] = []
   for (const user of queue.users) {
@@ -101,7 +114,6 @@ const save = async (data) => {
         label="Short Description"
         help="Short description shown on the initial card"
       />
-      <!-- TODO: WYSIWIG Editor -->
       <FormKit
         type="textarea"
         name="description"
