@@ -6,6 +6,12 @@ import VueAxios from 'vue-axios'
 import { createPinia } from 'pinia'
 import { plugin, defaultConfig } from '@formkit/vue'
 import setupInterceptors from './services/interceptors'
+import Logger from 'js-logger'
+
+// Log messages will be written to the window's console.
+Logger.useDefaults()
+
+// TODO Configure log level based on environment
 
 // Add Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'

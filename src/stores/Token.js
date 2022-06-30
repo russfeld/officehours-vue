@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia'
 import jwt_decode from 'jwt-decode'
 import { useStorage } from '@vueuse/core'
+import Logger from 'js-logger'
 
 // Services
 import api from '@/services/api'
@@ -45,6 +46,7 @@ export const useTokenStore = defineStore('token', {
   },
   actions: {
     async getToken() {
+      Logger.info('token:get')
       await api
         .get('/auth/token', { withCredentials: true })
         .then((response) => {
@@ -52,16 +54,18 @@ export const useTokenStore = defineStore('token', {
         })
         .catch((err) => {
           if (err.response && err.response.status === 401) {
-            // Redirect to CAS login
+            Logger.info('token:get login failed - redirecting to CAS')
+            // TODO baseURL configuration
             window.location.href = 'http://localhost:3000/auth/login'
           } else {
-            console.error(err)
+            Logger.error('token:get error' + JSON.stringify(err))
+            this.token = ''
           }
-          this.token = ''
         })
     },
 
     async tryToken() {
+      Logger.info('token:try')
       await api
         .get('/auth/token', { withCredentials: true })
         .then((response) => {
@@ -69,16 +73,17 @@ export const useTokenStore = defineStore('token', {
         })
         .catch(async (err) => {
           if (err.response && err.response.status === 401) {
-            // Try refresh token
+            Logger.info('token:try login failed - trying refresh token')
             await this.refreshToken()
           } else {
-            console.error(err)
+            Logger.error('token:try error' + JSON.stringify(err))
             this.token = ''
           }
         })
     },
 
     async refreshToken() {
+      Logger.info('token:refresh')
       await api
         .post('/auth/token', {
           refresh_token: this.refresh_token,
@@ -88,11 +93,12 @@ export const useTokenStore = defineStore('token', {
         })
         .catch((err) => {
           if (err.response && err.response.status === 401) {
-            console.error('Unable to refresh token - need to log in again')
+            Logger.info('token:refresh login failed - redirecting to CAS')
+            window.location.href = 'http://localhost:3000/auth/login'
           } else {
-            console.error(err)
+            Logger.error('token:refresh error' + JSON.stringify(err))
+            this.token = ''
           }
-          this.token = ''
         })
     },
 

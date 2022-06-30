@@ -1,5 +1,6 @@
 // Imports
 import { defineStore } from 'pinia'
+import Logger from 'js-logger'
 
 // Services
 import api from '@/services/api'
@@ -17,6 +18,7 @@ export const useUsersStore = defineStore('users', {
   },
   actions: {
     async hydrate() {
+      Logger.info('users:hydrate')
       await api.get('/api/v1/users').then((response) => {
         this.users = response.data
       })

@@ -30,10 +30,6 @@ const router = createRouter({
         const tokenStore = useTokenStore()
         await tokenStore.tryToken()
 
-        // if (!tokenStore.token) {
-        //   await tokenStore.tryToken()
-        // }
-
         if (tokenStore.token) {
           return '/queues'
         }

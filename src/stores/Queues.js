@@ -1,5 +1,6 @@
 // Imports
 import { defineStore } from 'pinia'
+import Logger from 'js-logger'
 
 // Services
 import api from '@/services/api'
@@ -21,11 +22,13 @@ export const useQueuesStore = defineStore('queues', {
   },
   actions: {
     async hydrate() {
+      Logger.info('queues:hydrate')
       await api.get('/api/v1/queues').then((response) => {
         this.queues = response.data
       })
     },
     async hydrateOnline() {
+      Logger.info('queues:hydrateOnline')
       await api.get('/api/v1/queues/online').then((response) => {
         this.online = response.data
       })

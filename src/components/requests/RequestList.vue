@@ -29,7 +29,6 @@ const { sortedRequests } = storeToRefs(requestsStore)
 <template>
   <h3 class="text-center">Students Waiting</h3>
   <hr />
-  {{ sortedRequests }}
   <ul class="list-group list-group-numbered">
     <RequestItem
       v-for="(request, index) in sortedRequests"
