@@ -107,7 +107,6 @@ export const useRequestsStore = defineStore('requests', {
       })
       await this.socket.emit('queue:connect', async (response, requests) => {
         if (response == 200) {
-          // TODO does not deal with sorting yet?
           this.requests = requests
         }
       })
