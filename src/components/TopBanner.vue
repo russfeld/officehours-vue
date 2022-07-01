@@ -8,6 +8,7 @@
   >
     <div class="col-lg-10 mx-auto">
       <p class="lead-custom text-center">
+        <!-- TODO Edit Banner -->
         Welcome! Here you can join the queue for office hours. Let's get
         started!
       </p>

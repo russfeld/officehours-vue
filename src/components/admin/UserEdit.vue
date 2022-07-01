@@ -1,9 +1,11 @@
 <script setup>
 // Imports
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { setErrors } from '@formkit/vue'
 import VueMultiselect from 'vue-multiselect'
+import EasyMDE from 'easymde'
 
 // Stores
 import { useUsersStore } from '@/stores/Users'
@@ -30,13 +32,24 @@ const rolesStore = useRolesStore()
 rolesStore.hydrate()
 const { roles } = storeToRefs(rolesStore)
 
+// Configure EasyMDE
+var easyMDE
+onMounted(() => {
+  easyMDE = new EasyMDE({
+    blockStyles: {
+      italic: '_',
+    },
+    status: false,
+  })
+})
+
 // Save User
 const save = async (data) => {
-  data = (({ id, name, contact_info }) => ({
+  data = (({ id, name }) => ({
     id,
     name,
-    contact_info,
   }))(data)
+  data['contact_info'] = easyMDE.value()
   // only send role ids of related roles
   data['roles'] = []
   for (const role of user.roles) {

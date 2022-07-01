@@ -1,0 +1,5 @@
+# ignore artifacts
+dist
+
+# Build stats
+stats.html
