@@ -43,7 +43,8 @@ export const useRequestsStore = defineStore('requests', {
       }
       this.$reset()
       const tokenStore = useTokenStore()
-      this.socket = io('http://localhost:3000', {
+      const url = import.meta.env.DEV ? 'http://localhost:3000' : '/'
+      this.socket = io(url, {
         auth: {
           token: tokenStore.token,
           queue_id: id,
