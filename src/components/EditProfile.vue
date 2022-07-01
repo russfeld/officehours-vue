@@ -21,6 +21,7 @@ const { user } = storeToRefs(profileStore)
 var easyMDE
 onMounted(() => {
   easyMDE = new EasyMDE({
+    autoDownloadFontAwesome: false,
     blockStyles: {
       italic: '_',
     },

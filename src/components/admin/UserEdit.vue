@@ -36,6 +36,7 @@ const { roles } = storeToRefs(rolesStore)
 var easyMDE
 onMounted(() => {
   easyMDE = new EasyMDE({
+    autoDownloadFontAwesome: false,
     blockStyles: {
       italic: '_',
     },

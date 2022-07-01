@@ -17,7 +17,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
 
 // Add Font Awesome
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { dom, library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+// Set up Font Awesome
 import {
   faArrowRightToBracket,
   faArrowRightFromBracket,
@@ -31,20 +34,48 @@ import {
   faLinkSlash,
   faCircleQuestion,
   faUserGraduate,
+  faBold,
+  faItalic,
+  faHeading,
+  faTable,
+  faImage,
+  faQuoteLeft,
+  faListOl,
+  faListUl,
+  faEye,
+  faColumns,
+  faArrowsAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faArrowRightToBracket)
-library.add(faChalkboardTeacher)
-library.add(faArrowRightFromBracket)
-library.add(faPenToSquare)
-library.add(faArrowLeft)
-library.add(faUser)
-library.add(faTrash)
-library.add(faPlus)
-library.add(faLink)
-library.add(faLinkSlash)
-library.add(faCircleQuestion)
-library.add(faUserGraduate)
+
+library.add(
+  faArrowRightToBracket,
+  faChalkboardTeacher,
+  faArrowRightFromBracket,
+  faPenToSquare,
+  faArrowLeft,
+  faUser,
+  faTrash,
+  faPlus,
+  faLink,
+  faLinkSlash,
+  faCircleQuestion,
+  faUserGraduate,
+  faBold,
+  faItalic,
+  faHeading,
+  faTable,
+  faImage,
+  faQuoteLeft,
+  faListOl,
+  faListUl,
+  faEye,
+  faColumns,
+  faArrowsAlt
+)
+
+// FontAwesome Watch DOM
+// Enables fa classes
+dom.watch()
 
 setupInterceptors()
 const app = createApp(App)
