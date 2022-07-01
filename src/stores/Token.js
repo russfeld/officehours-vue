@@ -10,7 +10,7 @@ import api from '@/services/api'
 export const useTokenStore = defineStore('token', {
   state: () => {
     return {
-      // TODO this may be unsafe - consider refactor?
+      // HACK this may be unsafe - consider refactor?
       token: useStorage('token', ''),
     }
   },
@@ -55,8 +55,9 @@ export const useTokenStore = defineStore('token', {
         .catch((err) => {
           if (err.response && err.response.status === 401) {
             Logger.info('token:get login failed - redirecting to CAS')
-            // TODO baseURL configuration
-            window.location.href = 'http://localhost:3000/auth/login'
+            window.location.href = import.meta.env.DEV
+              ? 'http://localhost:3000/auth/login'
+              : '/auth/login'
           } else {
             Logger.error('token:get error' + JSON.stringify(err))
             this.token = ''
@@ -94,7 +95,9 @@ export const useTokenStore = defineStore('token', {
         .catch((err) => {
           if (err.response && err.response.status === 401) {
             Logger.info('token:refresh login failed - redirecting to CAS')
-            window.location.href = 'http://localhost:3000/auth/login'
+            window.location.href = import.meta.env.DEV
+              ? 'http://localhost:3000/auth/login'
+              : '/auth/login'
           } else {
             Logger.error('token:refresh error' + JSON.stringify(err))
             this.token = ''

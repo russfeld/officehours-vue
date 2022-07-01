@@ -10,8 +10,7 @@ import Logger from 'js-logger'
 
 // Log messages will be written to the window's console.
 Logger.useDefaults()
-
-// TODO Configure log level based on environment
+Logger.setLevel(import.meta.env.DEV ? Logger.DEBUG : Logger.WARN)
 
 // Add Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'

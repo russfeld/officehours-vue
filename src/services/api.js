@@ -3,8 +3,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  // TODO Configuration URL?
-  baseURL: 'http://localhost:3000',
+  baseURL: import.meta.env.DEV ? 'http://localhost:3000' : '/',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

@@ -31,8 +31,9 @@ await requestsStore.connectQueue(props.id)
 
 // Disable Queue
 const disableQueue = async function () {
-  // TODO add confirmation dialog
-  await requestsStore.closeQueue()
+  if (confirm('Are you sure? All pending requests will be lost!')) {
+    await requestsStore.closeQueue()
+  }
 }
 
 // Enable Queue
