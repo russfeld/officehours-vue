@@ -3,12 +3,12 @@
 import { RouterView } from 'vue-router'
 
 // Components
-import Navbar from './components/Navbar.vue'
+import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
   <header>
-    <Navbar />
+    <NavBar />
   </header>
 
   <div id="main" class="container px-4 py-5">

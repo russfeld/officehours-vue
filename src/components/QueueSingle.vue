@@ -5,8 +5,8 @@ import DOMPurify from 'dompurify'
 import { marked } from 'marked'
 
 // Components
-import Helper from './requests/Helper.vue'
-import Student from './requests/Student.vue'
+import HelperPane from './requests/HelperPane.vue'
+import StudentPane from './requests/StudentPane.vue'
 
 // Stores
 import { useTokenStore } from '@/stores/Token'
@@ -49,10 +49,10 @@ const getQueue = queuesStore.getQueue
     ></div>
     <hr />
     <template v-if="getQueue(id).helper == 1">
-      <Helper :id="id" />
+      <HelperPane :id="id" />
     </template>
     <template v-else>
-      <Student :id="id" />
+      <StudentPane :id="id" />
     </template>
   </main>
 </template>

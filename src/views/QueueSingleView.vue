@@ -1,7 +1,7 @@
 <script setup>
-import Queue from '../components/Queue.vue'
+import QueueSingle from '../components/QueueSingle.vue'
 </script>
 
 <template>
-  <Queue />
+  <QueueSingle />
 </template>

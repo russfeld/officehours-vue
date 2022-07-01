@@ -40,6 +40,7 @@ onMounted(() => {
       italic: '_',
     },
     status: false,
+    spellChecker: false,
   })
 })
 
