@@ -73,12 +73,14 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'admin',
+      // TODO add code splitting?
       component: AdminView,
       beforeEnter: requireAdmin,
     },
     {
       path: '/admin/user/:id/edit',
       name: 'admin_useredit',
+      // TODO add code splitting
       component: UserEditView,
       props: true,
       beforeEnter: requireAdmin,
