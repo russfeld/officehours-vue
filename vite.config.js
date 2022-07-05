@@ -14,7 +14,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../officehours-node/public/',
+    outDir: '../public/',
     chunkSizeWarningLimit: 800,
   },
 })
