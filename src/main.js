@@ -45,6 +45,8 @@ import {
   faEye,
   faColumns,
   faArrowsAlt,
+  faRedo,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -70,7 +72,9 @@ library.add(
   faListUl,
   faEye,
   faColumns,
-  faArrowsAlt
+  faArrowsAlt,
+  faRedo,
+  faTimes
 )
 
 // FontAwesome Watch DOM

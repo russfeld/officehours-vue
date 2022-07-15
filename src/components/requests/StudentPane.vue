@@ -49,6 +49,9 @@ requestsStore.$subscribe(() => {
     studentModal = new Modal('#studentModal', {})
     studentModal.show()
   }
+  if (!request) {
+    modalShown = false
+  }
 })
 
 // Join Queue
@@ -102,7 +105,9 @@ onBeforeRouteLeave(async () => {
             <div
               v-html="
                 DOMPurify.sanitize(
-                  marked.parse(getRequest(tokenStore.id).helper.contact_info)
+                  marked.parse(
+                    getRequest(tokenStore.id).helper.contact_info || ''
+                  )
                 )
               "
             ></div>

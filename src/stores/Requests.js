@@ -203,5 +203,15 @@ export const useRequestsStore = defineStore('requests', {
         }
       })
     },
+    async requeueRequest(id) {
+      Logger.info('emit request:requeue - ' + id)
+      await this.socket.emit('request:requeue', id, async (response) => {
+        if (response == 200) {
+          Logger.info('request:requeue OK')
+        } else {
+          Logger.error('request:requeue error - ' + JSON.stringify(response))
+        }
+      })
+    },
   },
 })

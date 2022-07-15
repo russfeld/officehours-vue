@@ -58,6 +58,10 @@ const finishRequest = async function () {
   await requestsStore.finishRequest(props.request.id)
 }
 
+const requeueRequest = async function () {
+  await requestsStore.requeueRequest(props.request.id)
+}
+
 // Computed value for time ago
 const timeAgo = computed(() => {
   if (props.request.updated_at) {
@@ -107,17 +111,18 @@ const timeAgo = computed(() => {
       <font-awesome-icon icon="link-slash" />
     </template>
     {{ request.user.name }}
-    <template v-if="request.status_id == 2">
-      <span class="badge bg-primary rounded-pill">{{
-        request.helper.name
-      }}</span>
-    </template>
     <template v-if="helper">
       <button
         class="float-end btn btn-danger btn-sm mx-1"
         @click="deleteRequest"
       >
-        X
+        <font-awesome-icon icon="times" size="xl" />
+      </button>
+      <button
+        class="float-end btn btn-secondary btn-sm mx-1"
+        @click="requeueRequest"
+      >
+        <font-awesome-icon icon="redo" size="lg" />
       </button>
       <template v-if="request.status_id == 1">
         <button
@@ -134,6 +139,11 @@ const timeAgo = computed(() => {
         >
           Done
         </button>
+      </template>
+      <template v-if="request.status_id == 2">
+        <span class="badge bg-primary rounded-pill">{{
+          request.helper.name
+        }}</span>
       </template>
       <br />
       <small id="tooltip" class="text-muted">{{ timeAgo }}</small>
