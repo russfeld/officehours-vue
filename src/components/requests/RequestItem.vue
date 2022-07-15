@@ -1,6 +1,11 @@
 <script setup>
 // Stores
 import { useRequestsStore } from '@/stores/Requests'
+import { computed } from 'vue'
+import { reactive } from 'vue'
+import moment from 'moment'
+// import { Tooltip } from 'bootstrap'
+
 // Properties
 const props = defineProps({
   request: {
@@ -23,6 +28,21 @@ const props = defineProps({
   },
 })
 
+// Format string for dates
+// const format = 'M/D/YYYY h:mm:ss A'
+
+// Reactive state for computing times
+var state = reactive({ now: moment.utc() })
+
+// Update function for times
+const update = function () {
+  state.now = moment.utc()
+  setInterval(update, 10000)
+}
+
+// Call update every 10 seconds
+setInterval(update, 10000)
+
 // Requests Store
 const requestsStore = useRequestsStore()
 
@@ -37,6 +57,38 @@ const takeRequest = async function () {
 const finishRequest = async function () {
   await requestsStore.finishRequest(props.request.id)
 }
+
+// Computed value for time ago
+const timeAgo = computed(() => {
+  if (props.request.updated_at) {
+    return state.now.to(props.request.updated_at)
+  } else {
+    return state.now.to(props.request.created_at)
+  }
+})
+
+// const tooltipTime = computed(() => {
+//   if (props.request.updated_at) {
+//     return moment(props.request.updated_at).format(format)
+//   } else {
+//     return moment(props.request.created_at).format(format)
+//   }
+// })
+
+// Tooltip Variable
+// var tooltip;
+
+// Update on change
+// watch(tooltipTime, () => {
+//   tooltip.setContent(tooltipTime)
+//   console.log("watch")
+// })
+
+// Instantiate tooltip
+// onMounted(() => {
+//   tooltip = new Tooltip('#tooltip')
+//   console.log("mount")
+// })
 </script>
 
 <template>
@@ -83,6 +135,8 @@ const finishRequest = async function () {
           Done
         </button>
       </template>
+      <br />
+      <small id="tooltip" class="text-muted">{{ timeAgo }}</small>
     </template>
   </li>
 </template>
