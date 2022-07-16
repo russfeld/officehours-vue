@@ -12,7 +12,7 @@ import { useQueuesStore } from '@/stores/Queues'
 const queuesStore = useQueuesStore()
 queuesStore.hydrate()
 await queuesStore.hydrateOnline()
-const { sortedQueues, online } = storeToRefs(queuesStore)
+const { sortedQueues } = storeToRefs(queuesStore)
 </script>
 
 <template>
@@ -22,8 +22,6 @@ const { sortedQueues, online } = storeToRefs(queuesStore)
       :key="queue.id"
       :queue="queue"
       :index="index"
-      :helpers="online['helpers'][String(queue.id)]"
-      :requests="online['requests'][String(queue.id)]"
     >
     </QueueCard>
   </div>

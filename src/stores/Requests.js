@@ -66,8 +66,8 @@ export const useRequestsStore = defineStore('requests', {
         this.error = false
       })
       this.socket.on('queue:update', async (updated) => {
-        Logger.info('queue:update - ' + JSON.stringify(updated.id))
-        Logger.debug('|- updated: ' + JSON.stringify(updated))
+        Logger.info('queue:update - ' + updated.id)
+        Logger.debug('|- updated: ' + updated)
         var index = this.requests.findIndex((r) => r.id === updated.id)
         if (index < 0) {
           this.requests.push(updated)
@@ -76,27 +76,27 @@ export const useRequestsStore = defineStore('requests', {
         }
       })
       this.socket.on('queue:remove', async (id) => {
-        Logger.info('queue.remove - ' + JSON.stringify(id))
+        Logger.info('queue.remove - ' + id)
         var index = this.requests.findIndex((r) => r.id === id)
         if (index >= 0) {
           this.requests.splice(index, 1)
         }
       })
       this.socket.on('user:online', async (id) => {
-        Logger.info('user:online - ' + JSON.stringify(id))
+        Logger.info('user:online - ' + id)
         this.online.push(String(id))
       })
       this.socket.on('user:offline', async (id) => {
-        Logger.info('user:offline - ' + JSON.stringify(id))
+        Logger.info('user:offline - ' + id)
         this.online.splice(this.online.indexOf(String(id)), 1)
       })
       this.socket.on('helper:online', async (helper) => {
-        Logger.info('helper:online - ' + JSON.stringify(helper.id))
-        Logger.debug('|- helper: ' + JSON.stringify(helper))
+        Logger.info('helper:online - ' + helper.id)
+        Logger.debug('|- helper: ' + helper)
         this.helpers.push(helper)
       })
       this.socket.on('helper:offline', async (id) => {
-        Logger.info('helper:offline - ' + JSON.stringify(id))
+        Logger.info('helper:offline - ' + id)
         this.helpers.splice(
           this.helpers.findIndex((helper) => helper.id == id),
           1
@@ -109,8 +109,8 @@ export const useRequestsStore = defineStore('requests', {
       })
       this.socket.on('connected', async (online, helpers) => {
         Logger.info('socket:connected')
-        Logger.debug('|-online: ' + JSON.stringify(online))
-        Logger.debug('|-helpers: ' + JSON.stringify(helpers))
+        Logger.debug('|-online: ' + online)
+        Logger.debug('|-helpers: ' + helpers)
         this.online = online
         this.helpers = helpers
       })
@@ -124,10 +124,10 @@ export const useRequestsStore = defineStore('requests', {
       await this.socket.emit('queue:connect', async (response, requests) => {
         if (response == 200) {
           Logger.info('queue:connect OK')
-          Logger.debug('|- requests: ' + JSON.stringify(requests))
+          Logger.debug('|- requests: ' + requests)
           this.requests = requests
         } else {
-          Logger.error('queue:connect error - ' + JSON.stringify(response))
+          Logger.error('queue:connect error - ' + response)
         }
       })
     },
@@ -144,7 +144,7 @@ export const useRequestsStore = defineStore('requests', {
         if (response == 200) {
           Logger.info('queue:join OK')
         } else {
-          Logger.error('queue:join error - ' + JSON.stringify(response))
+          Logger.error('queue:join error - ' + response)
         }
       })
     },
@@ -156,7 +156,7 @@ export const useRequestsStore = defineStore('requests', {
           const queuesStore = useQueuesStore()
           queuesStore.hydrate()
         } else {
-          Logger.error('queue:open error - ' + JSON.stringify(response))
+          Logger.error('queue:open error - ' + response)
         }
       })
     },
@@ -169,7 +169,7 @@ export const useRequestsStore = defineStore('requests', {
           const queuesStore = useQueuesStore()
           queuesStore.hydrate()
         } else {
-          Logger.error('queue:close error - ' + JSON.stringify(response))
+          Logger.error('queue:close error - ' + response)
         }
       })
     },
@@ -179,7 +179,7 @@ export const useRequestsStore = defineStore('requests', {
         if (response == 200) {
           Logger.info('request:take OK')
         } else {
-          Logger.error('request:take error - ' + JSON.stringify(response))
+          Logger.error('request:take error - ' + response)
         }
       })
     },
@@ -189,7 +189,7 @@ export const useRequestsStore = defineStore('requests', {
         if (response == 200) {
           Logger.info('request:delete OK')
         } else {
-          Logger.error('request:delete error - ' + JSON.stringify(response))
+          Logger.error('request:delete error - ' + response)
         }
       })
     },
@@ -199,7 +199,7 @@ export const useRequestsStore = defineStore('requests', {
         if (response == 200) {
           Logger.info('request:finish OK')
         } else {
-          Logger.error('request:finish error - ' + JSON.stringify(response))
+          Logger.error('request:finish error - ' + response)
         }
       })
     },
@@ -209,7 +209,7 @@ export const useRequestsStore = defineStore('requests', {
         if (response == 200) {
           Logger.info('request:requeue OK')
         } else {
-          Logger.error('request:requeue error - ' + JSON.stringify(response))
+          Logger.error('request:requeue error - ' + response)
         }
       })
     },

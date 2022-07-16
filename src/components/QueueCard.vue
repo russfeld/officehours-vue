@@ -1,7 +1,10 @@
 <script setup>
 // Imports
 import { useRouter } from 'vue-router'
-const router = useRouter()
+import { storeToRefs } from 'pinia'
+
+// Stores
+import { useQueuesStore } from '@/stores/Queues'
 
 // Properties
 const props = defineProps({
@@ -11,21 +14,14 @@ const props = defineProps({
       return {}
     },
   },
-  helpers: {
-    type: Number,
-    default() {
-      return 0
-    },
-  },
-  requests: {
-    type: Number,
-    default() {
-      return 0
-    },
-  },
 })
 
+// Queues Store
+const queuesStore = useQueuesStore()
+const { getOnline } = storeToRefs(queuesStore)
+
 // Router action to load a queue when a card is clicked
+const router = useRouter()
 function loadqueue(queue_id) {
   router.push('/queues/' + queue_id)
 }
@@ -36,10 +32,12 @@ function loadqueue(queue_id) {
     <div class="card w-100 hvr-grow" @click="loadqueue(props.queue.id)">
       <h5 class="card-header">
         {{ props.queue.name }}
-        <template v-if="props.queue.is_open === 1">
+        <template v-if="getOnline(props.queue.id).is_open === 1">
           <span class="float-end badge rounded-pill bg-success"
-            >Open | {{ helpers }} <font-awesome-icon icon="user-graduate" /> |
-            {{ requests }} <font-awesome-icon icon="circle-question"
+            >Open | {{ getOnline(props.queue.id).helpers || 0 }}
+            <font-awesome-icon icon="user-graduate" /> |
+            {{ getOnline(props.queue.id).requests || 0 }}
+            <font-awesome-icon icon="circle-question"
           /></span>
         </template>
         <template v-else>

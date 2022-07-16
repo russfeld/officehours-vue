@@ -59,7 +59,7 @@ export const useTokenStore = defineStore('token', {
               ? 'http://localhost:3000/auth/login'
               : '/auth/login'
           } else {
-            Logger.error('token:get error' + JSON.stringify(err))
+            Logger.error('token:get error' + err)
             this.token = ''
           }
         })
@@ -77,7 +77,7 @@ export const useTokenStore = defineStore('token', {
             Logger.info('token:try login failed - trying refresh token')
             await this.refreshToken()
           } else {
-            Logger.error('token:try error' + JSON.stringify(err))
+            Logger.error('token:try error' + err)
             this.token = ''
           }
         })
@@ -99,7 +99,7 @@ export const useTokenStore = defineStore('token', {
               ? 'http://localhost:3000/auth/login'
               : '/auth/login'
           } else {
-            Logger.error('token:refresh error' + JSON.stringify(err))
+            Logger.error('token:refresh error' + err)
             this.token = ''
           }
         })
