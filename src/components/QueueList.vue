@@ -1,5 +1,6 @@
 <script setup>
 // Imports
+import { onBeforeRouteLeave } from 'vue-router'
 import { storeToRefs } from 'pinia'
 
 // Components
@@ -13,6 +14,11 @@ const queuesStore = useQueuesStore()
 queuesStore.hydrate()
 await queuesStore.hydrateOnline()
 const { sortedQueues } = storeToRefs(queuesStore)
+
+// Disconnect Socket on Leave
+onBeforeRouteLeave(async () => {
+  await queuesStore.disconnectQueue()
+})
 </script>
 
 <template>

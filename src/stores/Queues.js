@@ -24,7 +24,12 @@ export const useQueuesStore = defineStore('queues', {
       return (id) => state.queues.find((queue) => queue.id == id)
     },
     getOnline: (state) => {
-      return (id) => state.online.find((online) => online.id == id)
+      return (id) =>
+        state.online.find((online) => online.id == id) || {
+          is_open: false,
+          helpers: 0,
+          requests: 0,
+        }
     },
     sortedQueues: (state) => {
       return [...state.queues].sort((a, b) => b.is_open - a.is_open)
@@ -67,6 +72,16 @@ export const useQueuesStore = defineStore('queues', {
         this.connected = false
         this.error = false
       })
+      this.socket.on('status:update', async (updated) => {
+        Logger.info('status:update - ' + updated.id)
+        Logger.debug('|- updated: ' + updated)
+        var index = this.online.findIndex((r) => r.id === updated.id)
+        if (index < 0) {
+          this.online.push(updated)
+        } else {
+          Object.assign(this.online[index], updated)
+        }
+      })
       Logger.info('emit status:connect')
       await this.socket.emit('status:connect', async (response, online) => {
         if (response == 200) {
@@ -77,6 +92,13 @@ export const useQueuesStore = defineStore('queues', {
           Logger.error('status:connect error - ' + response)
         }
       })
+    },
+    async disconnectQueue() {
+      if (this.socket) {
+        Logger.info('emit socket:disconnect')
+        this.socket.disconnect()
+      }
+      this.$reset()
     },
     async update(queue) {
       await api
