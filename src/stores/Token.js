@@ -12,6 +12,7 @@ export const useTokenStore = defineStore('token', {
     return {
       // HACK this may be unsafe - consider refactor?
       token: useStorage('token', ''),
+      sound: true,
     }
   },
   getters: {
@@ -108,6 +109,10 @@ export const useTokenStore = defineStore('token', {
     async logout() {
       this.token = ''
       window.location.href = 'http://localhost:3000/auth/logout'
+    },
+
+    async toggleSound() {
+      this.sound = !this.sound
     },
   },
 })

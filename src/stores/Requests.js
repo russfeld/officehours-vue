@@ -71,6 +71,11 @@ export const useRequestsStore = defineStore('requests', {
         var index = this.requests.findIndex((r) => r.id === updated.id)
         if (index < 0) {
           this.requests.push(updated)
+          if (tokenStore.sound) {
+            // Sound Credit
+            // https://pixabay.com/sound-effects/ding-36029/
+            new Audio('/ding-36029.mp3').play()
+          }
         } else {
           this.requests[index] = updated
         }

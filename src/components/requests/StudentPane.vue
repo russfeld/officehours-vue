@@ -48,6 +48,11 @@ requestsStore.$subscribe(() => {
     modalShown = true
     studentModal = new Modal('#studentModal', {})
     studentModal.show()
+    if (tokenStore.sound) {
+      // Sound Credit
+      // https://pixabay.com/sound-effects/ding-36029/
+      new Audio('/ding-36029.mp3').play()
+    }
   }
   if (!request) {
     modalShown = false

@@ -47,6 +47,16 @@ const tokenStore = useTokenStore()
           <div v-if="tokenStore.token">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
+                <a class="nav-link" @click="tokenStore.toggleSound">
+                  <template v-if="tokenStore.sound">
+                    <font-awesome-icon icon="bell" />
+                  </template>
+                  <template v-else>
+                    <font-awesome-icon icon="bell-slash" />
+                  </template>
+                </a>
+              </li>
+              <li class="nav-item">
                 <RouterLink to="/profile" active-class="active" class="nav-link"
                   ><font-awesome-icon icon="user" />
                   {{ tokenStore.eid }}</RouterLink
