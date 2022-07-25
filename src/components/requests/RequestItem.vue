@@ -36,6 +36,7 @@ var state = reactive({ now: moment.utc() })
 
 // Update function for times
 const update = function () {
+  // BUG is this the memory leak?
   state.now = moment.utc()
   setInterval(update, 10000)
 }
