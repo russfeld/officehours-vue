@@ -9,6 +9,8 @@ import QueueEditView from '../views/QueueEditView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import AdminView from '../views/AdminView.vue'
 import UserEditView from '../views/UserEditView.vue'
+import DashboardView from '../views/DashboardView.vue'
+import PeriodView from '../views/PeriodView.vue'
 
 // Stores
 import { useTokenStore } from '@/stores/Token'
@@ -83,6 +85,20 @@ const router = createRouter({
       // TODO add code splitting
       component: UserEditView,
       props: true,
+      beforeEnter: requireAdmin,
+    },
+    {
+      path: '/data',
+      name: 'data',
+      // TODO add code splitting?
+      component: DashboardView,
+      beforeEnter: requireAdmin,
+    },
+    {
+      path: '/data/:id',
+      name: 'data_periods',
+      // TODO add code splitting?
+      component: PeriodView,
       beforeEnter: requireAdmin,
     },
   ],

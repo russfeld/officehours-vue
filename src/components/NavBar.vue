@@ -42,6 +42,11 @@ const tokenStore = useTokenStore()
               >Admin</RouterLink
             >
           </li>
+          <li v-if="tokenStore.is_admin" class="nav-item">
+            <RouterLink to="/data" active-class="active" class="nav-link"
+              >Data</RouterLink
+            >
+          </li>
         </ul>
         <div class="">
           <div v-if="tokenStore.token">

@@ -18,6 +18,8 @@
     "@vueuse/core": "^8.5.0",
     "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
+    "datatables.net-bs5": "^1.12.1",
+    "datatables.net-vue3": "^1.0.0",
     "dompurify": "^2.3.8",
     "easymde": "^2.16.1",
     "js-logger": "^1.6.1",
