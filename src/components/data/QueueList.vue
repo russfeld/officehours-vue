@@ -26,9 +26,13 @@ const columns = [
     },
   },
   {
-    data: null,
-    render: function () {
-      return '<button class="btn btn-sm btn-primary">Test</button>'
+    data: 'queue_name',
+    render: function (data) {
+      return (
+        '<a class="btn btn-success" href="/data/' +
+        encodeURIComponent(data) +
+        '">View</a>'
+      )
     },
   },
 ]
@@ -38,9 +42,18 @@ const columns = [
   <DataTable
     :columns="columns"
     :data="queues"
+    :options="{ paging: false, searching: false, info: false }"
     class="table table-hover table-striped"
     width="100%"
   >
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th># Periods</th>
+        <th>Recent</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
   </DataTable>
 </template>
 

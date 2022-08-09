@@ -10,9 +10,9 @@ import { usePeriodsStore } from '@/stores/Periods'
 
 // Properties
 const props = defineProps({
-  name: {
-    type: String,
-    default: '',
+  id: {
+    type: Number,
+    default: -1,
   },
 })
 
@@ -21,8 +21,8 @@ DataTable.use(DataTableBs5)
 
 // Requests Store
 const periodsStore = usePeriodsStore()
-await periodsStore.loadPeriods(props.name)
-const { periods } = storeToRefs(periodsStore)
+await periodsStore.loadEvents(props.id)
+const { events } = storeToRefs(periodsStore)
 
 const columns = [
   { data: 'id' },
@@ -42,7 +42,9 @@ const columns = [
   {
     data: 'id',
     render: function (data) {
-      return '<a class="btn btn-success" href="/period/' + data + '">View</a>'
+      return (
+        '<a class="btn btn-success" href="/data/period/' + data + '">View</a>'
+      )
     },
   },
 ]
@@ -51,7 +53,7 @@ const columns = [
 <template>
   <DataTable
     :columns="columns"
-    :data="periods"
+    :data="events"
     class="table table-hover table-striped"
     width="100%"
   >

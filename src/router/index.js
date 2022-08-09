@@ -11,6 +11,7 @@ import AdminView from '../views/AdminView.vue'
 import UserEditView from '../views/UserEditView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import PeriodView from '../views/PeriodView.vue'
+import EventView from '../views/EventView.vue'
 
 // Stores
 import { useTokenStore } from '@/stores/Token'
@@ -95,11 +96,28 @@ const router = createRouter({
       beforeEnter: requireAdmin,
     },
     {
-      path: '/data/:id',
+      path: '/data/:name',
       name: 'data_periods',
       // TODO add code splitting?
       component: PeriodView,
       beforeEnter: requireAdmin,
+      props: (route) => {
+        return {
+          name: route.params.name,
+        }
+      },
+    },
+    {
+      path: '/period/:id',
+      name: 'period',
+      // TODO add code splitting?
+      component: EventView,
+      beforeEnter: requireAdmin,
+      props: (route) => {
+        return {
+          id: route.params.id,
+        }
+      },
     },
   ],
 })
