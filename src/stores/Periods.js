@@ -11,6 +11,7 @@ export const usePeriodsStore = defineStore('periods', {
       queues: [],
       periods: [],
       events: [],
+      presences: [],
     }
   },
   actions: {
@@ -20,16 +21,17 @@ export const usePeriodsStore = defineStore('periods', {
         this.queues = response.data
       })
     },
-    async loadPeriods(id) {
-      Logger.info('periods:hydrate - ' + id)
-      await api.get('/api/v1/periods/' + id).then((response) => {
+    async loadPeriods(name) {
+      Logger.info('periods:hydrate - ' + name)
+      await api.get('/api/v1/periods?name=' + name).then((response) => {
         this.periods = response.data
       })
     },
     async loadEvents(id) {
       Logger.info('periods:hydrate - ' + id)
-      await api.get('/api/v1/periods/' + id + '/events').then((response) => {
-        this.events = response.data
+      await api.get('/api/v1/periods/' + id).then((response) => {
+        this.events = response.data.events
+        this.presences = response.data.presences
       })
     },
   },

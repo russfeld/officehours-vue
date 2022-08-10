@@ -22,10 +22,13 @@ DataTable.use(DataTableBs5)
 // Requests Store
 const periodsStore = usePeriodsStore()
 await periodsStore.loadEvents(props.id)
-const { events } = storeToRefs(periodsStore)
+const { events, presences } = storeToRefs(periodsStore)
 
-const columns = [
+const columns1 = [
   { data: 'id' },
+  { data: 'eid' },
+  { data: 'status' },
+  //  { data: 'presence_id'},
   {
     data: 'created_at',
     render: function (data) {
@@ -38,32 +41,60 @@ const columns = [
       return moment(data).format('L LTS')
     },
   },
-  { data: 'events' },
+]
+
+const columns2 = [
+  { data: 'id' },
+  { data: 'eid' },
   {
-    data: 'id',
+    data: 'created_at',
     render: function (data) {
-      return (
-        '<a class="btn btn-success" href="/data/period/' + data + '">View</a>'
-      )
+      return moment(data).format('L LTS')
+    },
+  },
+  {
+    data: 'updated_at',
+    render: function (data) {
+      return moment(data).format('L LTS')
     },
   },
 ]
 </script>
 
 <template>
+  <h1 class="display-5 text-center">Event Log: Period {{ id }}</h1>
+  <h2 class="text-center">Events</h2>
   <DataTable
-    :columns="columns"
+    :columns="columns1"
     :data="events"
+    :options="{ paging: false, searching: false, info: false }"
     class="table table-hover table-striped"
     width="100%"
   >
     <thead>
       <tr>
         <th>ID</th>
-        <th>Opened</th>
-        <th>Closed</th>
-        <th># Events</th>
-        <th>Actions</th>
+        <th>eID</th>
+        <th>Status</th>
+        <th>Start</th>
+        <th>End</th>
+      </tr>
+    </thead>
+  </DataTable>
+  <h2 class="text-center">Presences</h2>
+  <DataTable
+    :columns="columns2"
+    :data="presences"
+    :options="{ paging: false, searching: false, info: false }"
+    class="table table-hover table-striped"
+    width="100%"
+  >
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>eID</th>
+        <th>Start</th>
+        <th>End</th>
       </tr>
     </thead>
   </DataTable>

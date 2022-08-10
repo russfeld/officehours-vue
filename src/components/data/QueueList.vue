@@ -39,6 +39,7 @@ const columns = [
 </script>
 
 <template>
+  <h1 class="display-5 text-center">Event Log: Queues</h1>
   <DataTable
     :columns="columns"
     :data="queues"

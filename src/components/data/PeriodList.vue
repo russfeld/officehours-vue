@@ -49,6 +49,7 @@ const columns = [
 </script>
 
 <template>
+  <h1 class="display-5 text-center">Event Log: {{ name }}</h1>
   <DataTable
     :columns="columns"
     :data="periods"
