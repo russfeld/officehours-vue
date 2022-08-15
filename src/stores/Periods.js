@@ -14,6 +14,11 @@ export const usePeriodsStore = defineStore('periods', {
       presences: [],
     }
   },
+  getters: {
+    getPeriod: (state) => {
+      return (id) => state.periods.find((period) => period.id == id)
+    },
+  },
   actions: {
     async hydrate() {
       Logger.info('periods:hydrate')
@@ -31,6 +36,11 @@ export const usePeriodsStore = defineStore('periods', {
       Logger.info('periods:hydrate - ' + id)
       await api.get('/api/v1/periods/' + id).then((response) => {
         this.events = response.data.events
+        for (var event of this.events) {
+          event.ganttBarConfig = {
+            id: event.id
+          }
+        }
         this.presences = response.data.presences
       })
     },

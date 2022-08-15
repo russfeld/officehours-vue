@@ -7,6 +7,7 @@ import { createPinia } from 'pinia'
 import { plugin, defaultConfig } from '@formkit/vue'
 import setupInterceptors from './services/interceptors'
 import Logger from 'js-logger'
+import ganttastic from '@infectoone/vue-ganttastic'
 
 // Log messages will be written to the window's console.
 Logger.useDefaults()
@@ -104,6 +105,7 @@ app.use(
     },
   })
 )
+app.use(ganttastic)
 
 // Add Font Awesome
 app.component('FontAwesomeIcon', FontAwesomeIcon)

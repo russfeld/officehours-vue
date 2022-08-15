@@ -1,5 +1,6 @@
 <script setup>
 // Imports
+import { onMounted, h } from 'vue'
 import { storeToRefs } from 'pinia'
 import DataTable from 'datatables.net-vue3'
 import DataTableBs5 from 'datatables.net-bs5'
@@ -16,6 +17,10 @@ const periodsStore = usePeriodsStore()
 await periodsStore.hydrate()
 const { queues } = storeToRefs(periodsStore)
 
+const clickFunction = (data) => {
+  console.log("Clicked " + data)
+}
+
 const columns = [
   { data: 'queue_name' },
   { data: 'periods' },
@@ -28,14 +33,16 @@ const columns = [
   {
     data: 'queue_name',
     render: function (data) {
-      return (
-        '<a class="btn btn-success" href="/data/' +
-        encodeURIComponent(data) +
-        '">View</a>'
-      )
+      // TODO This doesn't work
+      // https://next--vue-dataset-demo.netlify.app/installation/
+      return h('button', {
+              onClick: () => clickFunction(data)
+            }, 'click')
     },
   },
 ]
+
+
 </script>
 
 <template>

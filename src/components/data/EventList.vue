@@ -22,7 +22,8 @@ DataTable.use(DataTableBs5)
 // Requests Store
 const periodsStore = usePeriodsStore()
 await periodsStore.loadEvents(props.id)
-const { events, presences } = storeToRefs(periodsStore)
+const { events, presences, periods } = storeToRefs(periodsStore)
+const getPeriod = periodsStore.getPeriod
 
 const columns1 = [
   { data: 'id' },
@@ -98,6 +99,22 @@ const columns2 = [
       </tr>
     </thead>
   </DataTable>
+
+  <p>{{ periods }}</p>
+
+  <g-gantt-chart
+    chart-start="period.created_at"
+    chart-end="period.updated_at"
+    precision="hour"
+    bar-start="created_at"
+    bar-end="updated_at"
+  >
+    <g-gantt-row
+      label="Test"
+      :bars="events"
+    />
+
+  </g-gantt-chart>
 </template>
 
 <style scoped>

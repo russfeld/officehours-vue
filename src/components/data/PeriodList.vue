@@ -66,6 +66,8 @@ const columns = [
       </tr>
     </thead>
   </DataTable>
+
+  <p>{{ periods }}</p>
 </template>
 
 <style scoped>
