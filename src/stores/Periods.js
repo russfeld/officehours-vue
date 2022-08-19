@@ -1,6 +1,7 @@
 // Imports
 import { defineStore } from 'pinia'
 import Logger from 'js-logger'
+import moment from 'moment'
 
 // Services
 import api from '@/services/api'
@@ -33,13 +34,16 @@ export const usePeriodsStore = defineStore('periods', {
       })
     },
     async loadEvents(id) {
+      // TODO hydrate period directly
       Logger.info('periods:hydrate - ' + id)
       await api.get('/api/v1/periods/' + id).then((response) => {
         this.events = response.data.events
         for (var event of this.events) {
           event.ganttBarConfig = {
-            id: event.id
+            id: event.id,
           }
+          event.created_at = moment(event.created_at).format('YYYY-MM-DD HH:mm')
+          event.updated_at = moment(event.updated_at).format('YYYY-MM-DD HH:mm')
         }
         this.presences = response.data.presences
       })
