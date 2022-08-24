@@ -45,7 +45,7 @@ const getQueue = queuesStore.getQueue
     <!-- Using DOMPurify to sanitize HTML -->
     <!-- eslint-disable vue/no-v-html -->
     <div
-      v-html="DOMPurify.sanitize(marked.parse(getQueue(id).description))"
+      v-html="DOMPurify.sanitize(marked.parse(getQueue(id).description || ''))"
     ></div>
     <hr />
     <template v-if="getQueue(id).helper == 1">

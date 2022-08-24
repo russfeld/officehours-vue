@@ -20,6 +20,10 @@ const props = defineProps({
     type: Number,
     default: -1,
   },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 // Queues Store
@@ -62,7 +66,11 @@ const save = async (data) => {
   }
   try {
     await queuesStore.update(data)
-    router.push('/queues/' + queue.id)
+    if (props.admin) {
+      router.push('/admin')
+    } else {
+      router.push('/queues/' + queue.id)
+    }
   } catch (error) {
     if (error.response && error.response.status === 422) {
       let errors = {}
@@ -146,12 +154,19 @@ const save = async (data) => {
           <button class="btn btn-success">Save</button>
         </div>
         <div class="col d-grid mb-2">
-          <router-link
-            :to="{ name: 'queue_single', params: { id: queue.id } }"
-            class="btn btn-secondary"
-          >
-            Cancel</router-link
-          >
+          <template v-if="admin">
+            <router-link :to="{ name: 'admin' }" class="btn btn-secondary">
+              Cancel</router-link
+            >
+          </template>
+          <template v-else>
+            <router-link
+              :to="{ name: 'queue_single', params: { id: queue.id } }"
+              class="btn btn-secondary"
+            >
+              Cancel</router-link
+            >
+          </template>
         </div>
       </div>
     </FormKit>

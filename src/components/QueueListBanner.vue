@@ -9,8 +9,7 @@
     <div class="col-lg-10 mx-auto">
       <p class="lead-custom text-center">
         <!-- TODO Edit Banner -->
-        Welcome! This site manages virtual queues for office hours.<br />Let's
-        get started!
+        Select a queue to join:
       </p>
     </div>
   </div>

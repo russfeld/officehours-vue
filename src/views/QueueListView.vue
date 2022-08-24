@@ -1,13 +1,13 @@
 <script setup>
 // import TheWelcome from "@/components/TheWelcome.vue";
-import TopBanner from '@/components/TopBanner.vue'
+import QueueListBanner from '@/components/QueueListBanner.vue'
 
 import QueueList from '@/components/QueueList.vue'
 </script>
 
 <template>
   <main>
-    <TopBanner />
+    <QueueListBanner />
     <br />
     <QueueList />
   </main>

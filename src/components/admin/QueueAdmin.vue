@@ -108,6 +108,14 @@ const addQueue = async function () {
         <tr>
           <td>{{ queue.name }}</td>
           <td>
+            <router-link
+              :to="{
+                name: 'queue_edit',
+                params: { id: queue.id, admin: true },
+              }"
+              class="btn btn-secondary btn-sm mx-1"
+              ><font-awesome-icon icon="pen-to-square"
+            /></router-link>
             <button
               type="button"
               class="btn btn-danger btn-sm mx-1"

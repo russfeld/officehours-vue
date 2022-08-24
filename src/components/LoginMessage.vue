@@ -14,7 +14,9 @@ const tokenStore = useTokenStore()
     <TopBanner />
     <br />
     <div v-if="tokenStore.token">
-      <RouterLink to="/queues" class="btn btn-success">Queues List</RouterLink>
+      <RouterLink to="/queues" class="btn btn-success"
+        >Click Here to See Available Queues</RouterLink
+      >
     </div>
     <div v-else>
       <a class="btn btn-success" @click="tokenStore.getToken()"
