@@ -29,14 +29,14 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      beforeEnter: async () => {
-        const tokenStore = useTokenStore()
-        await tokenStore.tryToken()
+      // beforeEnter: async () => {
+      //   const tokenStore = useTokenStore()
+      //   await tokenStore.tryToken()
 
-        if (tokenStore.token) {
-          return '/queues'
-        }
-      },
+      //   if (tokenStore.token) {
+      //     return '/queues'
+      //   }
+      // },
     },
     {
       path: '/about',
