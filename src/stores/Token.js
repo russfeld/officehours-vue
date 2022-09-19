@@ -108,10 +108,9 @@ export const useTokenStore = defineStore('token', {
 
     async logout() {
       this.token = ''
-      window.location.href =
-        window.location.href == import.meta.env.DEV
-          ? 'http://localhost:3000/auth/logout'
-          : '/auth/logout'
+      window.location.href = import.meta.env.DEV
+        ? 'http://localhost:3000/auth/logout'
+        : '/auth/logout'
     },
 
     async toggleSound() {
