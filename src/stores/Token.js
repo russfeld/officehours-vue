@@ -55,6 +55,7 @@ export const useTokenStore = defineStore('token', {
         })
         .catch((err) => {
           if (err.response && err.response.status === 401) {
+            this.token = ''
             Logger.info('token:get login failed - redirecting to CAS')
             window.location.href = import.meta.env.DEV
               ? 'http://localhost:3000/auth/login'
@@ -95,6 +96,7 @@ export const useTokenStore = defineStore('token', {
         })
         .catch((err) => {
           if (err.response && err.response.status === 401) {
+            this.token = ''
             Logger.info('token:refresh login failed - redirecting to CAS')
             window.location.href = import.meta.env.DEV
               ? 'http://localhost:3000/auth/login'
