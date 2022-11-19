@@ -35,14 +35,15 @@ const props = defineProps({
 var state = reactive({ now: moment.utc() })
 
 // Update function for times
-const update = function () {
-  // BUG is this the memory leak?
-  state.now = moment.utc()
-  setInterval(update, 10000)
-}
+//const update = function () {
+// BUG is this the memory leak?
+// TODO fix this?
+//  state.now = moment.utc()
+//setInterval(update, 10000)
+//}
 
 // Call update every 10 seconds
-setInterval(update, 10000)
+//setInterval(update, 10000)
 
 // Requests Store
 const requestsStore = useRequestsStore()

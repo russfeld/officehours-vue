@@ -26,7 +26,7 @@ const props = defineProps({
 // Requests Store
 const periodsStore = usePeriodsStore()
 await periodsStore.loadEvents(props.id)
-const { events, presences } = storeToRefs(periodsStore)
+const { events, presences, getEventsTimline } = storeToRefs(periodsStore)
 
 const eventCols = reactive([
   {
@@ -149,11 +149,44 @@ const presenceSortBy = computed(() => {
     return acc
   }, [])
 })
+
+const chartOptions = {
+  chart: {
+    type: 'rangeBar',
+  },
+  plotOptions: {
+    bar: {
+      horizontal: true,
+      barHeight: '50%',
+      rangeBarGroupRows: true,
+    },
+  },
+  xaxis: {
+    type: 'datetime',
+    labels: {
+      datetimeUTC: false,
+    },
+  },
+  dataLabels: {
+    enabled: true,
+    formatter: function (val, opts) {
+      return opts.w.config.series[opts.seriesIndex].data[opts.dataPointIndex].z
+    },
+  },
+}
 </script>
 
 <template>
   <h1 class="display-5 text-center">Event Log: Period {{ id }}</h1>
   <h2 class="text-center">Events</h2>
+
+  <div>
+    <apexchart
+      type="rangeBar"
+      :options="chartOptions"
+      :series="getEventsTimline"
+    ></apexchart>
+  </div>
 
   <dataset v-slot="{ ds }" :ds-data="events" :ds-sortby="eventSortBy">
     <div class="row" :data-page-count="ds.dsPagecount">
@@ -252,20 +285,4 @@ const presenceSortBy = computed(() => {
       <dataset-pager />
     </div>
   </dataset>
-
-  <!--
-
-  <g-gantt-chart
-    chart-start="{{ start }}"
-    chart-end="{{ end }}"
-    precision="hour"
-    bar-start="created_at"
-    bar-end="updated_at"
-  >
-    <g-gantt-row
-      label="Test"
-      :bars="events"
-    />
-
-  </g-gantt-chart> -->
 </template>
