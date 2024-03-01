@@ -128,7 +128,7 @@ router.beforeEach(async function (to) {
     const tokenStore = useTokenStore()
 
     if (!tokenStore.token) {
-      await tokenStore.tryToken()
+      await tokenStore.getToken()
     }
     if (!tokenStore.token) {
       return '/'

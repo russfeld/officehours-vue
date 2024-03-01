@@ -15,6 +15,13 @@ const props = defineProps({
     type: Number,
     default: -1,
   },
+  helper: {
+    type: Boolean,
+    default() {
+      return false
+    },
+  },
+
 })
 
 // Token Store
@@ -37,6 +44,7 @@ const { sortedRequests } = storeToRefs(requestsStore)
       :index="index"
       v-bind="$attrs"
       :user-id="tokenStore.id"
+      :helper="props.helper"
     >
     </RequestItem>
   </ul>

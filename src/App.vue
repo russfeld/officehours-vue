@@ -4,6 +4,13 @@ import { RouterView } from 'vue-router'
 
 // Components
 import NavBar from './components/NavBar.vue'
+
+// Stores
+import { useTokenStore } from '@/stores/Token'
+const tokenStore = useTokenStore()
+
+// Setup Stores
+tokenStore.tryToken()
 </script>
 
 <template>
