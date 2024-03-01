@@ -21,7 +21,6 @@ const props = defineProps({
       return false
     },
   },
-
 })
 
 // Token Store
