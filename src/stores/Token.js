@@ -12,7 +12,7 @@ export const useTokenStore = defineStore('token', {
     return {
       // HACK this may be unsafe - consider refactor?
       token: useStorage('token', ''),
-      sound: true,
+      sound: true
     }
   },
   getters: {
@@ -43,7 +43,7 @@ export const useTokenStore = defineStore('token', {
       } else {
         return false
       }
-    },
+    }
   },
   actions: {
     async getToken() {
@@ -87,7 +87,7 @@ export const useTokenStore = defineStore('token', {
       Logger.info('token:refresh')
       await api
         .post('/auth/token', {
-          refresh_token: this.refresh_token,
+          refresh_token: this.refresh_token
         })
         .then((response) => {
           this.token = response.data.token
@@ -108,7 +108,7 @@ export const useTokenStore = defineStore('token', {
       Logger.info('token:tryrefresh')
       await api
         .post('/auth/token', {
-          refresh_token: this.refresh_token,
+          refresh_token: this.refresh_token
         })
         .then((response) => {
           this.token = response.data.token
@@ -132,6 +132,6 @@ export const useTokenStore = defineStore('token', {
 
     async toggleSound() {
       this.sound = !this.sound
-    },
-  },
+    }
+  }
 })

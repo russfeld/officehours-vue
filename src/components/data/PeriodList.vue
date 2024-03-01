@@ -8,7 +8,7 @@ import {
   DatasetInfo,
   DatasetPager,
   DatasetSearch,
-  DatasetShow,
+  DatasetShow
 } from 'vue-dataset'
 
 // Stores
@@ -18,8 +18,8 @@ import { usePeriodsStore } from '@/stores/Periods'
 const props = defineProps({
   name: {
     type: String,
-    default: '',
-  },
+    default: ''
+  }
 })
 
 // Requests Store
@@ -31,23 +31,23 @@ const cols = reactive([
   {
     name: 'ID',
     field: 'id',
-    sort: '',
+    sort: ''
   },
   {
     name: 'Opened',
     field: 'created_at',
-    sort: '',
+    sort: ''
   },
   {
     name: 'Closed',
     field: 'updated_at',
-    sort: '',
+    sort: ''
   },
   {
     name: 'Events',
     field: 'events',
-    sort: '',
-  },
+    sort: ''
+  }
 ])
 
 const click = function (event, i) {
@@ -87,8 +87,15 @@ const sortBy = computed(() => {
 <template>
   <h1 class="display-5 text-center">Event Log: {{ name }}</h1>
 
-  <dataset v-slot="{ ds }" :ds-data="periods" :ds-sortby="sortBy">
-    <div class="row" :data-page-count="ds.dsPagecount">
+  <dataset
+    v-slot="{ ds }"
+    :ds-data="periods"
+    :ds-sortby="sortBy"
+  >
+    <div
+      class="row"
+      :data-page-count="ds.dsPagecount"
+    >
       <div class="col-md-6 mb-2 mb-md-0">
         <dataset-show ds-show-entries="25" />
       </div>
@@ -134,9 +141,7 @@ const sortBy = computed(() => {
         </div>
       </div>
     </div>
-    <div
-      class="d-flex flex-md-row flex-column justify-content-between align-items-center"
-    >
+    <div class="d-flex flex-md-row flex-column justify-content-between align-items-center">
       <dataset-info class="mb-2 mb-md-0" />
       <dataset-pager />
     </div>

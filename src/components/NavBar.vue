@@ -13,7 +13,11 @@ const tokenStore = useTokenStore()
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-purple">
     <div class="container">
-      <RouterLink to="/" class="navbar-brand">Office Hours</RouterLink>
+      <RouterLink
+        to="/"
+        class="navbar-brand"
+        >Office Hours</RouterLink
+      >
       <button
         class="navbar-toggler"
         type="button"
@@ -25,25 +29,46 @@ const tokenStore = useTokenStore()
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div id="navbarCollapse" class="collapse navbar-collapse">
+      <div
+        id="navbarCollapse"
+        class="collapse navbar-collapse"
+      >
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <RouterLink to="/queues" active-class="active" class="nav-link"
+            <RouterLink
+              to="/queues"
+              active-class="active"
+              class="nav-link"
               >Queues</RouterLink
             >
           </li>
           <li class="nav-item">
-            <RouterLink to="/about" active-class="active" class="nav-link"
+            <RouterLink
+              to="/about"
+              active-class="active"
+              class="nav-link"
               >About</RouterLink
             >
           </li>
-          <li v-if="tokenStore.is_admin" class="nav-item">
-            <RouterLink to="/admin" active-class="active" class="nav-link"
+          <li
+            v-if="tokenStore.is_admin"
+            class="nav-item"
+          >
+            <RouterLink
+              to="/admin"
+              active-class="active"
+              class="nav-link"
               >Admin</RouterLink
             >
           </li>
-          <li v-if="tokenStore.is_admin" class="nav-item">
-            <RouterLink to="/data" active-class="active" class="nav-link"
+          <li
+            v-if="tokenStore.is_admin"
+            class="nav-item"
+          >
+            <RouterLink
+              to="/data"
+              active-class="active"
+              class="nav-link"
               >Data</RouterLink
             >
           </li>
@@ -52,7 +77,10 @@ const tokenStore = useTokenStore()
           <div v-if="tokenStore.token">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link" @click="tokenStore.toggleSound">
+                <a
+                  class="nav-link"
+                  @click="tokenStore.toggleSound"
+                >
                   <template v-if="tokenStore.sound">
                     <font-awesome-icon icon="bell" />
                   </template>
@@ -62,23 +90,26 @@ const tokenStore = useTokenStore()
                 </a>
               </li>
               <li class="nav-item">
-                <RouterLink to="/profile" active-class="active" class="nav-link"
-                  ><font-awesome-icon icon="user" />
-                  {{ tokenStore.eid }}</RouterLink
+                <RouterLink
+                  to="/profile"
+                  active-class="active"
+                  class="nav-link"
+                  ><font-awesome-icon icon="user" /> {{ tokenStore.eid }}</RouterLink
                 >
               </li>
               <li class="nav-item">
                 <a
                   class="btn btn-success float-end"
                   @click="tokenStore.logout()"
-                  ><font-awesome-icon icon="arrow-right-from-bracket" />
-                  Logout</a
+                  ><font-awesome-icon icon="arrow-right-from-bracket" /> Logout</a
                 >
               </li>
             </ul>
           </div>
           <div v-else>
-            <a class="btn btn-success" @click="tokenStore.getToken()"
+            <a
+              class="btn btn-success"
+              @click="tokenStore.getToken()"
               ><font-awesome-icon icon="arrow-right-to-bracket" /> Login</a
             >
           </div>

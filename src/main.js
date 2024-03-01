@@ -49,7 +49,7 @@ import {
   faRedo,
   faTimes,
   faBell,
-  faBellSlash,
+  faBellSlash
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -100,9 +100,9 @@ app.use(
         input: 'form-control',
         label: 'form-label',
         help: 'form-text',
-        outer: 'mb-3',
-      },
-    },
+        outer: 'mb-3'
+      }
+    }
   })
 )
 app.use(VueApexCharts)

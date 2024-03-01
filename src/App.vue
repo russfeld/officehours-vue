@@ -18,7 +18,10 @@ tokenStore.tryToken()
     <NavBar />
   </header>
 
-  <div id="main" class="container px-4 py-5">
+  <div
+    id="main"
+    class="container px-4 py-5"
+  >
     <Suspense>
       <RouterView />
     </Suspense>

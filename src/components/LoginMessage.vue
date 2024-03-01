@@ -14,12 +14,16 @@ const tokenStore = useTokenStore()
     <TopBanner />
     <br />
     <div v-if="tokenStore.token">
-      <RouterLink to="/queues" class="btn btn-success"
+      <RouterLink
+        to="/queues"
+        class="btn btn-success"
         >Click Here to See Available Queues</RouterLink
       >
     </div>
     <div v-else>
-      <a class="btn btn-success" @click="tokenStore.getToken()"
+      <a
+        class="btn btn-success"
+        @click="tokenStore.getToken()"
         ><font-awesome-icon icon="arrow-right-to-bracket" /> Login</a
       >
     </div>

@@ -18,8 +18,8 @@ const router = useRouter()
 const props = defineProps({
   id: {
     type: Number,
-    default: -1,
-  },
+    default: -1
+  }
 })
 
 // Users Store
@@ -38,10 +38,10 @@ onMounted(() => {
   easyMDE = new EasyMDE({
     autoDownloadFontAwesome: false,
     blockStyles: {
-      italic: '_',
+      italic: '_'
     },
     status: false,
-    spellChecker: false,
+    spellChecker: false
   })
 })
 
@@ -49,14 +49,14 @@ onMounted(() => {
 const save = async (data) => {
   data = (({ id, name }) => ({
     id,
-    name,
+    name
   }))(data)
   data['contact_info'] = easyMDE.value()
   // only send role ids of related roles
   data['roles'] = []
   for (const role of user.roles) {
     data['roles'].push({
-      id: role.id,
+      id: role.id
     })
   }
   try {
@@ -74,14 +74,12 @@ const save = async (data) => {
         }
         setErrors(
           'usersForm',
-          [
-            'The server rejected this submission. Please correct errors listed above',
-          ],
+          ['The server rejected this submission. Please correct errors listed above'],
           errors // (optional) input level errors
         )
       } else {
         setErrors('usersForm', [
-          'The server rejected this submission due to an SQL Error. Refresh and try again',
+          'The server rejected this submission due to an SQL Error. Refresh and try again'
         ])
       }
     } else {
@@ -125,7 +123,11 @@ const save = async (data) => {
         rows="10"
       />
       <div class="mb-3">
-        <label for="multiselect-roles" class="form-label">Roles</label>
+        <label
+          for="multiselect-roles"
+          class="form-label"
+          >Roles</label
+        >
         <VueMultiselect
           id="multiselect-roles"
           v-model="user.roles"
@@ -144,7 +146,10 @@ const save = async (data) => {
           <button class="btn btn-success">Save</button>
         </div>
         <div class="col d-grid mb-2">
-          <router-link :to="{ name: 'admin' }" class="btn btn-secondary">
+          <router-link
+            :to="{ name: 'admin' }"
+            class="btn btn-secondary"
+          >
             Cancel</router-link
           >
         </div>

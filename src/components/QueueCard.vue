@@ -12,8 +12,8 @@ const props = defineProps({
     type: Object,
     default() {
       return {}
-    },
-  },
+    }
+  }
 })
 
 // Queues Store
@@ -29,7 +29,10 @@ function loadqueue(queue_id) {
 
 <template>
   <div class="col">
-    <div class="card w-100 hvr-grow" @click="loadqueue(props.queue.id)">
+    <div
+      class="card w-100 hvr-grow"
+      @click="loadqueue(props.queue.id)"
+    >
       <h5 class="card-header">
         {{ props.queue.name }}
         <template v-if="getOnline(props.queue.id).is_open === 1">

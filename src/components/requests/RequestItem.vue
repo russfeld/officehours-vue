@@ -12,20 +12,20 @@ const props = defineProps({
     type: Object,
     default() {
       return {}
-    },
+    }
   },
   helper: {
     type: Boolean,
     default() {
       return false
-    },
+    }
   },
   userId: {
     type: Number,
     default() {
       return -1
-    },
-  },
+    }
+  }
 })
 
 // Format string for dates
@@ -103,7 +103,7 @@ const timeAgo = computed(() => {
     :class="[
       request.status_id == 2 ? 'list-group-item-primary' : '',
       request.user_id == userId ? 'current-user' : '',
-      requestsStore.userOnline(request.user_id) ? '' : 'list-group-item-light',
+      requestsStore.userOnline(request.user_id) ? '' : 'list-group-item-light'
     ]"
   >
     <template v-if="requestsStore.userOnline(request.user_id)">
@@ -118,13 +118,19 @@ const timeAgo = computed(() => {
         class="float-end btn btn-danger btn-sm mx-1"
         @click="deleteRequest"
       >
-        <font-awesome-icon icon="times" size="xl" />
+        <font-awesome-icon
+          icon="times"
+          size="xl"
+        />
       </button>
       <button
         class="float-end btn btn-secondary btn-sm mx-1"
         @click="requeueRequest"
       >
-        <font-awesome-icon icon="redo" size="lg" />
+        <font-awesome-icon
+          icon="redo"
+          size="lg"
+        />
       </button>
       <template v-if="request.status_id == 1">
         <button
@@ -143,12 +149,14 @@ const timeAgo = computed(() => {
         </button>
       </template>
       <template v-if="request.status_id == 2">
-        <span class="badge bg-primary rounded-pill">{{
-          request.helper.name
-        }}</span>
+        <span class="badge bg-primary rounded-pill">{{ request.helper.name }}</span>
       </template>
       <br />
-      <small id="tooltip" class="text-muted">{{ timeAgo }}</small>
+      <small
+        id="tooltip"
+        class="text-muted"
+        >{{ timeAgo }}</small
+      >
     </template>
   </li>
 </template>

@@ -15,7 +15,7 @@ export const useRequestsStore = defineStore('requests', {
       helpers: [],
       socket: undefined,
       connected: false,
-      error: false,
+      error: false
     }
   },
   getters: {
@@ -23,8 +23,7 @@ export const useRequestsStore = defineStore('requests', {
       return (id) => state.requests.find((request) => request.user_id === id)
     },
     userOnline: (state) => {
-      return (id) =>
-        state.online.find((user) => user == id) === undefined ? false : true
+      return (id) => (state.online.find((user) => user == id) === undefined ? false : true)
     },
     sortedRequests: (state) => {
       return [...state.requests].sort(function (a, b) {
@@ -34,7 +33,7 @@ export const useRequestsStore = defineStore('requests', {
           return b.status_id - a.status_id
         }
       })
-    },
+    }
   },
   actions: {
     async connectQueue(id) {
@@ -47,8 +46,8 @@ export const useRequestsStore = defineStore('requests', {
       this.socket = io(url, {
         auth: {
           token: tokenStore.token,
-          queue_id: id,
-        },
+          queue_id: id
+        }
       })
       this.socket.on('connect', () => {
         Logger.info('socket:connect')
@@ -217,6 +216,6 @@ export const useRequestsStore = defineStore('requests', {
           Logger.error('request:requeue error - ' + response)
         }
       })
-    },
-  },
+    }
+  }
 })

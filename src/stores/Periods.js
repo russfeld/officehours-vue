@@ -12,7 +12,7 @@ export const usePeriodsStore = defineStore('periods', {
       queues: [],
       periods: [],
       events: [],
-      presences: [],
+      presences: []
     }
   },
   getters: {
@@ -23,12 +23,12 @@ export const usePeriodsStore = defineStore('periods', {
       var output = [
         {
           name: 'Queued',
-          data: [],
+          data: []
         },
         {
           name: 'Taken',
-          data: [],
-        },
+          data: []
+        }
       ]
       for (var event of state.events) {
         if (event.status == 'Queued') {
@@ -36,26 +36,22 @@ export const usePeriodsStore = defineStore('periods', {
             x: event.eid,
             y: [
               moment(event.created_at).valueOf(),
-              event.updated_at === null
-                ? moment().valueOf()
-                : moment(event.updated_at).valueOf(),
-            ],
+              event.updated_at === null ? moment().valueOf() : moment(event.updated_at).valueOf()
+            ]
           })
         } else if (event.status == 'Taken') {
           output[1].data.push({
             x: event.eid,
             y: [
               moment(event.created_at).valueOf(),
-              event.updated_at === null
-                ? moment().valueOf()
-                : moment(event.updated_at).valueOf(),
+              event.updated_at === null ? moment().valueOf() : moment(event.updated_at).valueOf()
             ],
-            z: event.presence ? event.presence.eid : '',
+            z: event.presence ? event.presence.eid : ''
           })
         }
       }
       return output
-    },
+    }
   },
   actions: {
     async hydrate() {
@@ -84,6 +80,6 @@ export const usePeriodsStore = defineStore('periods', {
         // }
         this.presences = response.data.presences
       })
-    },
-  },
+    }
+  }
 })

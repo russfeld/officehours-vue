@@ -15,8 +15,8 @@ import { useRequestsStore } from '@/stores/Requests'
 const props = defineProps({
   id: {
     type: Number,
-    default: -1,
-  },
+    default: -1
+  }
 })
 
 // Queues Store
@@ -62,13 +62,19 @@ onBeforeRouteLeave(async () => {
     </template>
     <template v-else>
       <template v-if="error">
-        <button class="btn btn-outline-danger float-end" @click="reconnect">
+        <button
+          class="btn btn-outline-danger float-end"
+          @click="reconnect"
+        >
           <font-awesome-icon icon="link-slash" />
           <span class="visually-hidden">Disconnected!</span>
         </button>
       </template>
       <template v-else>
-        <button class="btn btn-outline-warning float-end" @click="reconnect">
+        <button
+          class="btn btn-outline-warning float-end"
+          @click="reconnect"
+        >
           <span
             class="spinner-border spinner-border-sm"
             role="status"
@@ -80,12 +86,16 @@ onBeforeRouteLeave(async () => {
     </template>
     <h2 class="text-center">Moderate Queue</h2>
     <template v-if="getQueue(id).is_open == 1">
-      <a class="w-100 btn btn-success" @click="disableQueue"
+      <a
+        class="w-100 btn btn-success"
+        @click="disableQueue"
         >Queue is Open - Click to Close</a
       >
     </template>
     <template v-else>
-      <a class="w-100 btn btn-danger" @click="enableQueue"
+      <a
+        class="w-100 btn btn-danger"
+        @click="enableQueue"
         >Queue is Closed - Click to Open</a
       >
     </template>
@@ -96,7 +106,10 @@ onBeforeRouteLeave(async () => {
       <HelperList />
     </div>
     <div class="col-12 col-md-8 mb-4">
-      <RequestList :id="id" helper />
+      <RequestList
+        :id="id"
+        helper
+      />
     </div>
   </div>
 </template>

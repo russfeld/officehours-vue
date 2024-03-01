@@ -28,7 +28,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: HomeView
       // beforeEnter: async () => {
       //   const tokenStore = useTokenStore()
       //   await tokenStore.tryToken()
@@ -44,12 +44,12 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      component: () => import('../views/AboutView.vue')
     },
     {
       path: '/queues',
       name: 'queues',
-      component: QueueListView,
+      component: QueueListView
     },
     {
       path: '/queues/:id',
@@ -57,28 +57,28 @@ const router = createRouter({
       component: QueueSingleView,
       props: (route) => {
         return {
-          id: Number(route.params.id),
+          id: Number(route.params.id)
         }
-      },
+      }
     },
     {
       path: '/queues/:id/edit',
       name: 'queue_edit',
       component: QueueEditView,
       props: true,
-      beforeEnter: requireAdmin,
+      beforeEnter: requireAdmin
     },
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView,
+      component: ProfileView
     },
     {
       path: '/admin',
       name: 'admin',
       // TODO add code splitting?
       component: AdminView,
-      beforeEnter: requireAdmin,
+      beforeEnter: requireAdmin
     },
     {
       path: '/admin/user/:id/edit',
@@ -86,14 +86,14 @@ const router = createRouter({
       // TODO add code splitting
       component: UserEditView,
       props: true,
-      beforeEnter: requireAdmin,
+      beforeEnter: requireAdmin
     },
     {
       path: '/data',
       name: 'data',
       // TODO add code splitting?
       component: DashboardView,
-      beforeEnter: requireAdmin,
+      beforeEnter: requireAdmin
     },
     {
       path: '/data/:name',
@@ -103,9 +103,9 @@ const router = createRouter({
       beforeEnter: requireAdmin,
       props: (route) => {
         return {
-          name: route.params.name,
+          name: route.params.name
         }
-      },
+      }
     },
     {
       path: '/period/:id',
@@ -115,11 +115,11 @@ const router = createRouter({
       beforeEnter: requireAdmin,
       props: (route) => {
         return {
-          id: route.params.id,
+          id: route.params.id
         }
-      },
-    },
-  ],
+      }
+    }
+  ]
 })
 
 // Global Route Guard - User Must Log In!

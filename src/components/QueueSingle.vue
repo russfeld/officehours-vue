@@ -16,8 +16,8 @@ import { useQueuesStore } from '@/stores/Queues'
 const props = defineProps({
   id: {
     type: Number,
-    default: -1,
-  },
+    default: -1
+  }
 })
 
 // Token Store
@@ -31,7 +31,9 @@ const getQueue = queuesStore.getQueue
 
 <template>
   <main>
-    <router-link :to="{ name: 'queues' }" class="btn btn-secondary float-start"
+    <router-link
+      :to="{ name: 'queues' }"
+      class="btn btn-secondary float-start"
       ><font-awesome-icon icon="arrow-left" /> Back</router-link
     >
     <router-link
@@ -44,9 +46,7 @@ const getQueue = queuesStore.getQueue
     <hr />
     <!-- Using DOMPurify to sanitize HTML -->
     <!-- eslint-disable vue/no-v-html -->
-    <div
-      v-html="DOMPurify.sanitize(marked.parse(getQueue(id).description || ''))"
-    ></div>
+    <div v-html="DOMPurify.sanitize(marked.parse(getQueue(id).description || ''))"></div>
     <hr />
     <template v-if="getQueue(id).helper == 1">
       <HelperPane :id="id" />

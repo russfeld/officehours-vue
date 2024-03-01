@@ -11,30 +11,30 @@ export default defineConfig({
   plugins: [vue(), splitVendorChunkPlugin(), visualizer(), VueDevTools()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
   },
   build: {
     outDir: '../public/',
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 800
   },
   server: {
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-        secure: false,
+        secure: false
       },
       '/auth': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-        secure: false,
+        secure: false
       },
       '/docs': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
+        secure: false
+      }
+    }
+  }
 })

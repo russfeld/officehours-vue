@@ -13,14 +13,14 @@ import { useRequestsStore } from '@/stores/Requests'
 const props = defineProps({
   id: {
     type: Number,
-    default: -1,
+    default: -1
   },
   helper: {
     type: Boolean,
     default() {
       return false
-    },
-  },
+    }
+  }
 })
 
 // Token Store

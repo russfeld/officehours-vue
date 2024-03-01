@@ -23,10 +23,10 @@ onMounted(() => {
   easyMDE = new EasyMDE({
     autoDownloadFontAwesome: false,
     blockStyles: {
-      italic: '_',
+      italic: '_'
     },
     status: false,
-    spellChecker: false,
+    spellChecker: false
   })
 })
 
@@ -34,7 +34,7 @@ onMounted(() => {
 const save = async (formdata) => {
   const data = {
     name: formdata.name,
-    contact_info: easyMDE.value(),
+    contact_info: easyMDE.value()
   }
   try {
     await profileStore.update(data)
@@ -51,14 +51,12 @@ const save = async (formdata) => {
         }
         setErrors(
           'userform',
-          [
-            'The server rejected this submission. Please correct errors listed above',
-          ],
+          ['The server rejected this submission. Please correct errors listed above'],
           errors // (optional) input level errors
         )
       } else {
         setErrors('userform', [
-          'The server rejected this submission due to an SQL Error. Refresh and try again',
+          'The server rejected this submission due to an SQL Error. Refresh and try again'
         ])
       }
     } else {
@@ -106,7 +104,10 @@ const save = async (formdata) => {
           <button class="btn btn-success">Save</button>
         </div>
         <div class="col d-grid mb-2">
-          <router-link :to="{ name: 'queues' }" class="btn btn-secondary">
+          <router-link
+            :to="{ name: 'queues' }"
+            class="btn btn-secondary"
+          >
             Cancel</router-link
           >
         </div>

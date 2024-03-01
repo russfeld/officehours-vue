@@ -18,12 +18,12 @@ const router = useRouter()
 const props = defineProps({
   id: {
     type: Number,
-    default: -1,
+    default: -1
   },
   admin: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 // Queues Store
@@ -42,10 +42,10 @@ onMounted(() => {
   easyMDE = new EasyMDE({
     autoDownloadFontAwesome: false,
     blockStyles: {
-      italic: '_',
+      italic: '_'
     },
     status: false,
-    spellChecker: false,
+    spellChecker: false
   })
 })
 
@@ -54,14 +54,14 @@ const save = async (data) => {
   data = (({ id, name, snippet }) => ({
     id,
     name,
-    snippet,
+    snippet
   }))(data)
   data['description'] = easyMDE.value()
   // only send user ids of related users
   data['users'] = []
   for (const user of queue.users) {
     data['users'].push({
-      id: user.id,
+      id: user.id
     })
   }
   try {
@@ -83,14 +83,12 @@ const save = async (data) => {
         }
         setErrors(
           'queueform',
-          [
-            'The server rejected this submission. Please correct errors listed above',
-          ],
+          ['The server rejected this submission. Please correct errors listed above'],
           errors // (optional) input level errors
         )
       } else {
         setErrors('queueform', [
-          'The server rejected this submission due to an SQL Error. Refresh and try again',
+          'The server rejected this submission due to an SQL Error. Refresh and try again'
         ])
       }
     } else {
@@ -132,7 +130,11 @@ const save = async (data) => {
         rows="10"
       />
       <div class="mb-3">
-        <label for="multiselect-users" class="form-label">Helpers</label>
+        <label
+          for="multiselect-users"
+          class="form-label"
+          >Helpers</label
+        >
         <VueMultiselect
           id="multiselect-users"
           v-model="queue.users"
@@ -145,8 +147,7 @@ const save = async (data) => {
           track-by="id"
         />
         <div class="form-text">
-          Helpers who can manage the queue (usually TAs) - admins already have
-          access
+          Helpers who can manage the queue (usually TAs) - admins already have access
         </div>
       </div>
       <div class="row row-cols-1 row-cols-md-2">
@@ -155,7 +156,10 @@ const save = async (data) => {
         </div>
         <div class="col d-grid mb-2">
           <template v-if="admin">
-            <router-link :to="{ name: 'admin' }" class="btn btn-secondary">
+            <router-link
+              :to="{ name: 'admin' }"
+              class="btn btn-secondary"
+            >
               Cancel</router-link
             >
           </template>

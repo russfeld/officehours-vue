@@ -60,7 +60,12 @@ const addQueue = async function () {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="queueModalLabel" class="modal-title">Delete Queue</h5>
+          <h5
+            id="queueModalLabel"
+            class="modal-title"
+          >
+            Delete Queue
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -92,7 +97,11 @@ const addQueue = async function () {
     </div>
   </div>
 
-  <button type="button" class="btn btn-success float-end" @click="addQueue">
+  <button
+    type="button"
+    class="btn btn-success float-end"
+    @click="addQueue"
+  >
     <font-awesome-icon icon="plus" /> Queue
   </button>
   <h1 class="text-center">Queues</h1>
@@ -104,14 +113,17 @@ const addQueue = async function () {
       </tr>
     </thead>
     <tbody>
-      <template v-for="queue in queues" :key="queue.id">
+      <template
+        v-for="queue in queues"
+        :key="queue.id"
+      >
         <tr>
           <td>{{ queue.name }}</td>
           <td>
             <router-link
               :to="{
                 name: 'queue_edit',
-                params: { id: queue.id, admin: true },
+                params: { id: queue.id, admin: true }
               }"
               class="btn btn-secondary btn-sm mx-1"
               ><font-awesome-icon icon="pen-to-square"

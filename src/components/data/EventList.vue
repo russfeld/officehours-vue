@@ -9,7 +9,7 @@ import {
   DatasetInfo,
   DatasetPager,
   DatasetSearch,
-  DatasetShow,
+  DatasetShow
 } from 'vue-dataset'
 
 // Stores
@@ -19,8 +19,8 @@ import { usePeriodsStore } from '@/stores/Periods'
 const props = defineProps({
   id: {
     type: Number,
-    default: -1,
-  },
+    default: -1
+  }
 })
 
 // Requests Store
@@ -32,56 +32,56 @@ const eventCols = reactive([
   {
     name: 'ID',
     field: 'id',
-    sort: '',
+    sort: ''
   },
   {
     name: 'eID',
     field: 'eid',
-    sort: '',
+    sort: ''
   },
   {
     name: 'Status',
     field: 'status',
-    sort: '',
+    sort: ''
   },
   {
     name: 'Start',
     field: 'created_at',
-    sort: '',
+    sort: ''
   },
   {
     name: 'End',
     field: 'updated_at',
-    sort: '',
+    sort: ''
   },
   {
     name: 'Helper',
     field: 'presence.eid',
-    sort: '',
-  },
+    sort: ''
+  }
 ])
 
 const presenceCols = reactive([
   {
     name: 'ID',
     field: 'id',
-    sort: '',
+    sort: ''
   },
   {
     name: 'eID',
     field: 'eid',
-    sort: '',
+    sort: ''
   },
   {
     name: 'Start',
     field: 'created_at',
-    sort: '',
+    sort: ''
   },
   {
     name: 'End',
     field: 'updated_at',
-    sort: '',
-  },
+    sort: ''
+  }
 ])
 
 const eventClick = function (event, i) {
@@ -152,27 +152,27 @@ const presenceSortBy = computed(() => {
 
 const chartOptions = {
   chart: {
-    type: 'rangeBar',
+    type: 'rangeBar'
   },
   plotOptions: {
     bar: {
       horizontal: true,
       barHeight: '50%',
-      rangeBarGroupRows: true,
-    },
+      rangeBarGroupRows: true
+    }
   },
   xaxis: {
     type: 'datetime',
     labels: {
-      datetimeUTC: false,
-    },
+      datetimeUTC: false
+    }
   },
   dataLabels: {
     enabled: true,
     formatter: function (val, opts) {
       return opts.w.config.series[opts.seriesIndex].data[opts.dataPointIndex].z
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -188,8 +188,15 @@ const chartOptions = {
     ></apexchart>
   </div>
 
-  <dataset v-slot="{ ds }" :ds-data="events" :ds-sortby="eventSortBy">
-    <div class="row" :data-page-count="ds.dsPagecount">
+  <dataset
+    v-slot="{ ds }"
+    :ds-data="events"
+    :ds-sortby="eventSortBy"
+  >
+    <div
+      class="row"
+      :data-page-count="ds.dsPagecount"
+    >
       <div class="col-md-6 mb-2 mb-md-0">
         <dataset-show ds-show-entries="25" />
       </div>
@@ -229,9 +236,7 @@ const chartOptions = {
         </div>
       </div>
     </div>
-    <div
-      class="d-flex flex-md-row flex-column justify-content-between align-items-center"
-    >
+    <div class="d-flex flex-md-row flex-column justify-content-between align-items-center">
       <dataset-info class="mb-2 mb-md-0" />
       <dataset-pager />
     </div>
@@ -239,8 +244,15 @@ const chartOptions = {
 
   <h2 class="text-center">Presences</h2>
 
-  <dataset v-slot="{ ds }" :ds-data="presences" :ds-sortby="presenceSortBy">
-    <div class="row" :data-page-count="ds.dsPagecount">
+  <dataset
+    v-slot="{ ds }"
+    :ds-data="presences"
+    :ds-sortby="presenceSortBy"
+  >
+    <div
+      class="row"
+      :data-page-count="ds.dsPagecount"
+    >
       <div class="col-md-6 mb-2 mb-md-0">
         <dataset-show ds-show-entries="25" />
       </div>
@@ -278,9 +290,7 @@ const chartOptions = {
         </div>
       </div>
     </div>
-    <div
-      class="d-flex flex-md-row flex-column justify-content-between align-items-center"
-    >
+    <div class="d-flex flex-md-row flex-column justify-content-between align-items-center">
       <dataset-info class="mb-2 mb-md-0" />
       <dataset-pager />
     </div>

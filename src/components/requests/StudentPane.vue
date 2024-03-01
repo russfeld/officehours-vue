@@ -19,8 +19,8 @@ import { useTokenStore } from '../../stores/Token'
 const props = defineProps({
   id: {
     type: Number,
-    default: -1,
-  },
+    default: -1
+  }
 })
 
 // Token Store
@@ -87,7 +87,12 @@ onBeforeRouteLeave(async () => {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="studentModalLabel" class="modal-title">Your Turn!</h5>
+          <h5
+            id="studentModalLabel"
+            class="modal-title"
+          >
+            Your Turn!
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -96,9 +101,7 @@ onBeforeRouteLeave(async () => {
           ></button>
         </div>
         <div class="modal-body">
-          <template
-            v-if="getRequest(tokenStore.id) && getRequest(tokenStore.id).helper"
-          >
+          <template v-if="getRequest(tokenStore.id) && getRequest(tokenStore.id).helper">
             <p>
               You will be helped by
               <strong>{{ getRequest(tokenStore.id).helper.name }}</strong
@@ -110,9 +113,7 @@ onBeforeRouteLeave(async () => {
             <div
               v-html="
                 DOMPurify.sanitize(
-                  marked.parse(
-                    getRequest(tokenStore.id).helper.contact_info || ''
-                  )
+                  marked.parse(getRequest(tokenStore.id).helper.contact_info || '')
                 )
               "
             ></div>
@@ -140,13 +141,19 @@ onBeforeRouteLeave(async () => {
     </template>
     <template v-else>
       <template v-if="error">
-        <button class="btn btn-outline-danger float-end" @click="reconnect">
+        <button
+          class="btn btn-outline-danger float-end"
+          @click="reconnect"
+        >
           <font-awesome-icon icon="link-slash" />
           <span class="visually-hidden">Disconnected!</span>
         </button>
       </template>
       <template v-else>
-        <button class="btn btn-outline-warning float-end" @click="reconnect">
+        <button
+          class="btn btn-outline-warning float-end"
+          @click="reconnect"
+        >
           <span
             class="spinner-border spinner-border-sm"
             role="status"
@@ -159,14 +166,26 @@ onBeforeRouteLeave(async () => {
     <h2 class="text-center">Waiting Queue</h2>
     <template v-if="getQueue(id).is_open == 1">
       <template v-if="getRequest(tokenStore.id) != undefined">
-        <a class="w-100 btn btn-success disabled" disabled>Queue Joined</a>
+        <a
+          class="w-100 btn btn-success disabled"
+          disabled
+          >Queue Joined</a
+        >
       </template>
       <template v-else>
-        <a class="w-100 btn btn-success" @click="joinQueue()">Join Queue</a>
+        <a
+          class="w-100 btn btn-success"
+          @click="joinQueue()"
+          >Join Queue</a
+        >
       </template>
     </template>
     <template v-else>
-      <a class="w-100 btn btn-danger disabled" disabled>Queue is Closed</a>
+      <a
+        class="w-100 btn btn-danger disabled"
+        disabled
+        >Queue is Closed</a
+      >
     </template>
   </div>
   <hr />

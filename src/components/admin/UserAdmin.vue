@@ -66,7 +66,12 @@ const addUser = async function () {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="userModalLabel" class="modal-title">Delete User</h5>
+          <h5
+            id="userModalLabel"
+            class="modal-title"
+          >
+            Delete User
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -101,7 +106,11 @@ const addUser = async function () {
     </div>
   </div>
 
-  <button type="button" class="btn btn-success float-end" @click="addUser">
+  <button
+    type="button"
+    class="btn btn-success float-end"
+    @click="addUser"
+  >
     <font-awesome-icon icon="plus" /> User
   </button>
   <h1 class="text-center">Users</h1>
@@ -116,7 +125,10 @@ const addUser = async function () {
       </tr>
     </thead>
     <tbody>
-      <template v-for="user in users" :key="user.id">
+      <template
+        v-for="user in users"
+        :key="user.id"
+      >
         <tr>
           <td>{{ user.eid }}</td>
           <td>{{ user.name }}</td>

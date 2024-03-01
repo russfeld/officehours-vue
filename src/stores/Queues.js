@@ -16,7 +16,7 @@ export const useQueuesStore = defineStore('queues', {
       online: [],
       socket: undefined,
       connected: false,
-      error: false,
+      error: false
     }
   },
   getters: {
@@ -28,12 +28,12 @@ export const useQueuesStore = defineStore('queues', {
         state.online.find((online) => online.id == id) || {
           is_open: false,
           helpers: 0,
-          requests: 0,
+          requests: 0
         }
     },
     sortedQueues: (state) => {
       return [...state.queues].sort((a, b) => b.is_open - a.is_open)
-    },
+    }
   },
   actions: {
     async hydrate() {
@@ -49,13 +49,11 @@ export const useQueuesStore = defineStore('queues', {
         this.online = {}
       }
       const tokenStore = useTokenStore()
-      const url = import.meta.env.DEV
-        ? 'http://localhost:3000/status'
-        : '/status'
+      const url = import.meta.env.DEV ? 'http://localhost:3000/status' : '/status'
       this.socket = io(url, {
         auth: {
-          token: tokenStore.token,
-        },
+          token: tokenStore.token
+        }
       })
       this.socket.on('connect', () => {
         Logger.info('socket:connect')
@@ -103,7 +101,7 @@ export const useQueuesStore = defineStore('queues', {
     async update(queue) {
       await api
         .post('/api/v1/queues/' + queue.id, {
-          queue: queue,
+          queue: queue
         })
         .then(async () => {
           await this.hydrate()
@@ -118,6 +116,6 @@ export const useQueuesStore = defineStore('queues', {
       await api.put('/api/v1/queues/', { name: name }).then(async () => {
         await this.hydrate()
       })
-    },
-  },
+    }
+  }
 })
