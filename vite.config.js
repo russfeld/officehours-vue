@@ -34,6 +34,16 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false
+      },
+      '/socket.io': {
+        target: 'ws://localhost:3000', // Replace with your WebSocket server address
+        ws: true, // Enable WebSocket proxying
+        changeOrigin: true, // Required for WebSocket proxying
+      },
+      '/status': {
+        target: 'ws://localhost:3000', // Replace with your WebSocket server address
+        ws: true, // Enable WebSocket proxying
+        changeOrigin: true, // Required for WebSocket proxying
       }
     }
   }

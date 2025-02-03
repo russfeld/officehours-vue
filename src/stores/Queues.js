@@ -49,7 +49,7 @@ export const useQueuesStore = defineStore('queues', {
         this.online = {}
       }
       const tokenStore = useTokenStore()
-      const url = import.meta.env.DEV ? 'http://localhost:3000/status' : '/status'
+      const url = '/status'
       this.socket = io(url, {
         auth: {
           token: tokenStore.token
